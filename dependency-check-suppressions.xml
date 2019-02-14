@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suppressions xmlns="https://jeremylong.github.io/DependencyCheck/dependency-suppression.1.1.xsd">
+    <suppress>
+        <notes><![CDATA[
+   file name: groovy-sql-2.4.15.jar
+   ]]></notes>
+        <gav regex="true">^org\.codehaus\.groovy:groovy-sql:.*$</gav>
+        <cpe>cpe:/a:apache:groovy</cpe>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[
+   file name: groovy-sql-2.4.15.jar
+   ]]></notes>
+        <gav regex="true">^org\.codehaus\.groovy:groovy-sql:.*$</gav>
+        <cve>CVE-2016-6497</cve>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[
+   file name: cucumber-jvm-deps-1.0.5.jar/META-INF/maven/com.thoughtworks.xstream/xstream/pom.xml
+   ]]></notes>
+        <gav regex="true">com.thoughtworks.xstream:xstream:1.4.8</gav>
+        <cpe>cpe:/a:xstream_project:xstream:1.4.8</cpe>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[
+   file name: tomcat-embed-websocket-8.5.29.jar
+   ]]></notes>
+        <gav regex="true">^org\.apache\.tomcat\.embed:tomcat-embed-websocket:.*$</gav>
+        <cpe>cpe:/a:apache:tomcat</cpe>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[
+   file name: tomcat-embed-websocket-8.5.29.jar
+   ]]></notes>
+        <gav regex="true">^org\.apache\.tomcat\.embed:tomcat-embed-websocket:.*$</gav>
+        <cpe>cpe:/a:apache_tomcat:apache_tomcat</cpe>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[
+   file name: tomcat-embed-websocket-8.5.29.jar
+   ]]></notes>
+        <gav regex="true">^org\.apache\.tomcat\.embed:tomcat-embed-websocket:.*$</gav>
+        <cpe>cpe:/a:apache_software_foundation:tomcat</cpe>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[
+   file name: tomcat-embed-websocket-8.5.29.jar
+   ]]></notes>
+        <gav regex="true">^org\.apache\.tomcat\.embed:tomcat-embed-websocket:.*$</gav>
+        <cve>CVE-2018-8014</cve>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[
+   file name: tomcat-embed-core-8.5.29.jar
+   ]]></notes>
+        <gav regex="true">^org\.apache\.tomcat\.embed:tomcat-embed-core:.*$</gav>
+        <cve>CVE-2018-8014</cve>
+    </suppress>
+
+    <suppress>
+        <notes><![CDATA[
+   relates to CORS
+   ]]></notes>
+        <gav regex="true">.*</gav>
+        <cve>CVE-2018-8014</cve>
+    </suppress>
+
+    <suppress>
+        <notes><![CDATA[
+   relates to CORS
+   ]]></notes>
+        <gav regex="true">.*</gav>
+        <cve>CVE-2018-1258</cve>
+    </suppress>
+
+    <suppress>
+        <notes><![CDATA[
+   relates to CORS
+   ]]></notes>
+        <gav regex="true">.*</gav>
+        <cve>CVE-2018-1257</cve>
+    </suppress>
+
+    <suppress>
+        <notes><![CDATA[
+   relates to CORS
+   ]]></notes>
+        <gav regex="true">.*</gav>
+        <cve>CVE-2018-11039</cve>
+    </suppress>
+
+    <suppress>
+        <notes><![CDATA[
+   relates to CORS
+   ]]></notes>
+        <gav regex="true">.*</gav>
+        <cve>CVE-2018-11040</cve>
+    </suppress>
+    <suppress>
+        <notes>Fixed in dom4j v2.1.1</notes>
+        <gav regex="true">.*</gav>
+        <cve>CVE-2018-1000632</cve>
+    </suppress>
+    <suppress>
+        <notes>Gatling 3.0.1</notes>
+        <gav regex="true">.*</gav>
+        <cve>CVE-2018-13661</cve>
+    </suppress>
+    <suppress>
+        <notes>Gatling netty</notes>
+        <gav regex="true">.*</gav>
+        <cve>CVE-2014-3488</cve>
+    </suppress>
+    <suppress>
+        <notes>netty</notes>
+        <gav regex="true">.*</gav>
+        <cve>CVE-2015-2156</cve>
+    </suppress>
+    <suppress>
+        <notes>Scala library</notes>
+        <gav regex="true">.*</gav>
+        <cve>CVE-2017-15288</cve>
+    </suppress>
+    <suppress>
+        <notes>App Insights gauva</notes>
+        <gav regex="true">.*</gav>
+        <cve>CVE-2018-10237</cve>
+    </suppress>
+    <suppress>
+        <notes>https://github.com/FasterXML/jackson-databind/issues/2097#issuecomment-457071680</notes>
+        <gav regex="true">.*</gav>
+        <cve>CVE-2018-14718</cve>
+    </suppress>
+    <suppress>
+        <notes>https://github.com/FasterXML/jackson-databind/issues/2097#issuecomment-457071680</notes>
+        <gav regex="true">.*</gav>
+        <cve>CVE-2018-14719</cve>
+    </suppress>
+    <suppress>
+        <notes>https://github.com/FasterXML/jackson-databind/issues/2097#issuecomment-457071680</notes>
+        <gav regex="true">.*</gav>
+        <cve>CVE-2018-14720</cve>
+    </suppress>
+    <suppress>
+        <notes>https://github.com/FasterXML/jackson-databind/issues/2097#issuecomment-457071680</notes>
+        <gav regex="true">.*</gav>
+        <cve>CVE-2018-14721</cve>
+    </suppress>
+    <suppress>
+        <notes>https://github.com/FasterXML/jackson-databind/issues/2097#issuecomment-457071680</notes>
+        <gav regex="true">.*</gav>
+        <cve>CVE-2018-19360</cve>
+    </suppress>
+    <suppress>
+        <notes>https://github.com/FasterXML/jackson-databind/issues/2097#issuecomment-457071680</notes>
+        <gav regex="true">.*</gav>
+        <cve>CVE-2018-19361</cve>
+    </suppress>
+    <suppress>
+        <notes>https://github.com/FasterXML/jackson-databind/issues/2097#issuecomment-457071680</notes>
+        <gav regex="true">.*</gav>
+        <cve>CVE-2018-19362</cve>
+    </suppress>
+    <suppress>
+        <notes>See https://github.com/FasterXML/jackson-modules-java8/issues/90#issuecomment-450544881</notes>
+        <gav regex="true">.*</gav>
+        <cve>CVE-2018-1000873</cve>
+    </suppress>
+</suppressions>
