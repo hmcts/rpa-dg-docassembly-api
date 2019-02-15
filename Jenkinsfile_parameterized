@@ -1,0 +1,55 @@
+#!groovy
+
+properties([
+        [
+                $class: 'GithubProjectProperty',
+                displayName: 'Document Assembly API',
+                projectUrlStr: 'https://github.com/hmcts/rap-dg-docassembly'
+        ],
+        pipelineTriggers([
+                [$class: 'GitHubPushTrigger']
+        ])
+])
+
+@Library("Infrastructure")
+
+def type = "java"
+def product = "dg"
+def component = "ccd-docassembly"
+
+def channel = '#rpa-pipeline'
+
+List<LinkedHashMap<String, Object>> secrets = [
+        secret('microservicekey-dg-docassembly-api', 'S2S_TOKEN')
+]
+
+static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
+    [ $class: 'AzureKeyVaultSecret',
+      secretType: 'Secret',
+      name: secretName,
+      version: '',
+      envVariable: envVar
+    ]
+}
+
+withPipeline(type , product, component) {
+    enableSlackNotifications(channel)
+    loadVaultSecrets(secrets)
+
+    after('checkout') {
+        echo '${product}-${component} out'
+        sh '''
+mkdir -p application/src/main/resources/META-INF
+echo "allprojects { task printVersionInit { doLast { println project.version } } }" > init.gradle
+
+tee application/src/main/resources/META-INF/build-info.properties <<EOF 2>/dev/null
+build.version=$(./gradlew -q printVersion)
+build.number=${BUILD_NUMBER}
+build.commit=$(git rev-parse HEAD)
+build.date=$(date)
+EOF
+
+'''
+    }
+
+}

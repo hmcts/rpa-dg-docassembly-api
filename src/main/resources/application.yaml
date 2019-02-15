@@ -1,0 +1,73 @@
+spring:
+  application:
+    name: Document Assembly API
+
+base-urls:
+  idam-url: ${IDAM_API_URL:http://localhost:4501}
+  idam-user: ${IDAM_API_USER:test@test.com}
+  idam-user-role: ${IDAM_API_USER_ROLE:caseworker}
+  idam-s2s: ${S2S_URL:http://localhost:4502}
+  s2s-name: ${S2S_SERVICE_NAME:em_gw}
+  s2s-token: ${S2S_TOKEN:AAAAAAAAAAAAAAAA}
+  test-url: ${TEST_URL:http://localhost:8080}
+
+management:
+  endpoints:
+    web:
+      base-path: '/'
+      exposure:
+        include:
+         - health
+         - info
+  health:
+    db:
+      enabled: false
+    diskspace:
+      enabled: false
+  info:
+     build:
+       enabled: true # Whether to enable build info.
+     defaults:
+       enabled: true # Whether to enable default info contributors.
+     env:
+       enabled: true # Whether to enable environment info.
+     git:
+       enabled: true # Whether to enable git info.
+       mode: simple # Mode to use to expose git information.
+
+info:
+  app:
+    environment: ${PACKAGES_ENVIRONMENT:local}
+    project: ${PACKAGES_PROJECT:dg-docassembly}
+    name: ${PACKAGES_NAME:cor}
+#    version: ${PACKAGES_VERSION:unknown}
+
+authorization:
+  case-worker-roles: ${CASE_WORKER_ROLES:caseworker-probate,caseworker-cmc,caseworker-sscs,caseworker-divorce}
+  s2s-names-whitelist: ${S2S_NAMES_WHITELIST:sscs,divorce,ccd,em_gw,jui_webapp,pui_webapp}
+
+auth:
+  idam:
+    client:
+      baseUrl: ${IDAM_API_BASE_URI:http://localhost:4501}
+  provider:
+    service:
+      client:
+        baseUrl: ${S2S_BASE_URI:http://localhost:4502}
+
+azure:
+  app_insights_key: ${APPINSIGHTS_INSTRUMENTATIONKEY:true}
+  application-insights:
+    instrumentation-key: ${APPINSIGHTS_INSTRUMENTATIONKEY:d30268e8-8979-4579-8d58-010dbe03a1e6}
+
+app-insights:
+  dev-mode: off
+  request-component: on
+  telemetry-component: on
+
+
+idam:
+  s2s-auth:
+    url: ${S2S_BASE_URI:http://localhost:4502}
+    totp_secret: ${S2S_KEY:AAAAAAAAAAAAAAAA}
+    microservice: dg_docassembly
