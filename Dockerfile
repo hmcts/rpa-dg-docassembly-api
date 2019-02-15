@@ -4,7 +4,7 @@ MAINTAINER "HMCTS Team <https://github.com/hmcts>"
 LABEL maintainer = "HMCTS Team <https://github.com/hmcts>"
 
 WORKDIR /opt/app
-COPY build/libs/rpa-em-ccd-orchestrator.jar .
+COPY build/libs/rpa-dg-docassembly.jar .
 
 HEALTHCHECK --interval=10s --timeout=10s --retries=10 CMD http_proxy="" curl --silent --fail http://localhost:8080/health
 

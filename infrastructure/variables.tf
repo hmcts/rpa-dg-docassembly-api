@@ -1,10 +1,10 @@
 variable "product" {
   type = "string"
-  default = "em"
+  default = "dg"
 }
 
 variable "shared_product_name" {
-  default = "rpa"
+  default = "dg"
 }
 
 variable "component" {
@@ -63,18 +63,6 @@ variable "idam_api_url" {
 
 variable "s2s_url" {
   default = "rpe-service-auth-provider"
-}
-
-variable "dm_store_app_url" {
-  default = "dm-store"
-}
-
-variable "em_stitching_api_url" {
-  default = "em-stitching"
-}
-
-variable "em_ccd_orchestrator_url" {
-  default = "em-ccd-orchestrator"
 }
 
 ////////////////////////////////////////////////

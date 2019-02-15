@@ -16,6 +16,8 @@ plugins {
     id "net.ltgt.apt" version "0.18"
     id 'jacoco'
     id "com.github.lkishalmi.gatling" version "3.0.1"
+    id 'checkstyle'
+    id 'pmd'
 }
 
 apply plugin: 'java'
@@ -31,6 +33,21 @@ dependencyManagement {
     imports {
         mavenBom 'org.springframework.cloud:spring-cloud-openfeign:2.0.2.BUILD-SNAPSHOT'
     }
+}
+
+checkstyle {
+    maxWarnings = 0
+    toolVersion = '8.8'
+    // need to set configDir to rootDir otherwise submodule will use submodule/config/checkstyle
+    configDir = new File(rootDir, 'config/checkstyle')
+}
+
+pmd {
+    toolVersion = "5.8.1"
+    ignoreFailures = true
+    sourceSets = [sourceSets.main, sourceSets.test]
+    reportsDir = file("$project.buildDir/reports/pmd")
+    ruleSetFiles = files("config/pmd/ruleset.xml")
 }
 
 if (!project.hasProperty('runList')) {
@@ -77,7 +94,6 @@ def versions = [
 
 dependencies {
     compile 'com.squareup.okhttp3:okhttp:3.11.0'
-    compile("org.springframework.boot:spring-boot-starter-batch")
     compile "com.fasterxml.jackson.datatype:jackson-datatype-json-org:${versions.jackson}"
     compile "com.fasterxml.jackson.datatype:jackson-datatype-hppc:${versions.jackson}"
     compile "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${versions.jackson}"
@@ -99,10 +115,8 @@ dependencies {
 
     compile 'org.springframework.cloud:spring-cloud-starter-openfeign'
 
-    compile "org.mapstruct:mapstruct-jdk8:${mapstruct_version}"
     compile "org.springframework.boot:spring-boot-starter-security"
 
-    annotationProcessor "org.mapstruct:mapstruct-processor:${mapstruct_version}"
     annotationProcessor ("org.springframework.boot:spring-boot-configuration-processor") {
         exclude group: 'com.vaadin.external.google', module: 'android-json'
     }
@@ -146,6 +160,7 @@ jacocoTestReport {
     reports {
         xml.enabled = true
         csv.enabled = true
+        xml.destination file("${project.buildDir}/reports/jacoco/test/jacocoTestReport.xml")
     }
 
     afterEvaluate {
@@ -159,6 +174,7 @@ sonarqube {
     properties {
         property "sonar.projectName", "${rootProject.name}"
         property "sonar.jacoco.reportPath", "${project.buildDir}/jacoco/test.exec"
+        property "sonar.dependencyCheck.reportPath", "${project.buildDir}/reports/dependency-check-report.xml"
         property "sonar.exclusions", coverageExclusionList.join(", ")
     }
 }

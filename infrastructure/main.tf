@@ -1,12 +1,29 @@
+provider "azurerm" {
+  version = "1.21"
+}
+
 locals {
   app_full_name = "${var.product}-${var.component}"
   ase_name = "${data.terraform_remote_state.core_apps_compute.ase_name[0]}"
   local_env = "${(var.env == "preview" || var.env == "spreview") ? (var.env == "preview" ) ? "aat" : "saat" : var.env}"
   shared_vault_name = "${var.shared_product_name}-${local.local_env}"
+
+  previewVaultName = "${local.app_full_name}-aat"
+  nonPreviewVaultName = "${local.app_full_name}-${var.env}"
+  vaultName = "${(var.env == "preview" || var.env == "spreview") ? local.previewVaultName : local.nonPreviewVaultName}"
+
+  nonPreviewVaultUri = "${module.rpa-dg-docassembly-api-vault.key_vault_uri}"
+  previewVaultUri = "https://cet-online-app-aat.vault.azure.net/"
+  vaultUri = "${(var.env == "preview" || var.env == "spreview") ? local.previewVaultUri : local.nonPreviewVaultUri}"
+
+  previewEnv= "aat"
+  nonPreviewEnv = "${var.env}"
+  localenv = "${(var.env == "preview" || var.env == "spreview") ? local.previewEnv : local.nonPreviewEnv}"
+
+  s2s_vault_url = "https://s2s-${local.local_env}.vault.azure.net/"
+  local_ase = "${(var.env == "preview" || var.env == "spreview") ? (var.env == "preview" ) ? "core-compute-aat" : "core-compute-saat" : local.ase_name}"
+  s2s_url = "http://${var.s2s_url}-${local.local_env}.service.${local.local_ase}.internal"
 }
-# "${local.ase_name}"
-# "${local.app_full_name}"
-# "${local.local_env}"
 
 module "app" {
   source = "git@github.com:hmcts/cnp-module-webapp?ref=master"
@@ -24,18 +41,11 @@ module "app" {
   asp_name = "${var.shared_product_name}-${var.env}"
 
   app_settings = {
-    # JAVA_OPTS = "${var.java_opts}"
-    # SERVER_PORT = "8080"
-
     # idam
-    IDAM_API_BASE_URI = "${var.idam_api_url}"
-    S2S_BASE_URI = "http://${var.s2s_url}-${local.local_env}.service.core-compute-${local.local_env}.internal"
+    IDAM_API_URL = "${var.idam_api_url}"
+    S2S_URL = "http://${var.s2s_url}-${local.local_env}.service.core-compute-${local.local_env}.internal"
     S2S_KEY = "${data.azurerm_key_vault_secret.s2s_key.value}"
-
-    #DM STORE
-    DM_STORE_APP_URL = "http://${var.dm_store_app_url}-${local.local_env}.service.core-compute-${local.local_env}.internal"
-    #EM ANN API
-    EM_STITCHING_API_URL = "http://${var.em_stitching_api_url}-${local.local_env}.service.core-compute-${local.local_env}.internal"
+    S2S_NAMES_WHITELIST = "${var.s2s_names_whitelist}"
 
     # logging vars & healthcheck
     REFORM_SERVICE_NAME = "${local.app_full_name}"
@@ -69,37 +79,30 @@ module "app" {
   }
 }
 
-provider "vault" {
-  address = "https://vault.reform.hmcts.net:6200"
-}
-
-// TODO: Should name be changed, and does it need to be whitelisted? should it be changed for stitching app?
-data "azurerm_key_vault_secret" "s2s_key" {
-  name      = "microservicekey-em-npa-app"
-  vault_uri = "https://s2s-${local.local_env}.vault.azure.net/"
-}
-
 data "azurerm_key_vault" "shared_key_vault" {
   name = "${local.shared_vault_name}"
   resource_group_name = "${local.shared_vault_name}"
 }
 
-//data "azurerm_key_vault_secret" "s2s_secret" {
-//  name = "dg-npa-s2s-token"
-//  vault_uri = "${data.azurerm_key_vault.shared_key_vault.vault_uri}"
-//}
-//
-//data "azurerm_key_vault_secret" "oauth2_secret" {
-//  name = "show-oauth2-token"
-//  vault_uri = "${data.azurerm_key_vault.shared_key_vault.vault_uri}"
-//}
+data "azurerm_key_vault_secret" "s2s_key" {
+  name      = microservicekey-dg-docassembly-api
+  vault_uri = "https://s2s-${local.localenv}.vault.azure.net/"
+}
 
-module "local_key_vault" {
-  source = "git@github.com:hmcts/moj-module-key-vault?ref=master"
-  product = "${local.app_full_name}"
-  env = "${var.env}"
-  tenant_id = "${var.tenant_id}"
-  object_id = "${var.jenkins_AAD_objectId}"
+module "rpa-dg-docassembly-api-vault" {
+  source              = "git@github.com:hmcts/moj-module-key-vault?ref=master"
+  name                = "${local.vaultName}"
+  product             = "${var.product}"
+  env                 = "${var.env}"
+  tenant_id           = "${var.tenant_id}"
+  object_id           = "${var.jenkins_AAD_objectId}"
   resource_group_name = "${module.app.resource_group_name}"
-  product_group_object_id = "5d9cd025-a293-4b97-a0e5-6f43efce02c0"
+  product_group_object_id = "ffb5f9a3-b686-4325-a26e-746db5279a42"
+}
+
+
+resource "azurerm_key_vault_secret" "S2S_KEY" {
+  name = "${data.azurerm_key_vault_secret.s2s_key.name}"
+  value = "${data.azurerm_key_vault_secret.s2s_key.value}"
+  vault_uri = "${module.rpa-dg-docassembly-api-vault.key_vault_uri}"
 }

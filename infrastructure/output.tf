@@ -5,12 +5,12 @@ output "microserviceName" {
 
 // used for db migrations
 output "vaultName" {
-  value = "${module.local_key_vault.key_vault_name}"
+  value = "${local.vaultName}"
 }
 
 // used for grabbing shared secrets (shown in the jenkins file)
 output "vaultUri" {
-  value = "${data.azurerm_key_vault.shared_key_vault.vault_uri}"
+  value = "${local.vaultUri}"
 }
 
 output "idam_api_url" {
@@ -27,12 +27,4 @@ output "enable_idam_health_check" {
 
 output "enable_idam_healthcheck" {
   value = "${var.enable_idam_healthcheck}"
-}
-
-output "dm_store_app_url" {
-  value = "http://${var.dm_store_app_url}-${local.local_env}.service.core-compute-${local.local_env}.internal"
-}
-
-output "em_stitching_api_url" {
-  value = "http://${var.em_stitching_api_url}-${local.local_env}.service.core-compute-${local.local_env}.internal"
 }

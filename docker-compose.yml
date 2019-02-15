@@ -1,7 +1,7 @@
 version: '2.1'
 
 services:
-  rpa-em-ccd-orchestrator:
+  rpa-dg-docassembly:
     build:
       context: .
 #    image: hmcts/rpa-dg-docassembly:latest

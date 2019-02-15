@@ -42,10 +42,6 @@ public class Env {
         return require("S2S_SERVICE_NAME");
     }
 
-    public static String getStitchingApiUrl() {
-        return require("DG_DOCASSEMBLY_API_URL");
-    }
-
     public static String require(String name) {
         return Validate.notNull(System.getenv(name) == null ? defaults.getProperty(name) : System.getenv(name), "Environment variable `%s` is required", name);
     }

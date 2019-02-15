@@ -3,7 +3,7 @@
 properties([
     [
         $class: 'GithubProjectProperty',
-        displayName: 'Evidence Management CCD Orchestrator',
+        displayName: 'Document Assembly API',
         projectUrlStr: 'https://github.com/hmcts/rpa-dg-docassembly'
     ],
     pipelineTriggers([
@@ -15,12 +15,12 @@ properties([
 
 def type = "java"
 def product = "dg"
-def component = "ccd-docassembly"
+def component = "docassembly-api"
 
 def channel = '#rpa-pipeline'
 
 List<LinkedHashMap<String, Object>> secrets = [
-    secret('dg-s2s-token', 'S2S_TOKEN')
+    secret('microservicekey-dg-docassembly-api', 'S2S_TOKEN')
 ]
 
 static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
