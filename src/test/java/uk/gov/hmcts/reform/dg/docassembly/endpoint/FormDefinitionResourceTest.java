@@ -12,7 +12,7 @@ import static org.junit.Assert.assertTrue;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class DocumentAssemblyControllerTest {
+public class FormDefinitionResourceTest {
 
     @Test
     public void testDocumentAssembly () {
