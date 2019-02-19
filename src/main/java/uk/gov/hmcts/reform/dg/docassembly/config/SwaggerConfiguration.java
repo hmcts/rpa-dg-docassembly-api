@@ -13,13 +13,8 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @Configuration
 @EnableSwagger2
-@ComponentScan("uk.gov.hmcts.reform.dg.docassembly.uk.gov.hmcts.reform.dg.docassembly.rest")
+@ComponentScan("uk.gov.hmcts.reform.dg.docassembly.rest")
 public class SwaggerConfiguration {
-
-    private final static String apiVersion = "0.0.1";
-
-    private static final String MODEL_REF_TYPE = "string";
-    private static final String PARAMETER_TYPE = "header";
 
     @Bean
     public Docket api() {
@@ -34,8 +29,8 @@ public class SwaggerConfiguration {
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title("Document Assembly API")
-                .description("API to retrive UI definitions from templates and generate documents based those definitions")
-                .version(apiVersion)
+                .description("API to retrieve UI definitions from templates and generate documents based those definitions")
+                .version("0.0.1")
                 .build();
     }
 }

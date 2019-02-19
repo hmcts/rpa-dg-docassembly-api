@@ -1,9 +1,7 @@
-package uk.gov.hmcts.reform.dg.docassembly.service.impl;
+package uk.gov.hmcts.reform.dg.docassembly.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.poi.xwpf.extractor.XWPFWordExtractor;
-import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.springframework.stereotype.Service;
 import uk.gov.hmcts.reform.dg.docassembly.dto.TemplateIdDto;
 
@@ -14,13 +12,17 @@ import java.io.InputStream;
 public class FormDefinitionService {
 
     private final TemplateManagementApiClient templateManagementApiClient;
+    private final TemplateContentExtractor templateContentExtractor;
     private final ObjectMapper objectMapper;
 
     private final String startTag = "<<cs_{displaycode=‘1’}>>";
     private final String endTag = "<<es_>>";
 
-    public FormDefinitionService(TemplateManagementApiClient templateManagementApiClient, ObjectMapper objectMapper) {
+    public FormDefinitionService(TemplateManagementApiClient templateManagementApiClient,
+                                 TemplateContentExtractor templateContentExtractor,
+                                 ObjectMapper objectMapper) {
         this.templateManagementApiClient = templateManagementApiClient;
+        this.templateContentExtractor = templateContentExtractor;
         this.objectMapper = objectMapper;
     }
 
@@ -28,18 +30,15 @@ public class FormDefinitionService {
 
         try (InputStream inputStream = templateManagementApiClient.getTemplate(templateIdDto)) {
 
-            XWPFDocument doc = new XWPFDocument(inputStream);
-            XWPFWordExtractor extractor = new XWPFWordExtractor(doc);
-            String docText = extractor.getText();
+            String uiText = templateContentExtractor.extractTextBetweenTags(inputStream, startTag, endTag);
 
-            int startIndex = docText.indexOf(startTag) + startTag.length();
-            int endIndex = docText.indexOf(endTag, startIndex);
+            return objectMapper.readTree(uiText);
 
-            return objectMapper.readTree(docText.substring(startIndex, endIndex));
-
-        } catch(IOException e) {
+        } catch (IOException e) {
             throw new FormDefinitionRetrievalException(
-                    String.format("Could not retrieve form definition:'%s'", e.getMessage()), e);
+                    String.format("Could not retrieve form definition for template %s: '%s'",
+                            templateIdDto.getTemplateId(),
+                            e.getMessage()), e);
         }
 
     }

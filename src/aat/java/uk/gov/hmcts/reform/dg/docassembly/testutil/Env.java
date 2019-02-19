@@ -20,7 +20,9 @@ public class Env {
         defaults.setProperty("DG_DOCASSEMBLY_API_URL", "http://localhost:4623");
     }
 
-    public static String getUseProxy() { return require("PROXY"); }
+    public static String getUseProxy() {
+        return require("PROXY");
+    }
 
     public static String getTestUrl() {
         return require("TEST_URL");
@@ -30,7 +32,7 @@ public class Env {
         return require("IDAM_API_URL");
     }
 
-    public static String getS2SURL() {
+    public static String getS2sUrl() {
         return require("S2S_URL");
     }
 
@@ -43,6 +45,7 @@ public class Env {
     }
 
     public static String require(String name) {
-        return Validate.notNull(System.getenv(name) == null ? defaults.getProperty(name) : System.getenv(name), "Environment variable `%s` is required", name);
+        return Validate.notNull(System.getenv(name) == null ? defaults.getProperty(name) :
+                System.getenv(name), "Environment variable `%s` is required", name);
     }
 }

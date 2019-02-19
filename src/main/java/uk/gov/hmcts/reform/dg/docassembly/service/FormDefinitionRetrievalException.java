@@ -1,4 +1,4 @@
-package uk.gov.hmcts.reform.dg.docassembly.service.impl;
+package uk.gov.hmcts.reform.dg.docassembly.service;
 
 public class FormDefinitionRetrievalException extends RuntimeException {
 

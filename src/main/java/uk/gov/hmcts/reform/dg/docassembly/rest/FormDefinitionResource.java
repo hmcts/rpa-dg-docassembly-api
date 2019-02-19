@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import uk.gov.hmcts.reform.dg.docassembly.dto.TemplateIdDto;
-import uk.gov.hmcts.reform.dg.docassembly.service.impl.FormDefinitionService;
+import uk.gov.hmcts.reform.dg.docassembly.service.FormDefinitionService;
 
 @RestController
 @RequestMapping("/api")

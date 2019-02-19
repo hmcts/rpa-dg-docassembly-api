@@ -1,4 +1,4 @@
-package uk.gov.hmcts.reform.dg.docassembly.service.impl;
+package uk.gov.hmcts.reform.dg.docassembly.service;
 
 import okhttp3.*;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
@@ -17,16 +17,18 @@ import java.util.UUID;
 @Service
 public class TemplateRenditionService {
 
-    @Value("${docmosis.convert.endpoint}")
-    private String docmosisUrl;
+    private final String docmosisUrl;
 
-    @Value("${docmosis.accessKey}")
-    private String docmosisAccessKey;
+    private final String docmosisAccessKey;
 
     private final OkHttpClient httpClient;
 
-    public TemplateRenditionService(OkHttpClient httpClient) {
+    public TemplateRenditionService(OkHttpClient httpClient,
+                                    @Value("${docmosis.convert.endpoint}") String docmosisUrl,
+                                    @Value("${docmosis.accessKey}")String docmosisAccessKey) {
         this.httpClient = httpClient;
+        this.docmosisUrl = docmosisUrl;
+        this.docmosisAccessKey = docmosisAccessKey;
     }
 
     public TemplateRenditionOutputDto renderTemplate(CreateTemplateRenditionDto createTemplateRenditionDto)

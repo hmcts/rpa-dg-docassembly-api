@@ -1,8 +1,6 @@
-package uk.gov.hmcts.reform.dg.docassembly.service.impl;
+package uk.gov.hmcts.reform.dg.docassembly.service;
 
-
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
+import okhttp3.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import uk.gov.hmcts.reform.authorisation.generators.AuthTokenGenerator;
@@ -14,16 +12,19 @@ import java.io.InputStream;
 @Service
 public class TemplateManagementApiClient {
 
-    @Value("${template-management-api.base-url}${template-management-api.resource}")
-    private String templateManagementApiUrl;
+    private final String templateManagementApiUrl;
 
     private final AuthTokenGenerator authTokenGenerator;
 
     private final OkHttpClient httpClient;
 
-    public TemplateManagementApiClient(AuthTokenGenerator authTokenGenerator, OkHttpClient httpClient) {
+    public TemplateManagementApiClient(
+            AuthTokenGenerator authTokenGenerator,
+            OkHttpClient httpClient,
+            @Value("${template-management-api.base-url}${template-management-api.resource}") String templateManagementApiUrl) {
         this.authTokenGenerator = authTokenGenerator;
         this.httpClient = httpClient;
+        this.templateManagementApiUrl = templateManagementApiUrl;
     }
 
     public InputStream getTemplate(TemplateIdDto templateIdDto) throws IOException {

@@ -83,7 +83,7 @@ public class TestUtil {
                     .given()
                     .header("Content-Type", "application/json")
                     .body(jsonObject.toString())
-                    .post(Env.getS2SURL() + "/lease");
+                    .post(Env.getS2sUrl() + "/lease");
             s2sToken = response.getBody().asString();
             s2sToken = response.getBody().print();
         }

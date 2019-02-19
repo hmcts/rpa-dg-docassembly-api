@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import uk.gov.hmcts.reform.dg.docassembly.dto.CreateTemplateRenditionDto;
 import uk.gov.hmcts.reform.dg.docassembly.dto.TemplateRenditionOutputDto;
-import uk.gov.hmcts.reform.dg.docassembly.service.impl.TemplateRenditionService;
+import uk.gov.hmcts.reform.dg.docassembly.service.TemplateRenditionService;
 
 import javax.validation.Valid;
 import java.io.IOException;
