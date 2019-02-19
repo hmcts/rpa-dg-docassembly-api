@@ -68,6 +68,14 @@ services:
     image: mailhog/mailhog
 
   rpa-dg-template-management-api:
-    image: hmcts/rpa-dg-stitching-api:latest
+    image: hmcts.azurecr.io/hmcts/dg-tmpl-mgmt:latest
+    environment:
+      - S2S_BASE_URI=http://service-auth-provider-app:8489
+      - IDAM_API_BASE_URI=http://idam-api:8080
+      - APPINSIGHTS_INSTRUMENTATIONKEY=test-key
+    links:
+      - service-auth-provider-app
+    depends_on:
+      - service-auth-provider-app
     ports:
       - 4630:8080
