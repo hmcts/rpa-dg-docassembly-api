@@ -15,7 +15,7 @@ import static org.junit.Assert.assertTrue;
 public class DocumentAssemblyControllerTest {
 
     @Test
-    public void testDocumentAssembly () {
+    public void testDocumentAssembly() {
         assertTrue(true);
     }
 }

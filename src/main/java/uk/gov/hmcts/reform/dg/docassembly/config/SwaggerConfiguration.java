@@ -16,10 +16,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @ComponentScan("uk.gov.hmcts.reform.dg.docassembly.rest")
 public class SwaggerConfiguration {
 
-    private final static String apiVersion = "0.0.1";
-
-    private static final String MODEL_REF_TYPE = "string";
-    private static final String PARAMETER_TYPE = "header";
+    private static final String apiVersion = "0.0.1";
 
     @Bean
     public Docket api() {

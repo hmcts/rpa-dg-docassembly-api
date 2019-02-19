@@ -10,7 +10,7 @@ import static org.junit.Assert.assertTrue;
 public class DocumentAssemblyServiceTest {
 
     @Test
-    public void testDocumentAssemblyService () {
+    public void testDocumentAssemblyService() {
         assertTrue(true);
     }
 
