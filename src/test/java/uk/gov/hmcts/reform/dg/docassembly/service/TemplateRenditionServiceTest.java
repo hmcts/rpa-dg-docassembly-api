@@ -6,12 +6,14 @@ import okhttp3.mock.ClasspathResources;
 import okhttp3.mock.MockInterceptor;
 import okhttp3.mock.Rule;
 import org.apache.commons.io.IOUtils;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
 import uk.gov.hmcts.reform.dg.docassembly.dto.CreateTemplateRenditionDto;
 import uk.gov.hmcts.reform.dg.docassembly.dto.RenditionOutputType;
-import uk.gov.hmcts.reform.dg.docassembly.dto.TemplateRenditionOutputDto;
 
+import java.io.File;
 import java.util.Base64;
 
 public class TemplateRenditionServiceTest {
@@ -19,6 +21,8 @@ public class TemplateRenditionServiceTest {
     MockInterceptor interceptor = new MockInterceptor();
 
     TemplateRenditionService templateRenditionService;
+
+    DmStoreUploader dmStoreUploader;
 
     @Before
     public void setup() {
@@ -29,8 +33,11 @@ public class TemplateRenditionServiceTest {
                 .addInterceptor(interceptor)
                 .build();
 
+        dmStoreUploader = Mockito.mock(DmStoreUploader.class);
+
         templateRenditionService = new TemplateRenditionService(
                 client,
+                dmStoreUploader,
                 "http://tonrnado.com",
                 "x");
     }
@@ -46,16 +53,23 @@ public class TemplateRenditionServiceTest {
         createTemplateRenditionDto.setTemplateId(new String(Base64.getEncoder().encode("1".getBytes())));
         createTemplateRenditionDto.setOutputType(RenditionOutputType.PDF);
         createTemplateRenditionDto.setFormPayload(objectMapper.readTree("{}"));
+        createTemplateRenditionDto.setRenditionOutputLocation("x");
 
         interceptor.addRule(new Rule.Builder()
                 .post()
                 .respond(ClasspathResources.resource("template1.docx")));
 
-        TemplateRenditionOutputDto templateRenditionOutputDto =
+        Mockito.when(
+                dmStoreUploader.uploadFile(Mockito.any(File.class),
+                Mockito.any(CreateTemplateRenditionDto.class))).thenReturn(createTemplateRenditionDto);
+
+
+        CreateTemplateRenditionDto templateRenditionOutputDto =
                 templateRenditionService.renderTemplate(createTemplateRenditionDto);
 
-        IOUtils.contentEquals(templateRenditionOutputDto.getRendition(),
-                ClasspathResources.resource("template1.docx"));
+        Assert.assertEquals("x", templateRenditionOutputDto.getRenditionOutputLocation());
+
+
     }
 
 }

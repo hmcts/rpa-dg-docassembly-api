@@ -6,19 +6,24 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Optional;
 
 @Service
 public class TemplateContentExtractor {
 
-    public String extractTextBetweenTags(InputStream wordInputStream, String startTag, String endTag) throws IOException {
+    public Optional<String> extractTextBetweenTags(InputStream wordInputStream, String startTag, String endTag) throws IOException {
         XWPFDocument doc = new XWPFDocument(wordInputStream);
         XWPFWordExtractor extractor = new XWPFWordExtractor(doc);
         String docText = extractor.getText();
 
-        int startIndex = docText.indexOf(startTag) + startTag.length();
-        int endIndex = docText.indexOf(endTag, startIndex);
-
-        return docText.substring(startIndex, endIndex);
+        int startIndex = docText.indexOf(startTag);
+        if (startIndex >= 0) {
+            startIndex = startIndex + startTag.length();
+            int endIndex = docText.indexOf(endTag, startIndex);
+            return Optional.of(docText.substring(startIndex, endIndex));
+        } else {
+            return Optional.empty();
+        }
     }
 
 }

@@ -16,7 +16,6 @@ import uk.gov.hmcts.reform.auth.checker.core.service.ServiceRequestAuthorizer;
 import uk.gov.hmcts.reform.auth.checker.core.user.User;
 import uk.gov.hmcts.reform.auth.checker.core.user.UserRequestAuthorizer;
 import uk.gov.hmcts.reform.dg.docassembly.dto.CreateTemplateRenditionDto;
-import uk.gov.hmcts.reform.dg.docassembly.dto.TemplateRenditionOutputDto;
 import uk.gov.hmcts.reform.dg.docassembly.service.TemplateRenditionService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -55,16 +54,15 @@ public class TemplateRenditionResourceTest {
                 .when(userRequestAuthorizer.authorise(Mockito.any(HttpServletRequest.class)))
                 .thenReturn(new User("john", Stream.of("caseworker").collect(Collectors.toSet())));
 
-        TemplateRenditionOutputDto templateRenditionOutputDto = new TemplateRenditionOutputDto();
-        templateRenditionOutputDto.setOutputFileName("x");
-        templateRenditionOutputDto.setRendition(ClasspathResources.resource("template1.docx"));
+        CreateTemplateRenditionDto templateRenditionOutputDto = new CreateTemplateRenditionDto();
+        templateRenditionOutputDto.setRenditionOutputLocation("x");
 
         Mockito
                 .when(templateRenditionService.renderTemplate(Mockito.any(CreateTemplateRenditionDto.class)))
                 .thenReturn(templateRenditionOutputDto);
 
         this.mockMvc
-                .perform(post("/api/template-rendition")
+                .perform(post("/api/template-renditions")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\"outputType\":\"PDF\", \"templateId\":\"1\"}")
                         .header("Authorization", "xxx")

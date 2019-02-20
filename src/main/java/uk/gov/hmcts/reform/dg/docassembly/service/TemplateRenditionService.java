@@ -5,10 +5,8 @@ import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import uk.gov.hmcts.reform.dg.docassembly.dto.CreateTemplateRenditionDto;
-import uk.gov.hmcts.reform.dg.docassembly.dto.TemplateRenditionOutputDto;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Base64;
@@ -23,15 +21,19 @@ public class TemplateRenditionService {
 
     private final OkHttpClient httpClient;
 
+    private final DmStoreUploader dmStoreUploader;
+
     public TemplateRenditionService(OkHttpClient httpClient,
+                                    DmStoreUploader dmStoreUploader,
                                     @Value("${docmosis.convert.endpoint}") String docmosisUrl,
                                     @Value("${docmosis.accessKey}")String docmosisAccessKey) {
         this.httpClient = httpClient;
+        this.dmStoreUploader = dmStoreUploader;
         this.docmosisUrl = docmosisUrl;
         this.docmosisAccessKey = docmosisAccessKey;
     }
 
-    public TemplateRenditionOutputDto renderTemplate(CreateTemplateRenditionDto createTemplateRenditionDto)
+    public CreateTemplateRenditionDto renderTemplate(CreateTemplateRenditionDto createTemplateRenditionDto)
             throws IOException {
 
         String tempFileName = String.format("%s%s",
@@ -64,16 +66,19 @@ public class TemplateRenditionService {
                 "docmosis-rendition",
                 createTemplateRenditionDto.getOutputType().getFileExtension());
 
-        IOUtils.copy(httpClient.newCall(request).execute().body().byteStream(), new FileOutputStream(file));
+        Response response = httpClient.newCall(request).execute();
 
-        TemplateRenditionOutputDto templateRenditionOutputDto = new TemplateRenditionOutputDto();
-        templateRenditionOutputDto.setOutputFileName(tempFileName);
-        templateRenditionOutputDto.setRendition(new FileInputStream(file));
-        templateRenditionOutputDto.setRenditionSize(file.length());
-        templateRenditionOutputDto.setOutputFileName(tempFileName);
-        templateRenditionOutputDto.setTemplateId(createTemplateRenditionDto.getTemplateId());
+        if (!response.isSuccessful()) {
+            throw new TemplateRenditionException(
+                    String.format("Could not render a template %s. HTTP response and message %d, %s",
+                            createTemplateRenditionDto.getTemplateId(), response.code(), response.body().string()));
+        }
 
-        return templateRenditionOutputDto;
+        IOUtils.copy(response.body().byteStream(), new FileOutputStream(file));
+
+        dmStoreUploader.uploadFile(file, createTemplateRenditionDto);
+
+        return createTemplateRenditionDto;
     }
 
 }

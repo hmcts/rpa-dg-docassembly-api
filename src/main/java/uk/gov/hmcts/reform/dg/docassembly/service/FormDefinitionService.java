@@ -3,10 +3,12 @@ package uk.gov.hmcts.reform.dg.docassembly.service;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
+import pl.touk.throwing.ThrowingFunction;
 import uk.gov.hmcts.reform.dg.docassembly.dto.TemplateIdDto;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Optional;
 
 @Service
 public class FormDefinitionService {
@@ -26,13 +28,14 @@ public class FormDefinitionService {
         this.objectMapper = objectMapper;
     }
 
-    public JsonNode getFormDefinition(TemplateIdDto templateIdDto) {
+    public Optional<JsonNode> getFormDefinition(TemplateIdDto templateIdDto) {
 
         try (InputStream inputStream = templateManagementApiClient.getTemplate(templateIdDto)) {
 
-            String uiText = templateContentExtractor.extractTextBetweenTags(inputStream, startTag, endTag);
+            return templateContentExtractor
+                    .extractTextBetweenTags(inputStream, startTag, endTag)
+                    .map(ThrowingFunction.unchecked((objectMapper::readTree)));
 
-            return objectMapper.readTree(uiText);
 
         } catch (IOException e) {
             throw new FormDefinitionRetrievalException(

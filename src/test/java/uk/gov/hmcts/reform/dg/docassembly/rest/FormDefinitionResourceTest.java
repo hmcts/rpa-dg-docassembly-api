@@ -53,7 +53,7 @@ public class FormDefinitionResourceTest {
                 .thenReturn(new User("john", Stream.of("caseworker").collect(Collectors.toSet())));
 
         this.mockMvc
-                .perform(get("/api/form-definition/123")
+                .perform(get("/api/form-definitions/123")
                         .header("Authorization", "xxx")
                         .header("ServiceAuthorization", "xxx"))
                 .andDo(print()).andExpect(status().isOk());
