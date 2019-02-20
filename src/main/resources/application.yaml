@@ -71,3 +71,11 @@ idam:
     url: ${S2S_BASE_URI:http://localhost:4502}
     totp_secret: ${S2S_KEY:AAAAAAAAAAAAAAAA}
     microservice: dg_docassembly
+
+template-management-api:
+  base-url: ${DG_TEMPLATE_MANAGEMENT_API:http://localhost:4630}
+  resource: '/api/templates'
+
+docmosis:
+  accessKey: ${DOCMOSIS_ACCESS_KEY:xxxx}
+  convert.endpoint: ${DOCMOSIS_ENDPOINT:https://docmosis-development.platform.hmcts.net/rs/render}

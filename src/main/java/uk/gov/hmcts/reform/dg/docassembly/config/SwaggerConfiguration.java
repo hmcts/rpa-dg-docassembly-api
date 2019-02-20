@@ -16,8 +16,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @ComponentScan("uk.gov.hmcts.reform.dg.docassembly.rest")
 public class SwaggerConfiguration {
 
-    private static final String apiVersion = "0.0.1";
-
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
@@ -31,8 +29,8 @@ public class SwaggerConfiguration {
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title("Document Assembly API")
-                .description("API to retrive UI definitions from templates and generate documents based those definitions")
-                .version(apiVersion)
+                .description("API to retrieve UI definitions from templates and generate documents based those definitions")
+                .version("0.0.1")
                 .build();
     }
 }

@@ -32,7 +32,7 @@ public class Env {
         return require("IDAM_API_URL");
     }
 
-    public static String getS2SUrl() {
+    public static String getS2sUrl() {
         return require("S2S_URL");
     }
 
@@ -45,6 +45,7 @@ public class Env {
     }
 
     public static String require(String name) {
-        return Validate.notNull(System.getenv(name) == null ? defaults.getProperty(name) : System.getenv(name), "Environment variable `%s` is required", name);
+        return Validate.notNull(System.getenv(name) == null ? defaults.getProperty(name) :
+                System.getenv(name), "Environment variable `%s` is required", name);
     }
 }
