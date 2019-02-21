@@ -85,7 +85,7 @@ data "azurerm_key_vault" "shared_key_vault" {
 }
 
 data "azurerm_key_vault_secret" "s2s_key" {
-  name      = microservicekey-dg-docassembly-api
+  name      = "microservicekey-dg-docassembly-api"
   vault_uri = "https://s2s-${local.localenv}.vault.azure.net/"
 }
 
