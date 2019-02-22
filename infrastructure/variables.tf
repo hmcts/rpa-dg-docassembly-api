@@ -68,9 +68,6 @@ variable "s2s_url" {
 ////////////////////////////////////////////////
 // Logging
 ////////////////////////////////////////////////
-variable "root_appender" {
-  default = "JSON_CONSOLE"
-}
 
 variable "json_console_pretty_print" {
   default = "false"
