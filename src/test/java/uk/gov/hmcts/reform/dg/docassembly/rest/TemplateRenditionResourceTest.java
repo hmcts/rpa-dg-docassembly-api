@@ -1,6 +1,5 @@
 package uk.gov.hmcts.reform.dg.docassembly.rest;
 
-import okhttp3.mock.ClasspathResources;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;

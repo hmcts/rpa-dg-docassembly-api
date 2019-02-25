@@ -16,8 +16,9 @@ public class FormDefinitionResourceTests {
 
         Response response = testUtil.authRequest()
                 .request("GET",
-                        Env.getTestUrl() + "/api/form-definitions/" +
-                        Base64.encodeToString("FL-FRM-APP-ENG-00002.docx"));
+                        Env.getTestUrl()
+                                + "/api/form-definitions/"
+                                + Base64.encodeToString("FL-FRM-APP-ENG-00002.docx"));
 
         System.out.println(response.getBody().print());
         Assert.assertEquals(404, response.getStatusCode());

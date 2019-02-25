@@ -16,11 +16,12 @@ public class TemplateRenditionResourceTests {
     @Test
     public void testTemplateRendition() {
 
-
         Response response = testUtil
                 .authRequest()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .body("{\"formPayload\":{\"a\":1}, \"templateId\":\""+ Base64.getEncoder().encodeToString("FL-FRM-APP-ENG-00002.docx".getBytes())+"\"}")
+                .body("{\"formPayload\":{\"a\":1}, \"templateId\":\""
+                        + Base64.getEncoder().encodeToString("FL-FRM-APP-ENG-00002.docx".getBytes())
+                        + "\"}")
                 .request("POST",Env.getTestUrl() + "/api/template-renditions");
 
         System.out.println(response.getBody().print());

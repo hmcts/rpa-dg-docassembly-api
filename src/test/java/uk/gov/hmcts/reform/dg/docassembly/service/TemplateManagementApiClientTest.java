@@ -4,15 +4,11 @@ import okhttp3.OkHttpClient;
 import okhttp3.mock.ClasspathResources;
 import okhttp3.mock.MockInterceptor;
 import okhttp3.mock.Rule;
-import org.apache.commons.io.IOUtils;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.InjectMocks;
 import org.mockito.Mockito;
 import uk.gov.hmcts.reform.authorisation.generators.AuthTokenGenerator;
 import uk.gov.hmcts.reform.dg.docassembly.dto.TemplateIdDto;
-
-import java.io.InputStream;
 
 public class TemplateManagementApiClientTest {
 
@@ -20,12 +16,10 @@ public class TemplateManagementApiClientTest {
 
     MockInterceptor interceptor = new MockInterceptor();
 
-    @InjectMocks
     TemplateManagementApiClient templateManagementApiClient;
 
     @Before
     public void setup() {
-
         interceptor.reset();
 
         OkHttpClient client = new OkHttpClient.Builder()
@@ -50,12 +44,10 @@ public class TemplateManagementApiClientTest {
         Mockito.when(authTokenGenerator.generate()).thenReturn("x");
 
         interceptor.addRule(new Rule.Builder()
-                      .get()
-                      .respond(ClasspathResources.resource("template1.docx")));
+                .get()
+                .url("http://template-management-api/templates/x")
+                .respond(ClasspathResources.resource("template1.docx")));
 
-        InputStream inputStream = templateManagementApiClient.getTemplate(templateIdDto);
-
-        IOUtils.contentEquals(inputStream, ClasspathResources.resource("template1.docx"));
     }
 
 }
