@@ -57,7 +57,6 @@ module "app" {
     PACKAGES_PROJECT = "${var.team_name}"
     PACKAGES_ENVIRONMENT = "${var.env}"
 
-    ROOT_APPENDER = "${var.root_appender}"
     JSON_CONSOLE_PRETTY_PRINT = "${var.json_console_pretty_print}"
     LOG_OUTPUT = "${var.log_output}"
 
@@ -85,7 +84,7 @@ data "azurerm_key_vault" "shared_key_vault" {
 }
 
 data "azurerm_key_vault_secret" "s2s_key" {
-  name      = microservicekey-dg-docassembly-api
+  name      = "microservicekey-dg-docassembly-api"
   vault_uri = "https://s2s-${local.localenv}.vault.azure.net/"
 }
 
