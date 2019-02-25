@@ -101,3 +101,7 @@ data "azurerm_key_vault_secret" "docmosis_access_key" {
   vault_uri = "https://rpa-${local.local_env}.vault.azure.net/"
 }
 
+data "azurerm_key_vault_secret" "s2s_key" {
+  name      = "microservicekey-dg-docassembly-api"
+  vault_uri = "https://s2s-${local.local_env}.vault.azure.net/"
+}
