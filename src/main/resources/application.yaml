@@ -73,7 +73,7 @@ idam:
     microservice: dg_docassembly_api
 
 template-management-api:
-  base-url: ${DG_TEMPLATE_MANAGEMENT_API:http://localhost:4632}
+  base-url: ${DG_TEMPLATE_MANAGEMENT_API:http://localhost:4630}
   resource: '/api/templates'
 
 docmosis:

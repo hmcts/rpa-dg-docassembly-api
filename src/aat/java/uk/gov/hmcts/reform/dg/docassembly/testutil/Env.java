@@ -17,7 +17,7 @@ public class Env {
         defaults.setProperty("IDAM_API_USER_ROLE", "caseworker");
         defaults.setProperty("IDAM_API_USER", "test@test.com");
         defaults.setProperty("IDAM_API_URL", "http://betadevaccidamapplb.reform.hmcts.net");
-        defaults.setProperty("DG_TEMPLATE_MANAGEMENT_API", "http://localhost:4632");
+        defaults.setProperty("DG_TEMPLATE_MANAGEMENT_API", "http://localhost:4630");
     }
 
     public static String getUseProxy() {
