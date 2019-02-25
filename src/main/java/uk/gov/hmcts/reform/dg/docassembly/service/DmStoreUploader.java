@@ -87,7 +87,7 @@ public class DmStoreUploader {
         }
     }
 
-    private void uploadNewDocumentVersion(File file, CreateTemplateRenditionDto createTemplateRenditionDto) throws DocumentUploaderException {
+    private void uploadNewDocumentVersion(File file, CreateTemplateRenditionDto createTemplateRenditionDto) {
         try {
 
             MultipartBody requestBody = new MultipartBody
