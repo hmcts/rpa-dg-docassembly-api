@@ -14,13 +14,14 @@ public class TemplateManagementApiClientTest {
 
     AuthTokenGenerator authTokenGenerator;
 
-    MockInterceptor interceptor = new MockInterceptor();
+    MockInterceptor interceptor;
 
     TemplateManagementApiClient templateManagementApiClient;
 
     @Before
     public void setup() {
-        interceptor.reset();
+
+        interceptor = new MockInterceptor();
 
         OkHttpClient client = new OkHttpClient.Builder()
                 .addInterceptor(interceptor)
@@ -39,14 +40,34 @@ public class TemplateManagementApiClientTest {
         TemplateIdDto templateIdDto = new TemplateIdDto();
 
         templateIdDto.setJwt("x");
-        templateIdDto.setTemplateId("x");
+        templateIdDto.setTemplateId("abc");
 
         Mockito.when(authTokenGenerator.generate()).thenReturn("x");
 
         interceptor.addRule(new Rule.Builder()
                 .get()
-                .url("http://template-management-api/templates/x")
+                .url("http://template-management-api/templates/abc")
                 .respond(ClasspathResources.resource("template1.docx")));
+
+        templateManagementApiClient.getTemplate(templateIdDto);
+
+    }
+
+    @Test(expected = FormDefinitionRetrievalException.class)
+    public void testRetrievalException() throws Exception {
+        TemplateIdDto templateIdDto = new TemplateIdDto();
+
+        templateIdDto.setJwt("x");
+        templateIdDto.setTemplateId("abc");
+
+        Mockito.when(authTokenGenerator.generate()).thenReturn("x");
+
+        interceptor.addRule(new Rule.Builder()
+                .get()
+                .url("http://template-management-api/templates/abc")
+                .respond("").code(404));
+
+        templateManagementApiClient.getTemplate(templateIdDto);
 
     }
 

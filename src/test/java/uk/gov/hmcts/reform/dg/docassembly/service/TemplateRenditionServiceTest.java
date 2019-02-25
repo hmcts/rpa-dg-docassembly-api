@@ -71,4 +71,28 @@ public class TemplateRenditionServiceTest {
 
     }
 
+    @Test(expected = TemplateRenditionException.class)
+    public void testRenditionException() throws Exception {
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        CreateTemplateRenditionDto createTemplateRenditionDto = new CreateTemplateRenditionDto();
+
+        createTemplateRenditionDto.setJwt("x");
+        createTemplateRenditionDto.setTemplateId(new String(Base64.getEncoder().encode("1".getBytes())));
+        createTemplateRenditionDto.setOutputType(RenditionOutputType.PDF);
+        createTemplateRenditionDto.setFormPayload(objectMapper.readTree("{}"));
+        createTemplateRenditionDto.setRenditionOutputLocation("x");
+
+        interceptor.addRule(new Rule.Builder()
+                .post()
+                .respond("").code(500));
+
+        Mockito.when(
+                dmStoreUploader.uploadFile(Mockito.any(File.class),
+                        Mockito.any(CreateTemplateRenditionDto.class))).thenReturn(createTemplateRenditionDto);
+
+        templateRenditionService.renderTemplate(createTemplateRenditionDto);
+
+    }
+
 }

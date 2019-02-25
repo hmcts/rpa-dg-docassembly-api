@@ -1,6 +1,8 @@
 package uk.gov.hmcts.reform.dg.docassembly.service;
 
-import okhttp3.*;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import uk.gov.hmcts.reform.authorisation.generators.AuthTokenGenerator;
@@ -31,7 +33,7 @@ public class TemplateManagementApiClient {
         final Request request = new Request.Builder()
                 .addHeader("Authorization", templateIdDto.getJwt())
                 .addHeader("ServiceAuthorization", authTokenGenerator.generate())
-                .url(String.format("%s/%s", templateManagementApiUrl, templateIdDto.getTemplateId()))
+                .url(templateManagementApiUrl +"/"+ templateIdDto.getTemplateId())
                 .get()
                 .build();
 
@@ -44,7 +46,7 @@ public class TemplateManagementApiClient {
             ));
         }
 
-        return httpClient.newCall(request).execute().body().byteStream();
+        return response.body().byteStream();
 
     }
 
