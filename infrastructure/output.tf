@@ -8,11 +8,6 @@ output "vaultName" {
   value = "${local.vaultName}"
 }
 
-// used for grabbing shared secrets (shown in the jenkins file)
-output "vaultUri" {
-  value = "${local.vaultUri}"
-}
-
 output "idam_api_url" {
   value = "${var.idam_api_url}"
 }
