@@ -2,7 +2,10 @@ package uk.gov.hmcts.reform.dg.docassembly.service;
 
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import java.util.Optional;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class TemplateContentExtractorTest {
 
@@ -10,12 +13,12 @@ public class TemplateContentExtractorTest {
 
     @Test
     public void testExtraction() throws Exception {
-        String extractTextBetweenTags = templateContentExtractor.extractTextBetweenTags(
+        Optional<String> extractTextBetweenTags = templateContentExtractor.extractTextBetweenTags(
                 getClass().getClassLoader().getResourceAsStream("template1.docx"),
                 "<<cs_{displaycode=‘1’}>>", "<<es_>>");
 
         assertNotNull(extractTextBetweenTags);
-        assertEquals("[]", extractTextBetweenTags.trim());
+        assertEquals("[]", extractTextBetweenTags.get().trim());
     }
 
 }

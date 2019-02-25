@@ -16,14 +16,18 @@ public class FormDefinitionResource {
         this.formDefinitionService = formDefinitionService;
     }
 
-    @GetMapping("/form-definition/{templateId}")
+    @GetMapping("/form-definitions/{templateId}")
     public ResponseEntity<JsonNode> getFormDefinition(
             @PathVariable String templateId,
             @RequestHeader("Authorization") String jwt) {
         TemplateIdDto templateIdDto = new TemplateIdDto();
         templateIdDto.setTemplateId(templateId);
         templateIdDto.setJwt(jwt);
-        return ResponseEntity.ok(formDefinitionService.getFormDefinition(templateIdDto));
+
+        return formDefinitionService.getFormDefinition(templateIdDto)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
+
     }
 
 }

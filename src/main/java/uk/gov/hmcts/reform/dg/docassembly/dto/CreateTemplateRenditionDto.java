@@ -9,7 +9,9 @@ public class CreateTemplateRenditionDto extends TemplateIdDto {
     private JsonNode formPayload;
 
     @NotNull
-    RenditionOutputType outputType;
+    private RenditionOutputType outputType = RenditionOutputType.PDF;
+
+    private String renditionOutputLocation;
 
     public JsonNode getFormPayload() {
         return formPayload;
@@ -26,4 +28,13 @@ public class CreateTemplateRenditionDto extends TemplateIdDto {
     public void setOutputType(RenditionOutputType outputType) {
         this.outputType = outputType;
     }
+
+    public String getRenditionOutputLocation() {
+        return renditionOutputLocation;
+    }
+
+    public void setRenditionOutputLocation(String renditionOutputLocation) {
+        this.renditionOutputLocation = renditionOutputLocation;
+    }
+
 }

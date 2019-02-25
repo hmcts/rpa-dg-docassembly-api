@@ -1,5 +1,6 @@
 package uk.gov.hmcts.reform.dg.docassembly.rest;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -17,6 +18,7 @@ import uk.gov.hmcts.reform.dg.docassembly.dto.TemplateIdDto;
 import uk.gov.hmcts.reform.dg.docassembly.service.FormDefinitionService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -44,6 +46,8 @@ public class FormDefinitionResourceTest {
     @Test
     public void shouldCallFormDefinitionService() throws Exception {
 
+        ObjectMapper objectMapper = new ObjectMapper();
+
         Mockito
                 .when(serviceRequestAuthorizer.authorise(Mockito.any(HttpServletRequest.class)))
                 .thenReturn(new Service("ccd"));
@@ -52,8 +56,13 @@ public class FormDefinitionResourceTest {
                 .when(userRequestAuthorizer.authorise(Mockito.any(HttpServletRequest.class)))
                 .thenReturn(new User("john", Stream.of("caseworker").collect(Collectors.toSet())));
 
+
+        Mockito
+                .when(formDefinitionService.getFormDefinition(Mockito.any(TemplateIdDto.class)))
+                .thenReturn(Optional.of(objectMapper.readTree("{}")));
+
         this.mockMvc
-                .perform(get("/api/form-definition/123")
+                .perform(get("/api/form-definitions/123")
                         .header("Authorization", "xxx")
                         .header("ServiceAuthorization", "xxx"))
                 .andDo(print()).andExpect(status().isOk());

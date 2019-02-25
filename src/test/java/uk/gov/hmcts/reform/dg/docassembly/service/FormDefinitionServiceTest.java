@@ -13,6 +13,7 @@ import uk.gov.hmcts.reform.dg.docassembly.dto.TemplateIdDto;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Optional;
 
 
 @RunWith(MockitoJUnitRunner.class)
@@ -44,15 +45,15 @@ public class FormDefinitionServiceTest {
                 Mockito.any(InputStream.class),
                 Mockito.any(String.class),
                 Mockito.any(String.class)))
-                .thenReturn("{\"a\":1}");
+                .thenReturn(Optional.of("{\"a\":1}"));
 
         Mockito.when(objectMapper.readTree(
                 Mockito.any(String.class)))
                 .thenReturn(testObjectMapper.readTree("{\"a\":1}"));
 
-        JsonNode json = formDefinitionService.getFormDefinition(dto);
+        Optional<JsonNode> json = formDefinitionService.getFormDefinition(dto);
 
-        Assert.assertEquals(1, json.get("a").asInt());
+        Assert.assertEquals(1, json.get().get("a").asInt());
 
     }
 

@@ -12,6 +12,11 @@ public class TestUtil {
     private String s2sToken;
     private String idamToken;
 
+    public RequestSpecification authRequest() {
+        return s2sAuthRequest()
+                .header("Authorization", "Bearer " + getIdamToken("test@test.com"));
+    }
+
     public RequestSpecification s2sAuthRequest() {
         RestAssured.useRelaxedHTTPSValidation();
         return RestAssured
