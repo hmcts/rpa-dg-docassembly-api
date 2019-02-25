@@ -78,6 +78,7 @@ module "app" {
 
     DM_STORE_APP_URL = "http://${var.dm_store_app_url}-${local.local_env}.service.core-compute-${local.local_env}.internal"
     DG_TEMPLATE_MANAGEMENT_API = "http://${var.dg_docassembly_api_url}-${local.local_env}.service.core-compute-${local.local_env}.internal"
+    DOCMOSIS_ACCESS_KEY = "${data.azurerm_key_vault_secret.docmosis_access_key.value}"
   }
 }
 
@@ -102,9 +103,21 @@ module "rpa-dg-docassembly-api-vault" {
   product_group_object_id = "ffb5f9a3-b686-4325-a26e-746db5279a42"
 }
 
+provider "vault" {
+  address = "https://vault.reform.hmcts.net:6200"
+}
 
-resource "azurerm_key_vault_secret" "S2S_KEY" {
-  name = "${data.azurerm_key_vault_secret.s2s_key.name}"
-  value = "${data.azurerm_key_vault_secret.s2s_key.value}"
-  vault_uri = "${module.rpa-dg-docassembly-api-vault.key_vault_uri}"
+data "azurerm_key_vault_secret" "s2s_key" {
+  name      = "microservicekey-em-stitching-api"
+  vault_uri = "https://s2s-${local.local_env}.vault.azure.net/"
+}
+
+data "azurerm_key_vault_secret" "docmosis_access_key" {
+  name      = "docmosis-access-key"
+  vault_uri = "https://rpa-${local.local_env}.vault.azure.net/"
+}
+
+data "azurerm_key_vault" "shared_key_vault" {
+  name = "${local.shared_vault_name}"
+  resource_group_name = "${local.shared_vault_name}"
 }
