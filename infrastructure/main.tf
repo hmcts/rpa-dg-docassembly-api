@@ -18,7 +18,6 @@ locals {
 
   previewEnv= "aat"
   nonPreviewEnv = "${var.env}"
-  localenv = "${(var.env == "preview" || var.env == "spreview") ? local.previewEnv : local.nonPreviewEnv}"
 
   s2s_vault_url = "https://s2s-${local.local_env}.vault.azure.net/"
   local_ase = "${(var.env == "preview" || var.env == "spreview") ? (var.env == "preview" ) ? "core-compute-aat" : "core-compute-saat" : local.ase_name}"
@@ -80,16 +79,6 @@ module "app" {
     DG_TEMPLATE_MANAGEMENT_API = "http://${var.dg_docassembly_api_url}-${local.local_env}.service.core-compute-${local.local_env}.internal"
     DOCMOSIS_ACCESS_KEY = "${data.azurerm_key_vault_secret.docmosis_access_key.value}"
   }
-}
-
-data "azurerm_key_vault" "shared_key_vault" {
-  name = "${local.shared_vault_name}"
-  resource_group_name = "${local.shared_vault_name}"
-}
-
-data "azurerm_key_vault_secret" "s2s_key" {
-  name      = "microservicekey-dg-docassembly-api"
-  vault_uri = "https://s2s-${local.localenv}.vault.azure.net/"
 }
 
 module "rpa-dg-docassembly-api-vault" {
