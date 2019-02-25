@@ -107,17 +107,8 @@ provider "vault" {
   address = "https://vault.reform.hmcts.net:6200"
 }
 
-data "azurerm_key_vault_secret" "s2s_key" {
-  name      = "microservicekey-dg-docassembly-api"
-  vault_uri = "https://s2s-${local.local_env}.vault.azure.net/"
-}
-
 data "azurerm_key_vault_secret" "docmosis_access_key" {
   name      = "docmosis-access-key"
   vault_uri = "https://rpa-${local.local_env}.vault.azure.net/"
 }
 
-data "azurerm_key_vault" "shared_key_vault" {
-  name = "${local.shared_vault_name}"
-  resource_group_name = "${local.shared_vault_name}"
-}
