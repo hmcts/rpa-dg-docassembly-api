@@ -7,6 +7,8 @@ import io.restassured.specification.RequestSpecification;
 import org.json.JSONObject;
 import org.springframework.http.MediaType;
 
+import java.util.Base64;
+
 public class TestUtil {
 
     private String s2sToken;
@@ -94,6 +96,10 @@ public class TestUtil {
         }
 
         return s2sToken;
+    }
+
+    public String encodeBase64(String str) {
+        return Base64.getEncoder().encodeToString(str.getBytes());
     }
 }
 

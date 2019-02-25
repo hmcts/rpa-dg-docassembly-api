@@ -7,8 +7,6 @@ import org.springframework.http.MediaType;
 import uk.gov.hmcts.reform.dg.docassembly.testutil.Env;
 import uk.gov.hmcts.reform.dg.docassembly.testutil.TestUtil;
 
-import java.util.Base64;
-
 public class TemplateRenditionResourceTests {
 
     private final TestUtil testUtil = new TestUtil();
@@ -20,7 +18,7 @@ public class TemplateRenditionResourceTests {
                 .authRequest()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body("{\"formPayload\":{\"a\":1}, \"templateId\":\""
-                        + Base64.getEncoder().encodeToString("FL-FRM-APP-ENG-00002.docx".getBytes())
+                        + testUtil.encodeBase64("FL-FRM-APP-ENG-00002.docx")
                         + "\"}")
                 .request("POST",Env.getTestUrl() + "/api/template-renditions");
 
