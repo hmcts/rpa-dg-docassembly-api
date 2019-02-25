@@ -42,7 +42,7 @@ module "app" {
   app_settings = {
     # idam
     IDAM_API_URL = "${var.idam_api_url}"
-    S2S_URL = "http://${var.s2s_url}-${local.local_env}.service.core-compute-${local.local_env}.internal"
+    S2S_BASE_URI = "http://${var.s2s_url}-${local.local_env}.service.core-compute-${local.local_env}.internal"
     S2S_KEY = "${data.azurerm_key_vault_secret.s2s_key.value}"
     S2S_NAMES_WHITELIST = "${var.s2s_names_whitelist}"
 
