@@ -33,7 +33,7 @@ public class TemplateManagementApiClient {
         final Request request = new Request.Builder()
                 .addHeader("Authorization", templateIdDto.getJwt())
                 .addHeader("ServiceAuthorization", authTokenGenerator.generate())
-                .url(templateManagementApiUrl +"/"+ templateIdDto.getTemplateId())
+                .url(templateManagementApiUrl + "/" + templateIdDto.getTemplateId())
                 .get()
                 .build();
 

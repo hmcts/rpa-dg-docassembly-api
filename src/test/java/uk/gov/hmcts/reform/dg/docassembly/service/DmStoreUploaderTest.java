@@ -140,8 +140,8 @@ public class DmStoreUploaderTest {
                 .url("http://success.com/1")
                 .respond("").code(500));
 
-        CreateTemplateRenditionDto updatedCreateTemplateRenditionDto =
-                dmStoreUploader.uploadFile(File.createTempFile("testing_doc_assembly_a", "testing_doc_assembly_b"), createTemplateRenditionDto);
+
+        dmStoreUploader.uploadFile(File.createTempFile("testing_doc_assembly_a", "testing_doc_assembly_b"), createTemplateRenditionDto);
 
     }
 }
