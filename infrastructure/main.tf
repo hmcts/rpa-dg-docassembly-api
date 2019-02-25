@@ -75,6 +75,9 @@ module "app" {
     # Toggles
     ENABLE_IDAM_HEALTH_CHECK = "${var.enable_idam_healthcheck}"
     ENABLE_S2S_HEALTH_CHECK = "${var.enable_s2s_healthcheck}"
+
+    DM_STORE_APP_URL = "http://${var.dm_store_app_url}-${local.local_env}.service.core-compute-${local.local_env}.internal"
+    DG_TEMPLATE_MANAGEMENT_API = "http://${var.dg_docassembly_api_url}-${local.local_env}.service.core-compute-${local.local_env}.internal"
   }
 }
 

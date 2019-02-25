@@ -124,3 +124,10 @@ variable "case_worker_roles" {
 ////////////////////////////////////////////////
 // Addtional
 ////////////////////////////////////////////////
+variable "dm_store_app_url" {
+  default = "dm-store"
+}
+
+variable "dg_docassembly_api_url" {
+  default = "dg-docassembly-api"
+}
