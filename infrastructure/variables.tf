@@ -4,7 +4,7 @@ variable "product" {
 }
 
 variable "shared_product_name" {
-  default = "rpa"
+  default = "rpa-dg"
 }
 
 variable "component" {
