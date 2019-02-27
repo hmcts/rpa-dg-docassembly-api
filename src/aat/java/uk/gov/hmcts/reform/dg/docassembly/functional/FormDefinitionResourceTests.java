@@ -27,7 +27,7 @@ public class FormDefinitionResourceTests {
     }
 
     @Test
-    public void testFormDefinitionGetTemplateWithoutUIDefinition() {
+    public void testFormDefinitionGetNotExistingTemplate() {
 
         Response response = testUtil.authRequest()
                 .request("GET",
@@ -41,7 +41,7 @@ public class FormDefinitionResourceTests {
     }
 
     @Test
-    public void testFormDefinitionGetNotExistingTemplate() {
+    public void testFormDefinitionGetTemplateWithoutUIDefinition() {
 
         Response response = testUtil.authRequest()
                 .request("GET",
