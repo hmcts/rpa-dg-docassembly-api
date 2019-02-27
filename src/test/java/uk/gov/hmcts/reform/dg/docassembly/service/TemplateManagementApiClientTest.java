@@ -65,6 +65,25 @@ public class TemplateManagementApiClientTest {
         interceptor.addRule(new Rule.Builder()
                 .get()
                 .url("http://template-management-api/templates/abc")
+                .respond("").code(500));
+
+        templateManagementApiClient.getTemplate(templateIdDto);
+
+    }
+
+
+    @Test(expected = TemplateNotFoundException.class)
+    public void testTemplateNotFoundException() throws Exception {
+        TemplateIdDto templateIdDto = new TemplateIdDto();
+
+        templateIdDto.setJwt("x");
+        templateIdDto.setTemplateId("abc");
+
+        Mockito.when(authTokenGenerator.generate()).thenReturn("x");
+
+        interceptor.addRule(new Rule.Builder()
+                .get()
+                .url("http://template-management-api/templates/abc")
                 .respond("").code(404));
 
         templateManagementApiClient.getTemplate(templateIdDto);

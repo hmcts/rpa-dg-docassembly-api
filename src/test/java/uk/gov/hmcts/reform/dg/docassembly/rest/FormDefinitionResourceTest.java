@@ -15,7 +15,9 @@ import uk.gov.hmcts.reform.auth.checker.core.service.ServiceRequestAuthorizer;
 import uk.gov.hmcts.reform.auth.checker.core.user.User;
 import uk.gov.hmcts.reform.auth.checker.core.user.UserRequestAuthorizer;
 import uk.gov.hmcts.reform.dg.docassembly.dto.TemplateIdDto;
+import uk.gov.hmcts.reform.dg.docassembly.service.FormDefinitionRetrievalException;
 import uk.gov.hmcts.reform.dg.docassembly.service.FormDefinitionService;
+import uk.gov.hmcts.reform.dg.docassembly.service.TemplateNotFoundException;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
@@ -71,4 +73,64 @@ public class FormDefinitionResourceTest {
                 .verify(formDefinitionService, Mockito.times(1))
                 .getFormDefinition(Mockito.any(TemplateIdDto.class));
     }
+
+    @Test
+    public void testTemplateNotFoundErrorCode() throws Exception {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        Mockito
+                .when(serviceRequestAuthorizer.authorise(Mockito.any(HttpServletRequest.class)))
+                .thenReturn(new Service("ccd"));
+
+        Mockito
+                .when(userRequestAuthorizer.authorise(Mockito.any(HttpServletRequest.class)))
+                .thenReturn(new User("john", Stream.of("caseworker").collect(Collectors.toSet())));
+
+
+        Mockito
+                .when(formDefinitionService.getFormDefinition(Mockito.any(TemplateIdDto.class)))
+                .thenThrow(new TemplateNotFoundException("xxx"));
+
+        this.mockMvc
+                .perform(get("/api/form-definitions/123")
+                        .header("Authorization", "xxx")
+                        .header("ServiceAuthorization", "xxx"))
+                .andDo(print()).andExpect(status().is4xxClientError());
+
+        Mockito
+                .verify(formDefinitionService, Mockito.times(1))
+                .getFormDefinition(Mockito.any(TemplateIdDto.class));
+    }
+
+
+    @Test
+    public void testTemplateRetrievalException() throws Exception {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        Mockito
+                .when(serviceRequestAuthorizer.authorise(Mockito.any(HttpServletRequest.class)))
+                .thenReturn(new Service("ccd"));
+
+        Mockito
+                .when(userRequestAuthorizer.authorise(Mockito.any(HttpServletRequest.class)))
+                .thenReturn(new User("john", Stream.of("caseworker").collect(Collectors.toSet())));
+
+
+        Mockito
+                .when(formDefinitionService.getFormDefinition(Mockito.any(TemplateIdDto.class)))
+                .thenThrow(new FormDefinitionRetrievalException("xxx"));
+
+        this.mockMvc
+                .perform(get("/api/form-definitions/123")
+                        .header("Authorization", "xxx")
+                        .header("ServiceAuthorization", "xxx"))
+                .andDo(print()).andExpect(status().is5xxServerError());
+
+        Mockito
+                .verify(formDefinitionService, Mockito.times(1))
+                .getFormDefinition(Mockito.any(TemplateIdDto.class));
+    }
+
 }
