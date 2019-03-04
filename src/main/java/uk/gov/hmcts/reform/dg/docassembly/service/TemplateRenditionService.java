@@ -1,6 +1,9 @@
 package uk.gov.hmcts.reform.dg.docassembly.service;
 
-import okhttp3.*;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -54,7 +57,7 @@ public class TemplateRenditionService {
                         tempFileName)
                 .addFormDataPart(
                         "data",
-                        createTemplateRenditionDto.getFormPayload().asText())
+                        createTemplateRenditionDto.getFormPayload().toString())
                 .build();
 
         Request request = new Request.Builder()
