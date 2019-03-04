@@ -76,7 +76,7 @@ module "app" {
     ENABLE_S2S_HEALTH_CHECK = "${var.enable_s2s_healthcheck}"
 
     DM_STORE_APP_URL = "http://${var.dm_store_app_url}-${local.local_env}.service.core-compute-${local.local_env}.internal"
-    DG_TEMPLATE_MANAGEMENT_API = "http://${var.dg_docassembly_api_url}-${local.local_env}.service.core-compute-${local.local_env}.internal"
+    DG_TEMPLATE_MANAGEMENT_API = "http://${var.dg_template_management_api}-${local.local_env}.service.core-compute-${local.local_env}.internal"
     DOCMOSIS_ACCESS_KEY = "${data.azurerm_key_vault_secret.docmosis_access_key.value}"
   }
 }

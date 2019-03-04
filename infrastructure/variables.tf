@@ -128,6 +128,6 @@ variable "dm_store_app_url" {
   default = "dm-store"
 }
 
-variable "dg_docassembly_api_url" {
-  default = "dg-docassembly-api"
+variable "dg_template_management_api" {
+  default = "dg-tmpl-mgmt"
 }
