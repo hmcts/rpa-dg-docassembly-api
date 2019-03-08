@@ -26,4 +26,38 @@ public class TemplateRenditionResourceTests {
         Assert.assertEquals(200, response.getStatusCode());
 
     }
+
+    @Test
+    public void testTemplateRenditionToDoc() {
+
+        Response response = testUtil
+                .authRequest()
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .body("{\"formPayload\":{\"a\":1}, \"outputType\":\"DOC\", \"templateId\":\""
+                        + testUtil.encodeBase64("FL-FRM-APP-ENG-00002.docx")
+                        + "\"}")
+                .request("POST",Env.getTestUrl() + "/api/template-renditions");
+
+        System.out.println(response.getBody().print());
+        Assert.assertEquals(200, response.getStatusCode());
+
+    }
+
+
+    @Test
+    public void testTemplateRenditionToDocX() {
+
+        Response response = testUtil
+                .authRequest()
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .body("{\"formPayload\":{\"a\":1}, \"outputType\":\"DOCX\", \"templateId\":\""
+                        + testUtil.encodeBase64("FL-FRM-APP-ENG-00002.docx")
+                        + "\"}")
+                .request("POST",Env.getTestUrl() + "/api/template-renditions");
+
+        System.out.println(response.getBody().print());
+        Assert.assertEquals(200, response.getStatusCode());
+
+    }
+
 }
