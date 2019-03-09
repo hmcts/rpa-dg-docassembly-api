@@ -65,10 +65,6 @@ public class TemplateRenditionService {
                 .method("POST", requestBody)
                 .build();
 
-        File file = File.createTempFile(
-                "docmosis-rendition",
-                createTemplateRenditionDto.getOutputType().getFileExtension());
-
         Response response = httpClient.newCall(request).execute();
 
         if (!response.isSuccessful()) {
@@ -76,6 +72,10 @@ public class TemplateRenditionService {
                     String.format("Could not render a template %s. HTTP response and message %d, %s",
                             createTemplateRenditionDto.getTemplateId(), response.code(), response.body().string()));
         }
+
+        File file = File.createTempFile(
+            "docmosis-rendition",
+            createTemplateRenditionDto.getOutputType().getFileExtension());
 
         IOUtils.copy(response.body().byteStream(), new FileOutputStream(file));
 

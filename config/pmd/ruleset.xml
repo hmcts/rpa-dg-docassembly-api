@@ -13,6 +13,7 @@
     <rule ref="rulesets/java/design.xml">
         <exclude name="UseUtilityClass"/>
         <exclude name="ConfusingTernary"/>
+        <exclude name="DataClass"/>
     </rule>
     <rule ref="rulesets/java/empty.xml"/>
     <rule ref="rulesets/java/imports.xml">
