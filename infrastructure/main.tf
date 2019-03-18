@@ -45,6 +45,7 @@ module "app" {
     S2S_BASE_URI = "http://${var.s2s_name}-${local.local_env}.service.core-compute-${local.local_env}.internal"
     S2S_KEY = "${data.azurerm_key_vault_secret.s2s_key.value}"
     S2S_NAMES_WHITELIST = "${var.s2s_names_whitelist}"
+    DOCMOSIS_ACCESS_KEY = "${data.azurerm_key_vault_secret.docmosis_access_key.value}"
 
     # logging vars & healthcheck
     REFORM_SERVICE_NAME = "${local.app_full_name}"
