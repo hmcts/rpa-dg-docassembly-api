@@ -61,7 +61,7 @@ public class TemplateRenditionResourceTests {
     @Test
     public void testTemplateRenditionToDoc() {
 
-        Response response =         RestAssured.given()
+        Response response = RestAssured.given()
             .header("Authorization", idamAuth)
             .header("ServiceAuthorization", s2sAuth)
             .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -81,7 +81,6 @@ public class TemplateRenditionResourceTests {
         Response response = RestAssured.given()
             .header("Authorization", idamAuth)
             .header("ServiceAuthorization", s2sAuth)
-
             .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body("{\"formPayload\":{\"a\":1}, \"outputType\":\"DOCX\", \"templateId\":\""
                         + base64("FL-FRM-APP-ENG-00002.docx")
