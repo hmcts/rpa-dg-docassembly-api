@@ -7,21 +7,6 @@ locals {
   ase_name = "${data.terraform_remote_state.core_apps_compute.ase_name[0]}"
   local_env = "${(var.env == "preview" || var.env == "spreview") ? (var.env == "preview" ) ? "aat" : "saat" : var.env}"
   shared_vault_name = "${var.shared_product_name}-${local.local_env}"
-
-  previewVaultName = "${local.app_full_name}-aat"
-  nonPreviewVaultName = "${local.app_full_name}-${var.env}"
-  vaultName = "${(var.env == "preview" || var.env == "spreview") ? local.previewVaultName : local.nonPreviewVaultName}"
-
-  nonPreviewVaultUri = "${module.rpa-dg-docassembly-api-vault.key_vault_uri}"
-  previewVaultUri = "https://cet-online-app-aat.vault.azure.net/"
-  vaultUri = "${(var.env == "preview" || var.env == "spreview") ? local.previewVaultUri : local.nonPreviewVaultUri}"
-
-  previewEnv= "aat"
-  nonPreviewEnv = "${var.env}"
-
-  s2s_vault_url = "https://s2s-${local.local_env}.vault.azure.net/"
-  local_ase = "${(var.env == "preview" || var.env == "spreview") ? (var.env == "preview" ) ? "core-compute-aat" : "core-compute-saat" : local.ase_name}"
-  s2s_base_uri = "http://${var.s2s_name}-${local.local_env}.service.${local.local_ase}.internal"
 }
 
 module "app" {
@@ -44,7 +29,6 @@ module "app" {
     IDAM_API_BASE_URI = "${var.idam_api_base_uri}"
     S2S_BASE_URI = "http://${var.s2s_name}-${local.local_env}.service.core-compute-${local.local_env}.internal"
     S2S_KEY = "${data.azurerm_key_vault_secret.s2s_key.value}"
-    S2S_NAMES_WHITELIST = "${var.s2s_names_whitelist}"
 
     # logging vars & healthcheck
     REFORM_SERVICE_NAME = "${local.app_full_name}"
