@@ -18,7 +18,7 @@ properties([
 
 def type = "java"
 def product = "dg"
-def component = "docassembly-api"
+def component = "docassembly"
 
 def secrets = [
         's2s-${env}': [
