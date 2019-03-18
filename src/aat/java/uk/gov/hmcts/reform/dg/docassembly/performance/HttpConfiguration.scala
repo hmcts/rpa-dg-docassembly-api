@@ -2,11 +2,9 @@ package uk.gov.hmcts.reform.dg.docassembly.performance
 
 import io.gatling.core.Predef._
 import io.gatling.http.Predef._
-import uk.gov.hmcts.reform.dg.docassembly.testutil.{Env, TestUtil}
+import uk.gov.hmcts.reform.dg.docassembly.testutil.{Env}
 
 trait HttpConfiguration {
-
-    val testUtil = new TestUtil
 
     val headers = Map(
         """Content-Type""" -> """application/json""")

@@ -11,13 +11,6 @@ public class Env {
     static {
         defaults.setProperty("PROXY", "false");
         defaults.setProperty("TEST_URL", "http://localhost:8080");
-        defaults.setProperty("FUNCTIONAL_TEST_CLIENT_S2S_TOKEN", "AAAAAAAAAAAAAAAA");
-        defaults.setProperty("S2S_SERVICE_NAME", "em_gw");
-        defaults.setProperty("S2S_URL", "http://localhost:4502");
-        defaults.setProperty("IDAM_API_USER_ROLE", "caseworker");
-        defaults.setProperty("IDAM_API_USER", "test@test.com");
-        defaults.setProperty("IDAM_API_URL", "http://betadevaccidamapplb.reform.hmcts.net");
-        defaults.setProperty("DG_TEMPLATE_MANAGEMENT_API", "http://localhost:4630");
     }
 
     public static String getUseProxy() {
@@ -26,22 +19,6 @@ public class Env {
 
     public static String getTestUrl() {
         return require("TEST_URL");
-    }
-
-    public static String getIdamURL() {
-        return require("IDAM_API_URL");
-    }
-
-    public static String getS2sUrl() {
-        return require("S2S_URL");
-    }
-
-    public static String getS2SToken() {
-        return require("FUNCTIONAL_TEST_CLIENT_S2S_TOKEN");
-    }
-
-    public static String getS2SServiceName() {
-        return require("S2S_SERVICE_NAME");
     }
 
     public static String require(String name) {
