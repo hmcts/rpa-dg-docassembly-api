@@ -36,6 +36,7 @@ public class DmStoreUploader {
     }
 
     public CreateTemplateRenditionDto uploadFile(File file, CreateTemplateRenditionDto createTemplateRenditionDto) {
+        System.out.println("Uploading to DM store: " + dmStoreAppBaseUrl);
         if (createTemplateRenditionDto.getRenditionOutputLocation() != null) {
             uploadNewDocumentVersion(file, createTemplateRenditionDto);
         } else {
