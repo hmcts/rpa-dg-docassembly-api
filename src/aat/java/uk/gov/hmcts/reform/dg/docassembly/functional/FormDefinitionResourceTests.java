@@ -15,6 +15,7 @@ import uk.gov.hmcts.reform.dg.docassembly.Application;
 import uk.gov.hmcts.reform.dg.docassembly.testutil.Env;
 import uk.gov.hmcts.reform.dg.docassembly.testutil.IdamHelper;
 import uk.gov.hmcts.reform.dg.docassembly.testutil.S2sHelper;
+
 import static uk.gov.hmcts.reform.dg.docassembly.testutil.Base64.base64;
 
 @RunWith(SpringRunner.class)
