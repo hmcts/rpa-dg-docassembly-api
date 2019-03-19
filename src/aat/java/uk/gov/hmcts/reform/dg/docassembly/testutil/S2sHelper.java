@@ -19,9 +19,6 @@ public class S2sHelper {
     private String microservice;
 
     public String getS2sToken() {
-        System.out.println(s2sUrl);
-        System.out.println(totpSecret);
-        System.out.println(microservice);
         String otp = String.valueOf(new GoogleAuthenticator().getTotpPassword(totpSecret));
 
         JSONObject jsonObject = new JSONObject();

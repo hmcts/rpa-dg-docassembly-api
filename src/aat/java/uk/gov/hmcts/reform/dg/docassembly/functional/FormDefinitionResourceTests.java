@@ -37,8 +37,7 @@ public class FormDefinitionResourceTests {
     public void setup() {
         idamAuth = idamHelper.getIdamToken();
         s2sAuth = s2sHelper.getS2sToken();
-        System.out.println(idamAuth);
-        System.out.println(s2sAuth);
+
         RestAssured.useRelaxedHTTPSValidation();
     }
 
