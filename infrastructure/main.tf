@@ -21,7 +21,7 @@ locals {
 
   s2s_vault_url = "https://s2s-${local.local_env}.vault.azure.net/"
   local_ase = "${(var.env == "preview" || var.env == "spreview") ? (var.env == "preview" ) ? "core-compute-aat" : "core-compute-saat" : local.ase_name}"
-  s2s_url = "http://${var.s2s_url}-${local.local_env}.service.${local.local_ase}.internal"
+  s2s_base_uri = "http://${var.s2s_name}-${local.local_env}.service.${local.local_ase}.internal"
 }
 
 module "app" {
@@ -41,10 +41,9 @@ module "app" {
 
   app_settings = {
     # idam
-    IDAM_API_BASE_URI = "${var.idam_api_url}"
-    S2S_BASE_URI = "http://${var.s2s_url}-${local.local_env}.service.core-compute-${local.local_env}.internal"
+    IDAM_API_BASE_URI = "${var.idam_api_base_uri}"
+    S2S_BASE_URI = "http://${var.s2s_name}-${local.local_env}.service.core-compute-${local.local_env}.internal"
     S2S_KEY = "${data.azurerm_key_vault_secret.s2s_key.value}"
-    S2S_NAMES_WHITELIST = "${var.s2s_names_whitelist}"
 
     # logging vars & healthcheck
     REFORM_SERVICE_NAME = "${local.app_full_name}"

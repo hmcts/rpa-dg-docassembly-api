@@ -7,38 +7,36 @@ import org.springframework.http.MediaType;
 import uk.gov.hmcts.reform.dg.docassembly.testutil.Env;
 import uk.gov.hmcts.reform.dg.docassembly.testutil.TestUtil;
 
+import static uk.gov.hmcts.reform.dg.docassembly.testutil.Base64.base64;
+
 public class TemplateRenditionResourceTests {
 
-    private final TestUtil testUtil = new TestUtil();
+    TestUtil testUtil = new TestUtil();
 
     @Test
     public void testTemplateRendition() {
-
         Response response = testUtil
-                .authRequest()
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .body("{\"formPayload\":{\"a\":1}, \"templateId\":\""
-                        + testUtil.encodeBase64("FL-FRM-APP-ENG-00002.docx")
-                        + "\"}")
-                .request("POST",Env.getTestUrl() + "/api/template-renditions");
+            .authRequest()
+            .contentType(MediaType.APPLICATION_JSON_VALUE)
+            .body("{\"formPayload\":{\"a\":1}, \"templateId\":\""
+                    + base64("FL-FRM-APP-ENG-00002.docx")
+                    + "\"}")
+            .request("POST",Env.getTestUrl() + "/api/template-renditions");
 
-        System.out.println(response.getBody().print());
         Assert.assertEquals(200, response.getStatusCode());
 
     }
 
     @Test
     public void testTemplateRenditionToDoc() {
-
         Response response = testUtil
-                .authRequest()
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .body("{\"formPayload\":{\"a\":1}, \"outputType\":\"DOC\", \"templateId\":\""
-                        + testUtil.encodeBase64("FL-FRM-APP-ENG-00002.docx")
-                        + "\"}")
-                .request("POST",Env.getTestUrl() + "/api/template-renditions");
+            .authRequest()
+            .contentType(MediaType.APPLICATION_JSON_VALUE)
+            .body("{\"formPayload\":{\"a\":1}, \"outputType\":\"DOC\", \"templateId\":\""
+                    + base64("FL-FRM-APP-ENG-00002.docx")
+                    + "\"}")
+            .request("POST",Env.getTestUrl() + "/api/template-renditions");
 
-        System.out.println(response.getBody().print());
         Assert.assertEquals(200, response.getStatusCode());
 
     }
@@ -46,16 +44,14 @@ public class TemplateRenditionResourceTests {
 
     @Test
     public void testTemplateRenditionToDocX() {
-
         Response response = testUtil
-                .authRequest()
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .body("{\"formPayload\":{\"a\":1}, \"outputType\":\"DOCX\", \"templateId\":\""
-                        + testUtil.encodeBase64("FL-FRM-APP-ENG-00002.docx")
-                        + "\"}")
-                .request("POST",Env.getTestUrl() + "/api/template-renditions");
+            .authRequest()
+            .contentType(MediaType.APPLICATION_JSON_VALUE)
+            .body("{\"formPayload\":{\"a\":1}, \"outputType\":\"DOCX\", \"templateId\":\""
+                    + base64("FL-FRM-APP-ENG-00002.docx")
+                    + "\"}")
+            .request("POST",Env.getTestUrl() + "/api/template-renditions");
 
-        System.out.println(response.getBody().print());
         Assert.assertEquals(200, response.getStatusCode());
 
     }
