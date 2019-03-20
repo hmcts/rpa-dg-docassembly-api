@@ -3,12 +3,6 @@ package uk.gov.hmcts.reform.dg.docassembly.testutil;
 import com.warrenstrange.googleauth.GoogleAuthenticator;
 import io.restassured.RestAssured;
 import org.json.JSONObject;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-
-import com.warrenstrange.googleauth.GoogleAuthenticator;
-import io.restassured.RestAssured;
-import org.json.JSONObject;
 
 public class S2sHelper {
 

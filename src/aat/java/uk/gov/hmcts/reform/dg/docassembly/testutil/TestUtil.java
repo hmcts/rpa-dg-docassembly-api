@@ -1,6 +1,5 @@
 package uk.gov.hmcts.reform.dg.docassembly.testutil;
 
-
 import io.restassured.RestAssured;
 import io.restassured.specification.RequestSpecification;
 
