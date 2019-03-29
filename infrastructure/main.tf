@@ -89,6 +89,7 @@ module "rpa-dg-docassembly-api-vault" {
   object_id           = "${var.jenkins_AAD_objectId}"
   resource_group_name = "${module.app.resource_group_name}"
   product_group_object_id = "ffb5f9a3-b686-4325-a26e-746db5279a42"
+  common_tags  = "${var.common_tags}"
 }
 
 provider "vault" {
