@@ -57,7 +57,7 @@ public class TemplateRenditionService {
                         tempFileName)
                 .addFormDataPart(
                         "data",
-                        createTemplateRenditionDto.getFormPayload().toString())
+                        String.valueOf(createTemplateRenditionDto.getFormPayload()))
                 .build();
 
         Request request = new Request.Builder()
