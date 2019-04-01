@@ -30,8 +30,9 @@ public class TemplateManagementApiClientTest {
         authTokenGenerator = Mockito.mock(AuthTokenGenerator.class);
 
         templateManagementApiClient = new TemplateManagementApiClient(
-                authTokenGenerator,
-                client, "http://template-management-api/templates");
+                client,
+                "http://template-management-api/templates/",
+                "xxx");
     }
 
 
@@ -40,7 +41,7 @@ public class TemplateManagementApiClientTest {
         TemplateIdDto templateIdDto = new TemplateIdDto();
 
         templateIdDto.setJwt("x");
-        templateIdDto.setTemplateId("abc");
+        templateIdDto.setTemplateId("YWJj");
 
         Mockito.when(authTokenGenerator.generate()).thenReturn("x");
 
@@ -58,7 +59,7 @@ public class TemplateManagementApiClientTest {
         TemplateIdDto templateIdDto = new TemplateIdDto();
 
         templateIdDto.setJwt("x");
-        templateIdDto.setTemplateId("abc");
+        templateIdDto.setTemplateId("YWJj");
 
         Mockito.when(authTokenGenerator.generate()).thenReturn("x");
 
@@ -77,7 +78,7 @@ public class TemplateManagementApiClientTest {
         TemplateIdDto templateIdDto = new TemplateIdDto();
 
         templateIdDto.setJwt("x");
-        templateIdDto.setTemplateId("abc");
+        templateIdDto.setTemplateId("YWJj");
 
         Mockito.when(authTokenGenerator.generate()).thenReturn("x");
 

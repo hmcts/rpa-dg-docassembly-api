@@ -5,35 +5,37 @@ import okhttp3.Request;
 import okhttp3.Response;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import uk.gov.hmcts.reform.authorisation.generators.AuthTokenGenerator;
 import uk.gov.hmcts.reform.dg.docassembly.dto.TemplateIdDto;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Base64;
 
 @Service
 public class TemplateManagementApiClient {
 
     private final String templateManagementApiUrl;
 
-    private final AuthTokenGenerator authTokenGenerator;
+    private final String templateManagementApiAuth;
 
     private final OkHttpClient httpClient;
 
     public TemplateManagementApiClient(
-            AuthTokenGenerator authTokenGenerator,
             OkHttpClient httpClient,
-            @Value("${template-management-api.base-url}${template-management-api.resource}") String templateManagementApiUrl) {
-        this.authTokenGenerator = authTokenGenerator;
+            @Value("${template-management-api.base-url}${template-management-api.resource}")
+                    String templateManagementApiUrl,
+            @Value("${template-management-api.auth}")
+                    String templateManagementApiAuth) {
         this.httpClient = httpClient;
         this.templateManagementApiUrl = templateManagementApiUrl;
+        this.templateManagementApiAuth = templateManagementApiAuth;
     }
 
     public InputStream getTemplate(TemplateIdDto templateIdDto) throws IOException {
+        String filename = new String(Base64.getDecoder().decode(templateIdDto.getTemplateId()));
         final Request request = new Request.Builder()
-                .addHeader("Authorization", templateIdDto.getJwt())
-                .addHeader("ServiceAuthorization", authTokenGenerator.generate())
-                .url(templateManagementApiUrl + "/" + templateIdDto.getTemplateId())
+                .addHeader("Authorization", String.format("Basic %s", templateManagementApiAuth))
+                .url(templateManagementApiUrl + filename)
                 .get()
                 .build();
 
