@@ -65,6 +65,14 @@ variable "s2s_name" {
   default = "rpe-service-auth-provider"
 }
 
+variable "docmosis_uri" {
+  default = "https://docmosis-development.platform.hmcts.net/rs/render"
+}
+
+variable "docmosis_templates_uri" {
+  default = "https://docmosis-development.platform.hmcts.net"
+}
+
 ////////////////////////////////////////////////
 // Logging
 ////////////////////////////////////////////////
