@@ -81,6 +81,8 @@ module "app" {
 
     DOCMOSIS_TEMPLATES_ENDPOINT = "${var.docmosis_templates_uri}"
     DOCMOSIS_TEMPLATES_ENDPOINT_AUTH = "${data.azurerm_key_vault_secret.docmosis_templates_auth.value}"
+
+    WEBSITE_DNS_SERVER                                    = "${var.dns_server}"
   }
 }
 
