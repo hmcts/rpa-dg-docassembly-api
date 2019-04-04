@@ -10,7 +10,6 @@ services:
       - SERVER_PORT=8080
       - IDAM_API_BASE_URI=http://idam-api:8080
       - S2S_BASE_URI=http://service-auth-provider-app:8489
-      - DG_TEMPLATE_MANAGEMENT_API=http://rpa-dg-template-management-api:8080
       - DM_STORE_APP_URL=http://dm-store:8080
       - APPINSIGHTS_INSTRUMENTATIONKEY=test_app
       # these environment variables are used by java-logging library
@@ -23,28 +22,13 @@ services:
     ports:
       - 4631:$SERVER_PORT
 
-  rpa-dg-template-management-api:
-    image: hmcts.azurecr.io/hmcts/dg-tmpl-mgmt:latest
-    environment:
-      - S2S_BASE_URI=http://service-auth-provider-app:8489
-      - IDAM_API_BASE_URI=http://idam-api:8080
-      - APPINSIGHTS_INSTRUMENTATIONKEY=test-key
-      - DOCMOSIS_ACCESS_KEY=
-    links:
-      - service-auth-provider-app
-    depends_on:
-      - service-auth-provider-app
-    ports:
-      - 4630:8080
-
   service-auth-provider-app:
     image: hmcts/service-auth-provider-app:latest
     environment:
       - jwtKey=wThK0f0/lh3FlxFcL4xUWDMI5C1J9KyQBgXV4wseh1e5J1uYJIjvTvArHxQDrYoHJ23xFxjHkOnvNbR5dXRoxA==
-#      - Add key for any microservice that will be used: template-management
+#      - Add key for any microservice that will be used
       - microserviceKeys_em_gw=AAAAAAAAAAAAAAAA
       - microserviceKeys_dg_docassembly_api=AAAAAAAAAAAAAAAA
-      - microserviceKeys_dg_template_management_api=AAAAAAAAAAAAAAAA
       #      logging env vars
       - JSON_CONSOLE_PRETTY_PRINT=false
       - REFORM_SERVICE_TYPE=java
