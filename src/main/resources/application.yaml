@@ -3,6 +3,9 @@ spring:
     name: Document Assembly API
 
 management:
+  endpoint:
+    health:
+      show-details: "always"
   endpoints:
     web:
       base-path: '/'

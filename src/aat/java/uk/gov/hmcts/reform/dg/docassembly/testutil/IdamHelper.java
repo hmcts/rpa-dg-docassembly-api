@@ -1,6 +1,7 @@
 package uk.gov.hmcts.reform.dg.docassembly.testutil;
 
 import io.restassured.RestAssured;
+import io.restassured.path.json.JsonPath;
 import org.json.JSONObject;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -21,6 +22,8 @@ public class IdamHelper {
         this.client = client;
         this.secret = secret;
         this.redirect = redirect;
+        System.out.println("JJJ - IdamHelper instance created. idamUrl is");
+        System.out.println(idamUrl);
     }
 
     public String getIdamToken() {
@@ -50,7 +53,7 @@ public class IdamHelper {
         String credentials = USERNAME + ":" + PASSWORD;
         String authHeader = Base64.getEncoder().encodeToString(credentials.getBytes());
 
-        return RestAssured
+        JsonPath jsonPath = RestAssured
             .given()
             .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_FORM_URLENCODED_VALUE)
             .header("Authorization", "Basic " + authHeader)
@@ -58,8 +61,14 @@ public class IdamHelper {
             .formParam("client_id", client)
             .formParam("response_type", "code")
             .post(idamUrl + "/oauth2/authorize")
-            .jsonPath()
-            .get("code");
+            .jsonPath();
+
+        System.out.println("JJJ - getCode's returned jsonPath is");
+        System.out.println(jsonPath);
+        System.out.println("JJJ - prettified version is ");
+        System.out.println(jsonPath.prettyPrint());
+
+        return jsonPath.get("code");
     }
 
     private String getToken(String code) {
