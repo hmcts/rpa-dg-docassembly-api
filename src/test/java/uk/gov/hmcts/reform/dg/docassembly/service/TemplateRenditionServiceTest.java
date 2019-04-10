@@ -13,18 +13,21 @@ import uk.gov.hmcts.reform.dg.docassembly.dto.CreateTemplateRenditionDto;
 import uk.gov.hmcts.reform.dg.docassembly.dto.RenditionOutputType;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Base64;
 
 public class TemplateRenditionServiceTest {
 
-    MockInterceptor interceptor = new MockInterceptor();
+    private MockInterceptor interceptor = new MockInterceptor();
 
-    TemplateRenditionService templateRenditionService;
+    private TemplateRenditionService templateRenditionService;
 
-    DmStoreUploader dmStoreUploader;
+    private DmStoreUploader dmStoreUploader;
+
+    private CreateTemplateRenditionDto createTemplateRenditionDto;
 
     @Before
-    public void setup() {
+    public void setup() throws IOException {
 
         interceptor.reset();
 
@@ -39,20 +42,12 @@ public class TemplateRenditionServiceTest {
                 dmStoreUploader,
                 "http://tonrnado.com",
                 "x");
-    }
 
+        createTemplateRenditionDto = createTemplateRenditionDto();
+    }
 
     @Test
     public void testRendition() throws Exception {
-        ObjectMapper objectMapper = new ObjectMapper();
-
-        CreateTemplateRenditionDto createTemplateRenditionDto = new CreateTemplateRenditionDto();
-
-        createTemplateRenditionDto.setJwt("x");
-        createTemplateRenditionDto.setTemplateId(new String(Base64.getEncoder().encode("1".getBytes())));
-        createTemplateRenditionDto.setOutputType(RenditionOutputType.PDF);
-        createTemplateRenditionDto.setFormPayload(objectMapper.readTree("{}"));
-        createTemplateRenditionDto.setRenditionOutputLocation("x");
 
         interceptor.addRule(new Rule.Builder()
                 .post()
@@ -67,21 +62,29 @@ public class TemplateRenditionServiceTest {
                 templateRenditionService.renderTemplate(createTemplateRenditionDto);
 
         Assert.assertEquals("x", templateRenditionOutputDto.getRenditionOutputLocation());
+    }
+
+    @Test
+    public void testRenditionWithNoData() throws Exception {
+        createTemplateRenditionDto.setFormPayload(null);
+
+        interceptor.addRule(new Rule.Builder()
+                .post()
+                .respond(ClasspathResources.resource("template1.docx")));
+
+        Mockito.when(
+                dmStoreUploader.uploadFile(Mockito.any(File.class),
+                Mockito.any(CreateTemplateRenditionDto.class))).thenReturn(createTemplateRenditionDto);
 
 
+        CreateTemplateRenditionDto templateRenditionOutputDto =
+                templateRenditionService.renderTemplate(createTemplateRenditionDto);
+
+        Assert.assertEquals("x", templateRenditionOutputDto.getRenditionOutputLocation());
     }
 
     @Test(expected = TemplateRenditionException.class)
     public void testRenditionException() throws Exception {
-        ObjectMapper objectMapper = new ObjectMapper();
-
-        CreateTemplateRenditionDto createTemplateRenditionDto = new CreateTemplateRenditionDto();
-
-        createTemplateRenditionDto.setJwt("x");
-        createTemplateRenditionDto.setTemplateId(new String(Base64.getEncoder().encode("1".getBytes())));
-        createTemplateRenditionDto.setOutputType(RenditionOutputType.PDF);
-        createTemplateRenditionDto.setFormPayload(objectMapper.readTree("{}"));
-        createTemplateRenditionDto.setRenditionOutputLocation("x");
 
         interceptor.addRule(new Rule.Builder()
                 .post()
@@ -92,7 +95,19 @@ public class TemplateRenditionServiceTest {
                         Mockito.any(CreateTemplateRenditionDto.class))).thenReturn(createTemplateRenditionDto);
 
         templateRenditionService.renderTemplate(createTemplateRenditionDto);
-
     }
 
+    private CreateTemplateRenditionDto createTemplateRenditionDto() throws IOException {
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        CreateTemplateRenditionDto createTemplateRenditionDto = new CreateTemplateRenditionDto();
+
+        createTemplateRenditionDto.setJwt("x");
+        createTemplateRenditionDto.setTemplateId(new String(Base64.getEncoder().encode("1".getBytes())));
+        createTemplateRenditionDto.setOutputType(RenditionOutputType.PDF);
+        createTemplateRenditionDto.setFormPayload(objectMapper.readTree("{}"));
+        createTemplateRenditionDto.setRenditionOutputLocation("x");
+
+        return createTemplateRenditionDto;
+    }
 }
