@@ -1,6 +1,6 @@
 name: dg-docassembly
 home: https://github.com/hmcts/rpa-dg-docassembly-api
-version: 0.0.2
+version: 0.0.3
 description: HMCTS Document Assembly API
 maintainers:
   - name: HMCTS EM Team
