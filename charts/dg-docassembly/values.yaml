@@ -9,8 +9,8 @@ docassembly-api:
   livenessTimeout: 5
   livenessPeriod: 15
   livenessFailureThreshold: 10
-  # TODO hit liveness endpoint
-  livenessPath: '/health'
+#  # TODO hit liveness endpoint
+#  livenessPath: '/health'
   keyVaults:
     rpa:
       resourceGroup: rpa
