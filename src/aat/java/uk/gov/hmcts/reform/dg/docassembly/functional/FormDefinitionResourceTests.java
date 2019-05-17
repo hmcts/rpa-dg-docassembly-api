@@ -22,7 +22,6 @@ public class FormDefinitionResourceTests {
                 + base64("CV-CMC-GOR-ENG-0004-UI-Test.docx")
             );
 
-        System.out.println(response.getBody().print());
         Assert.assertEquals(200, response.getStatusCode());
 
     }
@@ -37,7 +36,6 @@ public class FormDefinitionResourceTests {
                 + base64("dont-exist.docx")
             );
 
-        System.out.println(response.getBody().print());
         Assert.assertEquals(404, response.getStatusCode());
 
     }
@@ -52,7 +50,6 @@ public class FormDefinitionResourceTests {
                 + base64("FL-FRM-APP-ENG-00002.docx")
             );
 
-        System.out.println(response.getBody().print());
         Assert.assertEquals(404, response.getStatusCode());
 
     }

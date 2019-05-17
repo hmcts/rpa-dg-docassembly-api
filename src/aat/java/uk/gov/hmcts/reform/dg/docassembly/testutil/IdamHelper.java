@@ -22,8 +22,6 @@ public class IdamHelper {
         this.client = client;
         this.secret = secret;
         this.redirect = redirect;
-        System.out.println("JJJ - IdamHelper instance created. idamUrl is");
-        System.out.println(idamUrl);
     }
 
     public String getIdamToken() {
@@ -62,11 +60,6 @@ public class IdamHelper {
             .formParam("response_type", "code")
             .post(idamUrl + "/oauth2/authorize")
             .jsonPath();
-
-        System.out.println("JJJ - getCode's returned jsonPath is");
-        System.out.println(jsonPath);
-        System.out.println("JJJ - prettified version is ");
-        System.out.println(jsonPath.prettyPrint());
 
         return jsonPath.get("code");
     }
