@@ -1,5 +1,6 @@
 package uk.gov.hmcts.reform.dg.docassembly.service;
 
+import com.microsoft.applicationinsights.TelemetryClient;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -18,6 +19,8 @@ import java.util.UUID;
 @Service
 public class TemplateRenditionService {
 
+    private final TelemetryClient telemetryClient;
+
     private final String docmosisUrl;
 
     private final String docmosisAccessKey;
@@ -29,11 +32,13 @@ public class TemplateRenditionService {
     public TemplateRenditionService(OkHttpClient httpClient,
                                     DmStoreUploader dmStoreUploader,
                                     @Value("${docmosis.convert.endpoint}") String docmosisUrl,
-                                    @Value("${docmosis.accessKey}")String docmosisAccessKey) {
+                                    @Value("${docmosis.accessKey}")String docmosisAccessKey,
+                                    TelemetryClient telemetryClient) {
         this.httpClient = httpClient;
         this.dmStoreUploader = dmStoreUploader;
         this.docmosisUrl = docmosisUrl;
         this.docmosisAccessKey = docmosisAccessKey;
+        this.telemetryClient = telemetryClient;
     }
 
     public CreateTemplateRenditionDto renderTemplate(CreateTemplateRenditionDto createTemplateRenditionDto)
@@ -65,7 +70,10 @@ public class TemplateRenditionService {
                 .method("POST", requestBody)
                 .build();
 
+        final long startTime = System.currentTimeMillis();
         Response response = httpClient.newCall(request).execute();
+        final long endTime = System.currentTimeMillis();
+        telemetryClient.trackMetric("Render template time", endTime - startTime);
 
         if (!response.isSuccessful()) {
             throw new TemplateRenditionException(
@@ -79,7 +87,10 @@ public class TemplateRenditionService {
 
         IOUtils.copy(response.body().byteStream(), new FileOutputStream(file));
 
+        final long startTime2 = System.currentTimeMillis();
         dmStoreUploader.uploadFile(file, createTemplateRenditionDto);
+        final long endTime2 = System.currentTimeMillis();
+        telemetryClient.trackMetric("DM store upload time", endTime2 - startTime2);
 
         return createTemplateRenditionDto;
     }
