@@ -60,7 +60,7 @@ public class TemplateRenditionService {
     }
 
     @DependencyProfiler(name = "docmosis", action = "render")
-    private Response render(CreateTemplateRenditionDto createTemplateRenditionDto) throws IOException {
+    public Response render(CreateTemplateRenditionDto createTemplateRenditionDto) throws IOException {
         String tempFileName = String.format("%s%s",
                 UUID.randomUUID().toString(),
                 createTemplateRenditionDto.getOutputType().getFileExtension());

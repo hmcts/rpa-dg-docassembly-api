@@ -5,6 +5,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import uk.gov.hmcts.reform.dg.docassembly.appinsights.DependencyProfiler;
 import uk.gov.hmcts.reform.dg.docassembly.dto.TemplateIdDto;
 
 import java.io.IOException;
@@ -31,6 +32,7 @@ public class TemplateManagementApiClient {
         this.templateManagementApiAuth = templateManagementApiAuth;
     }
 
+    @DependencyProfiler(name = "template-management", action = "get template")
     public InputStream getTemplate(TemplateIdDto templateIdDto) throws IOException {
         String filename = new String(Base64.getDecoder().decode(templateIdDto.getTemplateId()));
         final Request request = new Request.Builder()
