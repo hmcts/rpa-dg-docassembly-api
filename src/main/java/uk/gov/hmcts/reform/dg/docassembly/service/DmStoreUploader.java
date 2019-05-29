@@ -36,7 +36,7 @@ public class DmStoreUploader {
         this.userResolver = userResolver;
     }
 
-    @DependencyProfiler(name = "docmosis", action = "render")
+    @DependencyProfiler(name = "dm-store", action = "upload")
     public CreateTemplateRenditionDto uploadFile(File file, CreateTemplateRenditionDto createTemplateRenditionDto) {
         if (createTemplateRenditionDto.getRenditionOutputLocation() != null) {
             uploadNewDocumentVersion(file, createTemplateRenditionDto);
