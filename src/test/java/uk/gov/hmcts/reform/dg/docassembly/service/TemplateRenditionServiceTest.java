@@ -12,8 +12,8 @@ import org.mockito.Mockito;
 import uk.gov.hmcts.reform.dg.docassembly.dto.CreateTemplateRenditionDto;
 import uk.gov.hmcts.reform.dg.docassembly.dto.RenditionOutputType;
 
-import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Base64;
 
 public class TemplateRenditionServiceTest {
@@ -53,7 +53,7 @@ public class TemplateRenditionServiceTest {
                 .respond(ClasspathResources.resource("template1.docx")));
 
         Mockito.when(
-                dmStoreUploader.uploadFile(Mockito.any(File.class),
+                dmStoreUploader.uploadFile(Mockito.any(InputStream.class),
                 Mockito.any(CreateTemplateRenditionDto.class))).thenReturn(createTemplateRenditionDto);
 
 
@@ -72,7 +72,7 @@ public class TemplateRenditionServiceTest {
                 .respond(ClasspathResources.resource("template1.docx")));
 
         Mockito.when(
-                dmStoreUploader.uploadFile(Mockito.any(File.class),
+                dmStoreUploader.uploadFile(Mockito.any(InputStream.class),
                 Mockito.any(CreateTemplateRenditionDto.class))).thenReturn(createTemplateRenditionDto);
 
 
@@ -90,7 +90,7 @@ public class TemplateRenditionServiceTest {
                 .respond("").code(500));
 
         Mockito.when(
-                dmStoreUploader.uploadFile(Mockito.any(File.class),
+                dmStoreUploader.uploadFile(Mockito.any(InputStream.class),
                         Mockito.any(CreateTemplateRenditionDto.class))).thenReturn(createTemplateRenditionDto);
 
         templateRenditionService.renderTemplate(createTemplateRenditionDto);

@@ -15,6 +15,8 @@ import uk.gov.hmcts.reform.dg.docassembly.dto.CreateTemplateRenditionDto;
 import uk.gov.hmcts.reform.dg.docassembly.dto.RenditionOutputType;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.Base64;
 
 public class DmStoreUploaderTest {
@@ -65,8 +67,9 @@ public class DmStoreUploaderTest {
                 .post()
                 .respond("{\"_embedded\":{\"documents\":[{\"_links\":{\"self\":{\"href\":\"http://success.com/1\"}}}]}}"));
 
+        InputStream inputStream = new FileInputStream(File.createTempFile("testing_doc_assembly_a", "testing_doc_assembly_b"));
         CreateTemplateRenditionDto updatedCreateTemplateRenditionDto =
-                dmStoreUploader.uploadFile(File.createTempFile("testing_doc_assembly_a", "testing_doc_assembly_b"), createTemplateRenditionDto);
+                dmStoreUploader.uploadFile(inputStream, createTemplateRenditionDto);
 
         Assert.assertEquals("http://success.com/1",
                 updatedCreateTemplateRenditionDto.getRenditionOutputLocation());
@@ -90,7 +93,8 @@ public class DmStoreUploaderTest {
                 .post()
                 .respond("").code(404));
 
-        dmStoreUploader.uploadFile(File.createTempFile("testing_doc_assembly_a", "testing_doc_assembly_b"), createTemplateRenditionDto);
+        InputStream inputStream = new FileInputStream(File.createTempFile("testing_doc_assembly_a", "testing_doc_assembly_b"));
+        dmStoreUploader.uploadFile(inputStream, createTemplateRenditionDto);
 
     }
 
@@ -113,8 +117,9 @@ public class DmStoreUploaderTest {
                 .url("http://success.com/1")
                 .respond("{\"_embedded\":{\"documents\":[{\"_links\":{\"self\":{\"href\":\"http://success.com/1\"}}}]}}"));
 
+        InputStream inputStream = new FileInputStream(File.createTempFile("testing_doc_assembly_a", "testing_doc_assembly_b"));
         CreateTemplateRenditionDto updatedCreateTemplateRenditionDto =
-                dmStoreUploader.uploadFile(File.createTempFile("testing_doc_assembly_a", "testing_doc_assembly_b"), createTemplateRenditionDto);
+                dmStoreUploader.uploadFile(inputStream, createTemplateRenditionDto);
 
         Assert.assertEquals("http://success.com/1",
                 updatedCreateTemplateRenditionDto.getRenditionOutputLocation());
@@ -141,7 +146,8 @@ public class DmStoreUploaderTest {
                 .respond("").code(500));
 
 
-        dmStoreUploader.uploadFile(File.createTempFile("testing_doc_assembly_a", "testing_doc_assembly_b"), createTemplateRenditionDto);
+        InputStream inputStream = new FileInputStream(File.createTempFile("testing_doc_assembly_a", "testing_doc_assembly_b"));
+        dmStoreUploader.uploadFile(inputStream, createTemplateRenditionDto);
 
     }
 }

@@ -1,12 +1,9 @@
 package uk.gov.hmcts.reform.dg.docassembly.service;
 
 import okhttp3.Response;
-import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.stereotype.Service;
 import uk.gov.hmcts.reform.dg.docassembly.dto.CreateTemplateRenditionDto;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 
 @Service
@@ -31,13 +28,7 @@ public class TemplateRenditionService {
                             createTemplateRenditionDto.getTemplateId(), response.code(), response.body().string()));
         }
 
-        File file = File.createTempFile(
-                "docmosis-rendition",
-                createTemplateRenditionDto.getOutputType().getFileExtension());
-
-        IOUtils.copy(response.body().byteStream(), new FileOutputStream(file));
-
-        dmStoreUploader.uploadFile(file, createTemplateRenditionDto);
+        dmStoreUploader.uploadFile(response.body().byteStream(), createTemplateRenditionDto);
 
         return createTemplateRenditionDto;
     }

@@ -1,6 +1,10 @@
 package uk.gov.hmcts.reform.dg.docassembly.service;
 
 import okhttp3.*;
+import okhttp3.internal.Util;
+import okio.BufferedSink;
+import okio.Okio;
+import okio.Source;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -10,8 +14,8 @@ import uk.gov.hmcts.reform.authorisation.generators.AuthTokenGenerator;
 import uk.gov.hmcts.reform.dg.docassembly.appinsights.DependencyProfiler;
 import uk.gov.hmcts.reform.dg.docassembly.dto.CreateTemplateRenditionDto;
 
-import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 @Service
 public class DmStoreUploader {
@@ -37,16 +41,16 @@ public class DmStoreUploader {
     }
 
     @DependencyProfiler(name = "dm-store", action = "upload")
-    public CreateTemplateRenditionDto uploadFile(File file, CreateTemplateRenditionDto createTemplateRenditionDto) {
+    public CreateTemplateRenditionDto uploadFile(InputStream input, CreateTemplateRenditionDto createTemplateRenditionDto) {
         if (createTemplateRenditionDto.getRenditionOutputLocation() != null) {
-            uploadNewDocumentVersion(file, createTemplateRenditionDto);
+            uploadNewDocumentVersion(input, createTemplateRenditionDto);
         } else {
-            uploadNewDocument(file, createTemplateRenditionDto);
+            uploadNewDocument(input, createTemplateRenditionDto);
         }
         return createTemplateRenditionDto;
     }
 
-    private void uploadNewDocument(File file, CreateTemplateRenditionDto createTemplateRenditionDto) {
+    private void uploadNewDocument(InputStream input, CreateTemplateRenditionDto createTemplateRenditionDto) {
 
         try {
 
@@ -54,9 +58,11 @@ public class DmStoreUploader {
                     .Builder()
                     .setType(MultipartBody.FORM)
                     .addFormDataPart("classification", "PUBLIC")
-                    .addFormDataPart("files", file.getName(),
-                            RequestBody.create(MediaType.get(createTemplateRenditionDto.getOutputType().getMediaType()), file))
-                    .build();
+                    .addFormDataPart(
+                        "file",
+                        "docmosis-rendition",
+                        createBody(MediaType.get(createTemplateRenditionDto.getOutputType().getMediaType()), input)
+                    ).build();
 
             Request request = new Request.Builder()
                     .addHeader("user-id", getUserId(createTemplateRenditionDto))
@@ -89,15 +95,17 @@ public class DmStoreUploader {
         }
     }
 
-    private void uploadNewDocumentVersion(File file, CreateTemplateRenditionDto createTemplateRenditionDto) {
+    private void uploadNewDocumentVersion(InputStream input, CreateTemplateRenditionDto createTemplateRenditionDto) {
         try {
 
             MultipartBody requestBody = new MultipartBody
                     .Builder()
                     .setType(MultipartBody.FORM)
-                    .addFormDataPart("file", file.getName(),
-                            RequestBody.create(MediaType.get(createTemplateRenditionDto.getOutputType().getMediaType()),
-                                    file))
+                    .addFormDataPart(
+                        "file",
+                        "docmosis-rendition",
+                        createBody(MediaType.get(createTemplateRenditionDto.getOutputType().getMediaType()), input)
+                    )
                     .build();
 
             Request request = new Request.Builder()
@@ -124,4 +132,32 @@ public class DmStoreUploader {
         return user.getPrincipal();
     }
 
+    public static RequestBody createBody(final MediaType mediaType, final InputStream inputStream) {
+        return new RequestBody() {
+            @Override
+            public MediaType contentType() {
+                return mediaType;
+            }
+
+            @Override
+            public long contentLength() {
+                try {
+                    return inputStream.available();
+                } catch (IOException e) {
+                    return 0;
+                }
+            }
+
+            @Override
+            public void writeTo(BufferedSink sink) throws IOException {
+                Source source = null;
+                try {
+                    source = Okio.source(inputStream);
+                    sink.writeAll(source);
+                } finally {
+                    Util.closeQuietly(source);
+                }
+            }
+        };
+    }
 }
