@@ -1,6 +1,5 @@
 package uk.gov.hmcts.reform.dg.docassembly.service;
 
-import com.microsoft.applicationinsights.TelemetryClient;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -8,6 +7,7 @@ import okhttp3.Response;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import uk.gov.hmcts.reform.dg.docassembly.appinsights.DependencyProfiler;
 import uk.gov.hmcts.reform.dg.docassembly.dto.CreateTemplateRenditionDto;
 
 import java.io.File;
@@ -18,8 +18,6 @@ import java.util.UUID;
 
 @Service
 public class TemplateRenditionService {
-
-    private final TelemetryClient telemetryClient;
 
     private final String docmosisUrl;
 
@@ -32,18 +30,37 @@ public class TemplateRenditionService {
     public TemplateRenditionService(OkHttpClient httpClient,
                                     DmStoreUploader dmStoreUploader,
                                     @Value("${docmosis.convert.endpoint}") String docmosisUrl,
-                                    @Value("${docmosis.accessKey}")String docmosisAccessKey,
-                                    TelemetryClient telemetryClient) {
+                                    @Value("${docmosis.accessKey}") String docmosisAccessKey) {
         this.httpClient = httpClient;
         this.dmStoreUploader = dmStoreUploader;
         this.docmosisUrl = docmosisUrl;
         this.docmosisAccessKey = docmosisAccessKey;
-        this.telemetryClient = telemetryClient;
     }
 
     public CreateTemplateRenditionDto renderTemplate(CreateTemplateRenditionDto createTemplateRenditionDto)
             throws IOException {
 
+        Response response = this.render(createTemplateRenditionDto);
+
+        if (!response.isSuccessful()) {
+            throw new TemplateRenditionException(
+                    String.format("Could not render a template %s. HTTP response and message %d, %s",
+                            createTemplateRenditionDto.getTemplateId(), response.code(), response.body().string()));
+        }
+
+        File file = File.createTempFile(
+                "docmosis-rendition",
+                createTemplateRenditionDto.getOutputType().getFileExtension());
+
+        IOUtils.copy(response.body().byteStream(), new FileOutputStream(file));
+
+        dmStoreUploader.uploadFile(file, createTemplateRenditionDto);
+
+        return createTemplateRenditionDto;
+    }
+
+    @DependencyProfiler(name = "docmosis", action = "render")
+    private Response render(CreateTemplateRenditionDto createTemplateRenditionDto) throws IOException {
         String tempFileName = String.format("%s%s",
                 UUID.randomUUID().toString(),
                 createTemplateRenditionDto.getOutputType().getFileExtension());
@@ -70,29 +87,6 @@ public class TemplateRenditionService {
                 .method("POST", requestBody)
                 .build();
 
-        final long startTime = System.currentTimeMillis();
-        Response response = httpClient.newCall(request).execute();
-        final long endTime = System.currentTimeMillis();
-        telemetryClient.trackMetric("Render template time", endTime - startTime);
-
-        if (!response.isSuccessful()) {
-            throw new TemplateRenditionException(
-                    String.format("Could not render a template %s. HTTP response and message %d, %s",
-                            createTemplateRenditionDto.getTemplateId(), response.code(), response.body().string()));
-        }
-
-        File file = File.createTempFile(
-            "docmosis-rendition",
-            createTemplateRenditionDto.getOutputType().getFileExtension());
-
-        IOUtils.copy(response.body().byteStream(), new FileOutputStream(file));
-
-        final long startTime2 = System.currentTimeMillis();
-        dmStoreUploader.uploadFile(file, createTemplateRenditionDto);
-        final long endTime2 = System.currentTimeMillis();
-        telemetryClient.trackMetric("DM store upload time", endTime2 - startTime2);
-
-        return createTemplateRenditionDto;
+        return httpClient.newCall(request).execute();
     }
-
 }

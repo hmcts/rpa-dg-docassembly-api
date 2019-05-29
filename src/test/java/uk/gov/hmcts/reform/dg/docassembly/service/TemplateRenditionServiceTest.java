@@ -1,7 +1,6 @@
 package uk.gov.hmcts.reform.dg.docassembly.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.microsoft.applicationinsights.TelemetryClient;
 import okhttp3.OkHttpClient;
 import okhttp3.mock.ClasspathResources;
 import okhttp3.mock.MockInterceptor;
@@ -42,8 +41,7 @@ public class TemplateRenditionServiceTest {
                 client,
                 dmStoreUploader,
                 "http://tonrnado.com",
-                "x",
-                new TelemetryClient()
+                "x"
         );
 
         createTemplateRenditionDto = createTemplateRenditionDto();
