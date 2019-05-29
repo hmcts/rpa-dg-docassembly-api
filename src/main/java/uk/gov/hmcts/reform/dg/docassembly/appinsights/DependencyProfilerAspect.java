@@ -15,7 +15,7 @@ public class DependencyProfilerAspect {
     @Autowired
     private TelemetryClient telemetryClient;
 
-    @Around("@annotation(DependencyProfiler)")
+    @Around(value = "@annotation(annotation)")
     public Object logExecutionTime(ProceedingJoinPoint joinPoint, DependencyProfiler annotation) throws Throwable {
         long start = System.currentTimeMillis();
 
