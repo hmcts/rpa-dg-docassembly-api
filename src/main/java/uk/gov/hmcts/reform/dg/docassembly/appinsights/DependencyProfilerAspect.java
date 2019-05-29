@@ -16,14 +16,14 @@ public class DependencyProfilerAspect {
     private TelemetryClient telemetryClient;
 
     @Around("@annotation(DependencyProfiler)")
-    public Object logExecutionTime(ProceedingJoinPoint joinPoint) throws Throwable {
+    public Object logExecutionTime(ProceedingJoinPoint joinPoint, DependencyProfiler annotation) throws Throwable {
         long start = System.currentTimeMillis();
 
         Object proceed = joinPoint.proceed();
 
         long executionTime = System.currentTimeMillis() - start;
 
-        telemetryClient.trackDependency("docmosis", "render", new Duration(executionTime), true);
+        telemetryClient.trackDependency(annotation.name(), annotation.action(), new Duration(executionTime), true);
 
         return proceed;
     }
