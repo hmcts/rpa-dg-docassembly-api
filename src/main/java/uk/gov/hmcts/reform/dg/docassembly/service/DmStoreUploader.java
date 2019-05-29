@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import uk.gov.hmcts.reform.auth.checker.core.SubjectResolver;
 import uk.gov.hmcts.reform.auth.checker.core.user.User;
 import uk.gov.hmcts.reform.authorisation.generators.AuthTokenGenerator;
+import uk.gov.hmcts.reform.dg.docassembly.appinsights.DependencyProfiler;
 import uk.gov.hmcts.reform.dg.docassembly.dto.CreateTemplateRenditionDto;
 
 import java.io.File;
@@ -35,6 +36,7 @@ public class DmStoreUploader {
         this.userResolver = userResolver;
     }
 
+    @DependencyProfiler(name = "docmosis", action = "render")
     public CreateTemplateRenditionDto uploadFile(File file, CreateTemplateRenditionDto createTemplateRenditionDto) {
         if (createTemplateRenditionDto.getRenditionOutputLocation() != null) {
             uploadNewDocumentVersion(file, createTemplateRenditionDto);
