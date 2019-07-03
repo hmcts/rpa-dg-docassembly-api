@@ -20,6 +20,9 @@ services:
       - REFORM_ENVIRONMENT=docker
       - DOCMOSIS_ACCESS_KEY=
       - DOCMOSIS_TEMPLATES_ENDPOINT_AUTH=
+      #      endpoint toggles
+      - ENABLE_FORM_DEFINITION_ENDPOINT=true
+      - ENABLE_TEMPLATE_RENDITION_ENDPOINT=true
     ports:
       - 4631:$SERVER_PORT
 
