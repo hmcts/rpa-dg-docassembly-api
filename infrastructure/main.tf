@@ -74,6 +74,9 @@ module "app" {
     ENABLE_IDAM_HEALTH_CHECK = "${var.enable_idam_healthcheck}"
     ENABLE_S2S_HEALTH_CHECK = "${var.enable_s2s_healthcheck}"
 
+    ENABLE_FORM_DEFINITION_ENDPOINT="${var.enable_form_definition_endpoint}"
+    ENABLE_TEMPLATE_RENDITION_ENDPOINT="${var.enable_template_rendition_endpoint}"
+
     DM_STORE_APP_URL = "http://${var.dm_store_app_url}-${local.local_env}.service.core-compute-${local.local_env}.internal"
 
     DOCMOSIS_ENDPOINT = "${var.docmosis_uri}"
