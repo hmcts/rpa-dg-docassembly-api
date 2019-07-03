@@ -1,5 +1,6 @@
 package uk.gov.hmcts.reform.dg.docassembly.rest;
 
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import uk.gov.hmcts.reform.dg.docassembly.dto.CreateTemplateRenditionDto;
@@ -8,6 +9,7 @@ import uk.gov.hmcts.reform.dg.docassembly.service.TemplateRenditionService;
 import javax.validation.Valid;
 import java.io.IOException;
 
+@ConditionalOnProperty("endpoint-toggles.template-rendition")
 @RestController
 @RequestMapping("/api")
 public class TemplateRenditionResource {
