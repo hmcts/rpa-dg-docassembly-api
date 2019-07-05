@@ -23,7 +23,6 @@ public class FormDefinitionResourceTests {
             );
 
         Assert.assertEquals(200, response.getStatusCode());
-
     }
 
     @Test
@@ -37,7 +36,6 @@ public class FormDefinitionResourceTests {
             );
 
         Assert.assertEquals(404, response.getStatusCode());
-
     }
 
     @Test
@@ -51,10 +49,5 @@ public class FormDefinitionResourceTests {
             );
 
         Assert.assertEquals(404, response.getStatusCode());
-
     }
-
-
-
-
 }
