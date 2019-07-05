@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import uk.gov.hmcts.reform.dg.docassembly.dto.TemplateIdDto;
 import uk.gov.hmcts.reform.dg.docassembly.service.FormDefinitionService;
 
-@ConditionalOnProperty("endpoint-toggles.form-definition")
+@ConditionalOnProperty("endpoint-toggles.form-definitions")
 @RestController
 @RequestMapping("/api")
 public class FormDefinitionResource {

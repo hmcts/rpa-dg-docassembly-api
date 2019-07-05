@@ -21,6 +21,8 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -45,19 +47,16 @@ public class TemplateRenditionResourceTest {
     @Test
     public void shouldCallTemplateRenditionService() throws Exception {
 
-        Mockito
-                .when(serviceRequestAuthorizer.authorise(Mockito.any(HttpServletRequest.class)))
+        when(serviceRequestAuthorizer.authorise(Mockito.any(HttpServletRequest.class)))
                 .thenReturn(new Service("ccd"));
 
-        Mockito
-                .when(userRequestAuthorizer.authorise(Mockito.any(HttpServletRequest.class)))
+        when(userRequestAuthorizer.authorise(Mockito.any(HttpServletRequest.class)))
                 .thenReturn(new User("john", Stream.of("caseworker").collect(Collectors.toSet())));
 
         CreateTemplateRenditionDto templateRenditionOutputDto = new CreateTemplateRenditionDto();
         templateRenditionOutputDto.setRenditionOutputLocation("x");
 
-        Mockito
-                .when(templateRenditionService.renderTemplate(Mockito.any(CreateTemplateRenditionDto.class)))
+        when(templateRenditionService.renderTemplate(Mockito.any(CreateTemplateRenditionDto.class)))
                 .thenReturn(templateRenditionOutputDto);
 
         this.mockMvc
@@ -69,8 +68,7 @@ public class TemplateRenditionResourceTest {
                 .andDo(print())
                 .andExpect(status().isOk());
 
-        Mockito
-                .verify(templateRenditionService, Mockito.times(1))
+        verify(templateRenditionService, Mockito.times(1))
                 .renderTemplate(Mockito.any(CreateTemplateRenditionDto.class));
     }
 }
