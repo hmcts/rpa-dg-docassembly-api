@@ -9,7 +9,7 @@ import uk.gov.hmcts.reform.dg.docassembly.service.TemplateRenditionService;
 import javax.validation.Valid;
 import java.io.IOException;
 
-@ConditionalOnProperty("endpoint-toggles.template-rendition")
+@ConditionalOnProperty("endpoint-toggles.template-renditions")
 @RestController
 @RequestMapping("/api")
 public class TemplateRenditionResource {

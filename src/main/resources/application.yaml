@@ -79,5 +79,5 @@ dm-store-app:
   base-url: ${DM_STORE_APP_URL:http://localhost:4603}
 
 endpoint-toggles:
-  form-definition: ${ENABLE_FORM_DEFINITION_ENDPOINT:true}
-  template-rendition: ${ENABLE_TEMPLATE_RENDITION_ENDPOINT:true}
+  form-definitions: ${ENABLE_FORM_DEFINITION_ENDPOINT:true}
+  template-renditions: ${ENABLE_TEMPLATE_RENDITION_ENDPOINT:true}
