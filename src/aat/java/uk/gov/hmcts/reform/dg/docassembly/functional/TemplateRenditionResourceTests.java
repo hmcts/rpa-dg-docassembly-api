@@ -24,7 +24,6 @@ public class TemplateRenditionResourceTests {
             .request("POST",Env.getTestUrl() + "/api/template-renditions");
 
         Assert.assertEquals(200, response.getStatusCode());
-
     }
 
     @Test
@@ -38,9 +37,7 @@ public class TemplateRenditionResourceTests {
             .request("POST",Env.getTestUrl() + "/api/template-renditions");
 
         Assert.assertEquals(200, response.getStatusCode());
-
     }
-
 
     @Test
     public void testTemplateRenditionToDocX() {
@@ -53,7 +50,5 @@ public class TemplateRenditionResourceTests {
             .request("POST",Env.getTestUrl() + "/api/template-renditions");
 
         Assert.assertEquals(200, response.getStatusCode());
-
     }
-
 }
