@@ -1,6 +1,7 @@
 package uk.gov.hmcts.reform.dg.docassembly.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -56,6 +57,12 @@ public class EndpointTogglesTest {
     public static void setup() {
         System.setProperty("endpoint-toggles.form-definitions", "false");
         System.setProperty("endpoint-toggles.template-renditions", "false");
+    }
+
+    @AfterClass
+    public static void cleanup() {
+        System.setProperty("endpoint-toggles.form-definitions", "true");
+        System.setProperty("endpoint-toggles.template-renditions", "true");
     }
 
     @Test

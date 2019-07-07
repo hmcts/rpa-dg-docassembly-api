@@ -131,7 +131,7 @@ variable "enable_template_rendition_endpoint" {
 // Whitelists
 ////////////////////////////////////////////////
 variable "s2s_names_whitelist" {
-  default = "em_api,em_gw,ccd_gw,ccd_data,sscs,divorce_document_upload,divorce_document_generator,probate_backend,jui_webapp,pui_webapp"
+  default = "em_api,em_gw,ccd_gw,ccd_data,sscs,divorce_document_upload,divorce_document_generator,probate_backend,jui_webapp,pui_webapp,cmc_claim_store"
 }
 
 variable "case_worker_roles" {

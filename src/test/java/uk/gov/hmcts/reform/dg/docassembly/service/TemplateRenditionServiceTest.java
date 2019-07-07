@@ -38,10 +38,9 @@ public class TemplateRenditionServiceTest {
         dmStoreUploader = Mockito.mock(DmStoreUploader.class);
 
         templateRenditionService = new TemplateRenditionService(
-                client,
-                dmStoreUploader,
-                "http://tonrnado.com",
-                "x");
+            dmStoreUploader,
+            new DocmosisApiClient(client, "http://tornado.com", "x")
+        );
 
         createTemplateRenditionDto = createTemplateRenditionDto();
     }
