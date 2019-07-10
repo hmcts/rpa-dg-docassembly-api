@@ -3,6 +3,8 @@ package uk.gov.hmcts.reform.dg.docassembly.dto;
 public enum RenditionOutputType {
 
     PDF(".pdf", "application/pdf"),
+    HTML(".html", "text/html"),
+    TEXT(".txt", "text/plain"),
     DOC(".doc", "application/msword"),
     DOCX(".docx", "application/vnd.openxmlformats-officedocument.wordprocessingml.document");
 
