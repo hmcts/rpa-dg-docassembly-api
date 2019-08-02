@@ -1,6 +1,6 @@
 docassembly-api:
   applicationPort: 8080
-  image: hmcts.azurecr.io/hmcts/dg-docassembly:latest
+  image: hmctspublic.azurecr.io/dg/docassembly:latest
   readinessDelay: 30
   readinessTimeout: 5
   readinessPeriod: 15
