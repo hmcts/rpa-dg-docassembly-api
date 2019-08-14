@@ -64,7 +64,7 @@ public class FormDefinitionResourceTest {
 
         this.mockMvc
                 .perform(get("/api/form-definitions/123")
-                        .header("Authorization", "xxx")
+                        .header("Authorization", "x.y.z")
                         .header("ServiceAuthorization", "xxx"))
                 .andDo(print()).andExpect(status().isOk());
 
@@ -86,7 +86,7 @@ public class FormDefinitionResourceTest {
 
         this.mockMvc
                 .perform(get("/api/form-definitions/123")
-                        .header("Authorization", "xxx")
+                        .header("Authorization", "x.y.z")
                         .header("ServiceAuthorization", "xxx"))
                 .andDo(print()).andExpect(status().is4xxClientError());
 
@@ -109,7 +109,7 @@ public class FormDefinitionResourceTest {
 
         this.mockMvc
                 .perform(get("/api/form-definitions/123")
-                        .header("Authorization", "xxx")
+                        .header("Authorization", "x.y.z")
                         .header("ServiceAuthorization", "xxx"))
                 .andDo(print()).andExpect(status().is5xxServerError());
 
