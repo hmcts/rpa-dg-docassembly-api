@@ -51,15 +51,15 @@ public class DmStoreUploaderTest {
     @Test
     public void testUploadNewFile() throws Exception {
         CreateTemplateRenditionDto createTemplateRenditionDto = new CreateTemplateRenditionDto();
-        createTemplateRenditionDto.setJwt("x");
+        createTemplateRenditionDto.setJwt("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c");
         createTemplateRenditionDto.setTemplateId(new String(Base64.getEncoder().encode("1".getBytes())));
         createTemplateRenditionDto.setOutputType(RenditionOutputType.PDF);
         createTemplateRenditionDto.setFormPayload(objectMapper.readTree("{}"));
-        Mockito.when(authTokenGenerator.generate()).thenReturn("x");
+        Mockito.when(authTokenGenerator.generate()).thenReturn("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c");
 
         User mockedUser = Mockito.mock(User.class);
         Mockito.when(mockedUser.getPrincipal()).thenReturn("p1");
-        Mockito.when(userResolver.getTokenDetails("x")).thenReturn(mockedUser);
+        Mockito.when(userResolver.getTokenDetails("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c")).thenReturn(mockedUser);
 
         interceptor.addRule(new Rule.Builder()
                 .post()
@@ -76,15 +76,15 @@ public class DmStoreUploaderTest {
     @Test(expected = DocumentUploaderException.class)
     public void testUploadNewFileHttpFailedException() throws Exception {
         CreateTemplateRenditionDto createTemplateRenditionDto = new CreateTemplateRenditionDto();
-        createTemplateRenditionDto.setJwt("x");
+        createTemplateRenditionDto.setJwt("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c");
         createTemplateRenditionDto.setTemplateId(new String(Base64.getEncoder().encode("1".getBytes())));
         createTemplateRenditionDto.setOutputType(RenditionOutputType.PDF);
         createTemplateRenditionDto.setFormPayload(objectMapper.readTree("{}"));
-        Mockito.when(authTokenGenerator.generate()).thenReturn("x");
+        Mockito.when(authTokenGenerator.generate()).thenReturn("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c");
 
         User mockedUser = Mockito.mock(User.class);
         Mockito.when(mockedUser.getPrincipal()).thenReturn("p1");
-        Mockito.when(userResolver.getTokenDetails("x")).thenReturn(mockedUser);
+        Mockito.when(userResolver.getTokenDetails("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c")).thenReturn(mockedUser);
 
         interceptor.addRule(new Rule.Builder()
                 .post()
@@ -97,16 +97,16 @@ public class DmStoreUploaderTest {
     @Test
     public void testUploadNewVersionOfFile() throws Exception {
         CreateTemplateRenditionDto createTemplateRenditionDto = new CreateTemplateRenditionDto();
-        createTemplateRenditionDto.setJwt("x");
+        createTemplateRenditionDto.setJwt("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c");
         createTemplateRenditionDto.setTemplateId(new String(Base64.getEncoder().encode("1".getBytes())));
         createTemplateRenditionDto.setOutputType(RenditionOutputType.PDF);
         createTemplateRenditionDto.setFormPayload(objectMapper.readTree("{}"));
         createTemplateRenditionDto.setRenditionOutputLocation("http://success.com/1");
-        Mockito.when(authTokenGenerator.generate()).thenReturn("x");
+        Mockito.when(authTokenGenerator.generate()).thenReturn("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c");
 
         User mockedUser = Mockito.mock(User.class);
         Mockito.when(mockedUser.getPrincipal()).thenReturn("p1");
-        Mockito.when(userResolver.getTokenDetails("x")).thenReturn(mockedUser);
+        Mockito.when(userResolver.getTokenDetails("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c")).thenReturn(mockedUser);
 
         interceptor.addRule(new Rule.Builder()
                 .post()
@@ -124,16 +124,16 @@ public class DmStoreUploaderTest {
     @Test(expected = DocumentUploaderException.class)
     public void testUploadNewVersionOfFileException() throws Exception {
         CreateTemplateRenditionDto createTemplateRenditionDto = new CreateTemplateRenditionDto();
-        createTemplateRenditionDto.setJwt("x");
+        createTemplateRenditionDto.setJwt("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c");
         createTemplateRenditionDto.setTemplateId(new String(Base64.getEncoder().encode("1".getBytes())));
         createTemplateRenditionDto.setOutputType(RenditionOutputType.PDF);
         createTemplateRenditionDto.setFormPayload(objectMapper.readTree("{}"));
         createTemplateRenditionDto.setRenditionOutputLocation("http://success.com/1");
-        Mockito.when(authTokenGenerator.generate()).thenReturn("x");
+        Mockito.when(authTokenGenerator.generate()).thenReturn("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c");
 
         User mockedUser = Mockito.mock(User.class);
         Mockito.when(mockedUser.getPrincipal()).thenReturn("p1");
-        Mockito.when(userResolver.getTokenDetails("x")).thenReturn(mockedUser);
+        Mockito.when(userResolver.getTokenDetails("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c")).thenReturn(mockedUser);
 
         interceptor.addRule(new Rule.Builder()
                 .post()
