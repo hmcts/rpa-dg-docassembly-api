@@ -34,17 +34,19 @@ public class TemplateRenditionService {
 
         // Avoiding the utilisation of a user provided parameter and mapping against an enum
         // to protect against a security vulnerability SonarCloud: javasecurity:S2083 (Protect against Path Injection Attacks)
-        String tempFileExtension = RenditionOutputType.PDF.getFileExtension();;
-         switch (createTemplateRenditionDto.getOutputType()) {
-             case DOC:
-                 tempFileExtension = RenditionOutputType.DOC.getFileExtension();
-                 break;
-             case DOCX:
-                 tempFileExtension = RenditionOutputType.DOCX.getFileExtension();
-                 break;
-             case PDF:
-                 tempFileExtension = RenditionOutputType.PDF.getFileExtension();
-                 break;
+        String tempFileExtension = RenditionOutputType.PDF.getFileExtension();
+        switch (createTemplateRenditionDto.getOutputType()) {
+            case DOC:
+                tempFileExtension = RenditionOutputType.DOC.getFileExtension();
+                break;
+            case DOCX:
+                tempFileExtension = RenditionOutputType.DOCX.getFileExtension();
+                break;
+            case PDF:
+                tempFileExtension = RenditionOutputType.PDF.getFileExtension();
+                break;
+            default:
+                tempFileExtension = RenditionOutputType.PDF.getFileExtension();
         }
 
         File file = File.createTempFile(
