@@ -46,7 +46,9 @@ public class TemplateRenditionServiceTest {
     }
 
     @Test
-    public void testRendition() throws Exception {
+    public void testRenditionWithTypePDF() throws Exception {
+
+        createTemplateRenditionDto.setOutputType(RenditionOutputType.PDF);
 
         interceptor.addRule(new Rule.Builder()
                 .post()
@@ -55,6 +57,46 @@ public class TemplateRenditionServiceTest {
         Mockito.when(
                 dmStoreUploader.uploadFile(Mockito.any(File.class),
                 Mockito.any(CreateTemplateRenditionDto.class))).thenReturn(createTemplateRenditionDto);
+
+
+        CreateTemplateRenditionDto templateRenditionOutputDto =
+                templateRenditionService.renderTemplate(createTemplateRenditionDto);
+
+        Assert.assertEquals("x", templateRenditionOutputDto.getRenditionOutputLocation());
+    }
+
+    @Test
+    public void testRenditionWithTypeDoc() throws Exception {
+
+        createTemplateRenditionDto.setOutputType(RenditionOutputType.DOC);
+
+        interceptor.addRule(new Rule.Builder()
+                .post()
+                .respond(ClasspathResources.resource("template1.docx")));
+
+        Mockito.when(
+                dmStoreUploader.uploadFile(Mockito.any(File.class),
+                        Mockito.any(CreateTemplateRenditionDto.class))).thenReturn(createTemplateRenditionDto);
+
+
+        CreateTemplateRenditionDto templateRenditionOutputDto =
+                templateRenditionService.renderTemplate(createTemplateRenditionDto);
+
+        Assert.assertEquals("x", templateRenditionOutputDto.getRenditionOutputLocation());
+    }
+
+    @Test
+    public void testRenditionWithTypeDocX() throws Exception {
+
+        createTemplateRenditionDto.setOutputType(RenditionOutputType.DOCX);
+
+        interceptor.addRule(new Rule.Builder()
+                .post()
+                .respond(ClasspathResources.resource("template1.docx")));
+
+        Mockito.when(
+                dmStoreUploader.uploadFile(Mockito.any(File.class),
+                        Mockito.any(CreateTemplateRenditionDto.class))).thenReturn(createTemplateRenditionDto);
 
 
         CreateTemplateRenditionDto templateRenditionOutputDto =
