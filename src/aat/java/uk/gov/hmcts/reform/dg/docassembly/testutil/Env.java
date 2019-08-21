@@ -36,12 +36,12 @@ public class Env {
         return require("IDAM_API_BASE_URI");
     }
 
-    public static boolean isFormDefinitionEndpointEnabled(){
+    public static boolean isFormDefinitionEndpointEnabled() {
         String formDefinitionEndpointEnabled = require("enable_form_definition_endpoint");
         return Boolean.valueOf(formDefinitionEndpointEnabled);
     }
 
-    public static boolean isTemplateRenditionEndpointEnabled(){
+    public static boolean isTemplateRenditionEndpointEnabled() {
         String templateRenditionEndpointEnabled = require("enable_template_rendition_endpoint");
         return Boolean.valueOf(templateRenditionEndpointEnabled);
     }
