@@ -37,12 +37,12 @@ public class Env {
     }
 
     public static boolean isFormDefinitionEndpointEnabled() {
-        String formDefinitionEndpointEnabled = require("enable_form_definition_endpoint");
+        String formDefinitionEndpointEnabled = require("ENABLE_FORM_DEFINITION_ENDPOINT");
         return Boolean.valueOf(formDefinitionEndpointEnabled);
     }
 
     public static boolean isTemplateRenditionEndpointEnabled() {
-        String templateRenditionEndpointEnabled = require("enable_template_rendition_endpoint");
+        String templateRenditionEndpointEnabled = require("ENABLE_TEMPLATE_RENDITION_ENDPOINT");
         return Boolean.valueOf(templateRenditionEndpointEnabled);
     }
 
