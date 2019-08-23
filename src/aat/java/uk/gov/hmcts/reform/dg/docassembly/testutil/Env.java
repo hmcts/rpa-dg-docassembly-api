@@ -18,6 +18,8 @@ public class Env {
         defaults.setProperty("S2S_BASE_URI", "http://localhost:4502");
         defaults.setProperty("FUNCTIONAL_TEST_CLIENT_S2S_TOKEN", "AAAAAAAAAAAAAAAA");
         defaults.setProperty("S2S_SERVICE_NAME", "em_gw");
+        defaults.setProperty("ENABLE_FORM_DEFINITION_ENDPOINT", "false");
+        defaults.setProperty("ENABLE_TEMPLATE_RENDITION_ENDPOINT", "true");
     }
 
     public static String getUseProxy() {
@@ -34,6 +36,16 @@ public class Env {
 
     public static String getIdamUrl() {
         return require("IDAM_API_BASE_URI");
+    }
+
+    public static boolean isFormDefinitionEndpointEnabled() {
+        String formDefinitionEndpointEnabled = require("ENABLE_FORM_DEFINITION_ENDPOINT");
+        return Boolean.valueOf(formDefinitionEndpointEnabled);
+    }
+
+    public static boolean isTemplateRenditionEndpointEnabled() {
+        String templateRenditionEndpointEnabled = require("ENABLE_TEMPLATE_RENDITION_ENDPOINT");
+        return Boolean.valueOf(templateRenditionEndpointEnabled);
     }
 
     public static String getOAuthClient() {
