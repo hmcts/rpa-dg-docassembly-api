@@ -2,6 +2,7 @@ package uk.gov.hmcts.reform.dg.docassembly.functional;
 
 import io.restassured.response.Response;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Test;
 import org.springframework.http.MediaType;
 import uk.gov.hmcts.reform.dg.docassembly.testutil.Env;
@@ -15,6 +16,9 @@ public class TemplateRenditionResourceTests {
 
     @Test
     public void testTemplateRendition() {
+        // If the Endpoint Toggles are enabled, continue, if not skip and ignore
+        Assume.assumeTrue(Env.isTemplateRenditionEndpointEnabled());
+
         Response response = testUtil
             .authRequest()
             .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -28,6 +32,9 @@ public class TemplateRenditionResourceTests {
 
     @Test
     public void testTemplateRenditionToDoc() {
+        // If the Endpoint Toggles are enabled, continue, if not skip and ignore
+        Assume.assumeTrue(Env.isTemplateRenditionEndpointEnabled());
+
         Response response = testUtil
             .authRequest()
             .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -41,6 +48,9 @@ public class TemplateRenditionResourceTests {
 
     @Test
     public void testTemplateRenditionToDocX() {
+        // If the Endpoint Toggles are enabled, continue, if not skip and ignore
+        Assume.assumeTrue(Env.isTemplateRenditionEndpointEnabled());
+
         Response response = testUtil
             .authRequest()
             .contentType(MediaType.APPLICATION_JSON_VALUE)

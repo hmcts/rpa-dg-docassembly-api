@@ -4,6 +4,7 @@ import okhttp3.Response;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.stereotype.Service;
 import uk.gov.hmcts.reform.dg.docassembly.dto.CreateTemplateRenditionDto;
+import uk.gov.hmcts.reform.dg.docassembly.dto.RenditionOutputType;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -31,9 +32,23 @@ public class TemplateRenditionService {
                             createTemplateRenditionDto.getTemplateId(), response.code(), response.body().string()));
         }
 
+        // Avoiding the utilisation of a user provided parameter and mapping against an enum
+        // to protect against a security vulnerability SonarCloud: javasecurity:S2083 (Protect against Path Injection Attacks)
+        String tempFileExtension;
+        switch (createTemplateRenditionDto.getOutputType()) {
+            case DOC:
+                tempFileExtension = RenditionOutputType.DOC.getFileExtension();
+                break;
+            case DOCX:
+                tempFileExtension = RenditionOutputType.DOCX.getFileExtension();
+                break;
+            default:
+                tempFileExtension = RenditionOutputType.PDF.getFileExtension();
+        }
+
         File file = File.createTempFile(
                 "docmosis-rendition",
-                createTemplateRenditionDto.getOutputType().getFileExtension());
+                tempFileExtension);
 
         IOUtils.copy(response.body().byteStream(), new FileOutputStream(file));
 
