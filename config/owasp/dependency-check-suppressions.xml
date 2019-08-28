@@ -29,4 +29,11 @@
         <packageUrl regex="true">^pkg:javascript/moment\.js@.*$</packageUrl>
         <vulnerabilityName>reDOS - regular expression denial of service</vulnerabilityName>
     </suppress>
+    <suppress>
+        <notes><![CDATA[
+      file name: jackson-databind-2.9.9.jar
+      ]]></notes>
+        <packageUrl regex="true">^pkg:maven/com\.fasterxml\.jackson\.core/jackson\-databind@.*$</packageUrl>
+        <cve>CVE-2019-12384</cve>
+    </suppress>
 </suppressions>
