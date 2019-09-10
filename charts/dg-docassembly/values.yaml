@@ -18,9 +18,6 @@ docassembly-api:
         - AppInsightsInstrumentationKey
         - docmosis-templates-auth
         - docmosis-access-key
-    s2s:
-      resourceGroup: rpe-service-auth-provider
-      secrets:
         - microservicekey-dg-docassembly-api
   environment:
     # Regardless of environment, point towards AAT instances. Overwrite in product charts etc.
