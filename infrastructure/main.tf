@@ -119,8 +119,13 @@ data "azurerm_key_vault_secret" "s2s_key" {
   vault_uri = "https://s2s-${local.local_env}.vault.azure.net/"
 }
 
-resource "azurerm_key_vault_secret" "rpa" {
+data "azurerm_key_vault" "local_key_vault" {
+  name = "${local.vaultName}"
+  resource_group_name = "${local.vaultName}"
+}
+
+resource "azurerm_key_vault_secret" "local_s2s_key" {
   name         = "microservicekey-dg-docassembly-api"
   value        = "${data.azurerm_key_vault_secret.s2s_key.value}"
-  vault_uri = "https://rpa-${local.local_env}.vault.azure.net/"
+  key_vault_id = "${data.azurerm_key_vault.local_key_vault.id}"
 }
