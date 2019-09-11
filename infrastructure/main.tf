@@ -19,7 +19,6 @@ locals {
   previewEnv= "aat"
   nonPreviewEnv = "${var.env}"
 
-  s2s_vault_url = "https://s2s-${local.local_env}.vault.azure.net/"
   local_ase = "${(var.env == "preview" || var.env == "spreview") ? (var.env == "preview" ) ? "core-compute-aat" : "core-compute-saat" : local.ase_name}"
   s2s_base_uri = "http://${var.s2s_name}-${local.local_env}.service.${local.local_ase}.internal"
 }
@@ -118,4 +117,15 @@ data "azurerm_key_vault_secret" "docmosis_templates_auth" {
 data "azurerm_key_vault_secret" "s2s_key" {
   name      = "microservicekey-dg-docassembly-api"
   vault_uri = "https://s2s-${local.local_env}.vault.azure.net/"
+}
+
+data "azurerm_key_vault" "local_key_vault" {
+  name = "${local.vaultName}"
+  resource_group_name = "${local.vaultName}"
+}
+
+resource "azurerm_key_vault_secret" "local_s2s_key" {
+  name         = "microservicekey-dg-docassembly-api"
+  value        = "${data.azurerm_key_vault_secret.s2s_key.value}"
+  key_vault_id = "${data.azurerm_key_vault.local_key_vault.id}"
 }
