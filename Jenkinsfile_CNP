@@ -18,12 +18,10 @@ def product = "dg"
 def component = "docassembly"
 
 def secrets = [
-    's2s-${env}': [
-        secret('microservicekey-em-gw', 'FUNCTIONAL_TEST_CLIENT_S2S_TOKEN')
-    ],
-    'rpa-${env}': [
-        secret('show-oauth2-token', 'FUNCTIONAL_TEST_CLIENT_OAUTH_SECRET')
-    ]
+        'rpa-${env}': [
+                secret('em-s2s-token', 'FUNCTIONAL_TEST_CLIENT_S2S_TOKEN'),
+                secret('show-oauth2-token', 'FUNCTIONAL_TEST_CLIENT_OAUTH_SECRET')
+        ]
 ]
 
 static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
