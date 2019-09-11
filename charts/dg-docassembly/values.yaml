@@ -18,8 +18,8 @@ docassembly-api:
         - AppInsightsInstrumentationKey
         - docmosis-templates-auth
         - docmosis-access-key
-    s2s:
-      resourceGroup: rpe-service-auth-provider
+    dg-docassembly:
+      resourceGroup: dg-docassembly
       secrets:
         - microservicekey-dg-docassembly-api
   environment:
