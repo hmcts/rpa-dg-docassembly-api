@@ -119,6 +119,14 @@ variable "enable_s2s_healthcheck" {
     default = "false"
 }
 
+variable "enable_form_definition_endpoint" {
+    default = "true"
+}
+
+variable "enable_template_rendition_endpoint" {
+    default = "true"
+}
+
 ////////////////////////////////////////////////
 // Whitelists
 ////////////////////////////////////////////////

@@ -4,7 +4,7 @@ services:
   rpa-dg-docassembly-api:
     build:
       context: .
-    image: hmcts.azurecr.io/hmcts/dg-docassembly:latest
+    image: hmctspublic.azurecr.io/dg/docassembly:latest
     environment:
       - SERVER_PORT=8080
       - IDAM_API_BASE_URI=http://idam-api:8080
@@ -19,5 +19,8 @@ services:
       - REFORM_ENVIRONMENT=docker
       - DOCMOSIS_ACCESS_KEY=
       - DOCMOSIS_TEMPLATES_ENDPOINT_AUTH=
+      #      endpoint toggles
+      - ENABLE_FORM_DEFINITION_ENDPOINT=true
+      - ENABLE_TEMPLATE_RENDITION_ENDPOINT=true
     ports:
       - 4631:$SERVER_PORT
