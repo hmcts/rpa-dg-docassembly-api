@@ -120,6 +120,11 @@ data "azurerm_key_vault_secret" "s2s_key" {
   vault_uri = "https://s2s-${local.local_env}.vault.azure.net/"
 }
 
+data "azurerm_key_vault" "product" {
+  name = "${var.shared_product_name}-${var.env}"
+  resource_group_name = "${var.shared_product_name}-${var.env}"
+}
+
 # Copy s2s key from shared to local vault
 data "azurerm_key_vault" "local_key_vault" {
   name = "${local.vaultName}"
@@ -148,7 +153,7 @@ resource "azurerm_key_vault_secret" "local_docmosis_templates_auth" {
 # Load AppInsights key from rpa vault
 data "azurerm_key_vault_secret" "app_insights_key" {
   name      = "AppInsightsInstrumentationKey"
-  vault_uri = "https://rpa-${local.local_env}.vault.azure.net/"
+  key_vault_id = "${data.azurerm_key_vault.product.id}"
 }
 
 resource "azurerm_key_vault_secret" "local_app_insights_key" {
