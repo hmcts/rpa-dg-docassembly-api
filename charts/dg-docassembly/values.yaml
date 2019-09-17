@@ -9,6 +9,7 @@ docassembly-api:
   livenessTimeout: 5
   livenessPeriod: 15
   livenessFailureThreshold: 10
+  aadIdentityName: dg
 #  # TODO hit liveness endpoint
 #  livenessPath: '/health'
   keyVaults:
