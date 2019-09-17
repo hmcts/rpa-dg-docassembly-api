@@ -13,16 +13,13 @@ docassembly-api:
 #  # TODO hit liveness endpoint
 #  livenessPath: '/health'
   keyVaults:
-    rpa:
-      resourceGroup: rpa
-      secrets:
-        - AppInsightsInstrumentationKey
-        - docmosis-templates-auth
-        - docmosis-access-key
     dg-docassembly:
       resourceGroup: dg-docassembly
       secrets:
         - microservicekey-dg-docassembly-api
+        - AppInsightsInstrumentationKey
+        - docmosis-templates-auth
+        - docmosis-access-key
   environment:
     # Regardless of environment, point towards AAT instances. Overwrite in product charts etc.
     IDAM_API_BASE_URI: https://idam-api.aat.platform.hmcts.net
