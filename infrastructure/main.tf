@@ -37,6 +37,7 @@ module "app" {
   common_tags  = "${var.common_tags}"
   asp_rg = "${var.shared_product_name}-${var.env}"
   asp_name = "${var.shared_product_name}-dg-${var.env}"
+  appinsights_instrumentation_key = "${data.azurerm_key_vault_secret.app_insights_key.value}"
 
   app_settings = {
     # idam
