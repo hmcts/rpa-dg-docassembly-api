@@ -2,11 +2,11 @@ spring:
   cloud:
     propertiesvolume:
       enabled: true
-      prefixed: true
-      paths: /mnt/secrets/rpa,/mnt/secrets/dg-docassembly
+      prefixed: false
+      paths: /mnt/secrets/dg-docassembly
       aliases:
-        dg-docassembly.microservicekey-dg-docassembly-api: S2S_KEY
-        rpa.AppInsightsInstrumentationKey: APPINSIGHTS_INSTRUMENTATIONKEY
-        rpa.docmosis-access-key: DOCMOSIS_ACCESS_KEY
-        rpa.docmosis-templates-auth: DOCMOSIS_TEMPLATES_ENDPOINT_AUTH
+        microservicekey-dg-docassembly-api: S2S_KEY
+        AppInsightsInstrumentationKey: APPINSIGHTS_INSTRUMENTATIONKEY
+        docmosis-access-key: DOCMOSIS_ACCESS_KEY
+        docmosis-templates-auth: DOCMOSIS_TEMPLATES_ENDPOINT_AUTH
 

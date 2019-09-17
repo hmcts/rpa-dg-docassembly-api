@@ -150,3 +150,7 @@ variable "dg_template_management_api" {
 variable "dns_server" {
   type = "string"
 }
+
+variable "managed_identity_object_id" {
+  default = ""
+}
