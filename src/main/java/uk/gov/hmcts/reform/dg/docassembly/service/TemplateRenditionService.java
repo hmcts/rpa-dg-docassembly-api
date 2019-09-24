@@ -2,6 +2,8 @@ package uk.gov.hmcts.reform.dg.docassembly.service;
 
 import okhttp3.Response;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import uk.gov.hmcts.reform.dg.docassembly.dto.CreateTemplateRenditionDto;
 import uk.gov.hmcts.reform.dg.docassembly.dto.RenditionOutputType;
@@ -12,6 +14,8 @@ import java.io.IOException;
 
 @Service
 public class TemplateRenditionService {
+
+    private static Logger log = LoggerFactory.getLogger(TemplateRenditionService.class);
 
     private final DmStoreUploader dmStoreUploader;
     private final DocmosisApiClient docmosisApiClient;
@@ -27,9 +31,11 @@ public class TemplateRenditionService {
         Response response = this.docmosisApiClient.render(createTemplateRenditionDto);
 
         if (!response.isSuccessful()) {
-            throw new TemplateRenditionException(
+            TemplateRenditionException exceptionToThrow = new TemplateRenditionException(
                     String.format("Could not render a template %s. HTTP response and message %d, %s",
                             createTemplateRenditionDto.getTemplateId(), response.code(), response.body().string()));
+            log.error(exceptionToThrow.toString(), exceptionToThrow);
+            throw exceptionToThrow;
         }
 
         // Avoiding the utilisation of a user provided parameter and mapping against an enum

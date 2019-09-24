@@ -2,6 +2,8 @@ package uk.gov.hmcts.reform.dg.docassembly.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import pl.touk.throwing.ThrowingFunction;
 import uk.gov.hmcts.reform.dg.docassembly.dto.TemplateIdDto;
@@ -12,6 +14,8 @@ import java.util.Optional;
 
 @Service
 public class FormDefinitionService {
+
+    private static Logger log = LoggerFactory.getLogger(FormDefinitionService.class);
 
     private final TemplateManagementApiClient templateManagementApiClient;
     private final TemplateContentExtractor templateContentExtractor;
@@ -38,10 +42,12 @@ public class FormDefinitionService {
 
 
         } catch (IOException e) {
-            throw new FormDefinitionRetrievalException(
+            FormDefinitionRetrievalException exceptionToThrow = new FormDefinitionRetrievalException(
                     String.format("Could not retrieve form definition for template %s: '%s'",
                             templateIdDto.getTemplateId(),
                             e.getMessage()), e);
+            log.error(exceptionToThrow.getMessage(), exceptionToThrow);
+            throw exceptionToThrow;
         }
 
     }
