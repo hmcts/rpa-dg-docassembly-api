@@ -1,5 +1,9 @@
 package uk.gov.hmcts.reform.dg.docassembly.rest;
 
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +24,10 @@ public class TemplateRenditionResource {
         this.templateRenditionService = templateRenditionService;
     }
 
+    @ApiOperation(
+        value = "Renders a templates using provided values and uploads it to Document Store"
+    )
+    @ApiImplicitParam(name = "ServiceAuthorization", paramType = "header", required = true, dataTypeClass = String.class)
     @PostMapping("/template-renditions")
     public ResponseEntity<CreateTemplateRenditionDto> createTemplateRendition(
             @RequestBody @Valid CreateTemplateRenditionDto createTemplateRenditionDto,

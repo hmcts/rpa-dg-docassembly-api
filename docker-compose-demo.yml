@@ -9,7 +9,7 @@ services:
     environment:
       - SERVER_PORT=8080
       - IDAM_API_BASE_URI=http://idam-api:8080
-      - S2S_BASE_URI=http://service-auth-provider-app:8489
+      - S2S_BASE_URI=http://service-auth-provider-api:8489
       - DM_STORE_APP_URL=http://dm-store:8080
       - APPINSIGHTS_INSTRUMENTATIONKEY=test_app
       # these environment variables are used by java-logging library
@@ -24,10 +24,10 @@ services:
       - ENABLE_FORM_DEFINITION_ENDPOINT=true
       - ENABLE_TEMPLATE_RENDITION_ENDPOINT=true
     ports:
-      - 4631:$SERVER_PORT
+      - 8080:8080
 
-  service-auth-provider-app:
-    image: hmctspublic.azurecr.io/rpe/service-auth-provider-app:latest
+  service-auth-provider-api:
+    image: hmctspublic.azurecr.io/rpe/service-auth-provider:latest
     environment:
       - jwtKey=wThK0f0/lh3FlxFcL4xUWDMI5C1J9KyQBgXV4wseh1e5J1uYJIjvTvArHxQDrYoHJ23xFxjHkOnvNbR5dXRoxA==
 #      - Add key for any microservice that will be used
@@ -106,7 +106,7 @@ services:
       - SPRING_PROFILES_ACTIVE=dev
       - IDAM_TESTING_SUPPORT_ENABLED=true
       - LOGGING_LEVEL_UK_GOV_HMCTS_IDAM=DEBUG
-      - IDAM_S2S_BASE_URI=http://service-auth-provider-app:8489
+      - IDAM_S2S_BASE_URI=http://service-auth-provider-api:8489
       - S2S_NAMES_WHITELIST=em_npa_app,sscs,divorce,ccd,em_gw,ccd_gw,em_stitching_api,em_ccd_orchestrator,dg_docassembly_api
       - http_proxy=
       - https_proxy=
@@ -125,10 +125,10 @@ services:
       - PACKAGES_VERSION=unkown
     links:
       - dm-store-db
-      - service-auth-provider-app
+      - service-auth-provider-api
     depends_on:
       - dm-store-db
-      - service-auth-provider-app
+      - service-auth-provider-api
     ports:
       - 4603:8080
 
@@ -138,5 +138,4 @@ services:
       - POSTGRES_USER=evidence
       - POSTGRES_PASSWORD=evidence
       - POSTGRES_DB=evidence
-    ports:
-      - 5434:5432
+
