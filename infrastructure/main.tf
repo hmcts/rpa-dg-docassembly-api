@@ -90,7 +90,7 @@ module "app" {
 }
 
 module "rpa-dg-docassembly-api-vault" {
-  source              = "git@github.com:hmcts/moj-module-key-vault?ref=master"
+  source              = "git@github.com:hmcts/cnp-module-key-vault?ref=master"
   name                = "${local.vaultName}"
   product             = "${var.product}"
   env                 = "${var.env}"
