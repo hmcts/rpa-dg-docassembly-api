@@ -18,7 +18,7 @@ public class Env {
         defaults.setProperty("S2S_BASE_URI", "http://localhost:4502");
         defaults.setProperty("FUNCTIONAL_TEST_CLIENT_S2S_TOKEN", "AAAAAAAAAAAAAAAA");
         defaults.setProperty("S2S_SERVICE_NAME", "em_gw");
-        defaults.setProperty("ENABLE_FORM_DEFINITION_ENDPOINT", "true");
+        defaults.setProperty("ENABLE_FORM_DEFINITION_ENDPOINT", "false");
         defaults.setProperty("ENABLE_TEMPLATE_RENDITION_ENDPOINT", "true");
     }
 
