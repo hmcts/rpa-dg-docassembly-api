@@ -11,7 +11,7 @@ plugins {
     id 'checkstyle'
     id 'pmd'
     id "com.github.lkishalmi.gatling" version "3.0.2"
-    id 'au.com.dius.pact' version '3.5.24'
+    id 'au.com.dius.pact' version '4.0.0'
 }
 
 apply plugin: 'java'
