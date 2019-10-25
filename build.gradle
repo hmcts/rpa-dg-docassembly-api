@@ -10,7 +10,6 @@ plugins {
     id 'jacoco'
     id 'checkstyle'
     id 'pmd'
-    id "com.github.lkishalmi.gatling" version "3.2.9"
     id 'au.com.dius.pact' version '4.0.1'
 }
 
@@ -210,9 +209,6 @@ dependencyCheck {
 
 sourceSets {
     aat {
-        scala {
-            srcDirs = ['src/aat/java']
-        }
         java {
             compileClasspath += main.output
             runtimeClasspath += main.output
@@ -221,18 +217,7 @@ sourceSets {
         resources {
             srcDir('src/aat/resources')
         }
-        compileClasspath += configurations.gatling
     }
-}
-
-configurations {
-    gatling
-    contractTestCompile.extendsFrom testCompile
-    contractTestRuntime.extendsFrom testRuntime
-}
-
-gatling {
-    logLevel = "INFO"
 }
 
 idea {
@@ -242,28 +227,6 @@ idea {
         testSourceDirs += project.sourceSets.contractTest.java.srcDirs
         testResourceDirs += project.sourceSets.contractTest.resources.srcDirs
     }
-}
-
-task gatlingRunAAT(type: JavaExec) {
-    group = 'gatling'
-    description = 'Run gatling tests'
-    new File("${buildDir}/reports/tests/performance").mkdirs()
-    classpath = sourceSets.aat.runtimeClasspath + configurations.gatling
-    main = "io.gatling.app.Gatling"
-    args = ['-s', 'uk.gov.hmcts.reform.dg.docassembly.performance.NpaLoad',
-            '-rf', "${buildDir}/reports/tests/performance"
-    ]
-}
-
-task gatlingRunSmoke(type: JavaExec) {
-    group = 'gatling'
-    description = 'Run gatling tests'
-    new File("${buildDir}/reports/tests/performance").mkdirs()
-    classpath = sourceSets.aat.runtimeClasspath + configurations.gatling
-    main = "io.gatling.app.Gatling"
-    args = ['-s', 'uk.gov.hmcts.reform.dg.docassembly.performance.NpaSmoke',
-            '-rf', "${buildDir}/reports/tests/performance"
-    ]
 }
 
 task functional(type: Test) {
