@@ -1,4 +1,4 @@
-docassembly-api:
+java:
   applicationPort: 8080
   image: hmctspublic.azurecr.io/dg/docassembly:latest
   readinessDelay: 30
