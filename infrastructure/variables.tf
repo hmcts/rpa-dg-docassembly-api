@@ -144,9 +144,6 @@ variable "dm_store_app_url" {
   default = "dm-store"
 }
 
-variable "dg_template_management_api" {
-  default = "dg-tmpl-mgmt"
-}
 variable "dns_server" {
   type = "string"
 }
