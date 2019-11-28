@@ -5,19 +5,15 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Test;
 import org.springframework.http.MediaType;
-import uk.gov.hmcts.reform.dg.docassembly.testutil.Env;
-import uk.gov.hmcts.reform.dg.docassembly.testutil.TestUtil;
 
 import static uk.gov.hmcts.reform.dg.docassembly.testutil.Base64.base64;
 
-public class TemplateRenditionResourceTests {
-
-    TestUtil testUtil = new TestUtil();
+public class TemplateRenditionResourceTests extends BaseTest {
 
     @Test
     public void testTemplateRendition() {
         // If the Endpoint Toggles are enabled, continue, if not skip and ignore
-        Assume.assumeTrue(Env.isTemplateRenditionEndpointEnabled());
+        Assume.assumeTrue(toggleProperties.isEnableTemplateRenditionEndpoint());
 
         Response response = testUtil
             .authRequest()
@@ -25,7 +21,7 @@ public class TemplateRenditionResourceTests {
             .body("{\"formPayload\":{\"a\":1}, \"templateId\":\""
                     + base64("FL-FRM-APP-ENG-00002.docx")
                     + "\"}")
-            .request("POST",Env.getTestUrl() + "/api/template-renditions");
+            .request("POST",testUtil.getTestUrl() + "/api/template-renditions");
 
         Assert.assertEquals(200, response.getStatusCode());
     }
@@ -33,7 +29,7 @@ public class TemplateRenditionResourceTests {
     @Test
     public void testTemplateRenditionToDoc() {
         // If the Endpoint Toggles are enabled, continue, if not skip and ignore
-        Assume.assumeTrue(Env.isTemplateRenditionEndpointEnabled());
+        Assume.assumeTrue(toggleProperties.isEnableTemplateRenditionEndpoint());
 
         Response response = testUtil
             .authRequest()
@@ -41,7 +37,7 @@ public class TemplateRenditionResourceTests {
             .body("{\"formPayload\":{\"a\":1}, \"outputType\":\"DOC\", \"templateId\":\""
                     + base64("FL-FRM-APP-ENG-00002.docx")
                     + "\"}")
-            .request("POST",Env.getTestUrl() + "/api/template-renditions");
+            .request("POST",testUtil.getTestUrl() + "/api/template-renditions");
 
         Assert.assertEquals(200, response.getStatusCode());
     }
@@ -49,7 +45,7 @@ public class TemplateRenditionResourceTests {
     @Test
     public void testTemplateRenditionToDocX() {
         // If the Endpoint Toggles are enabled, continue, if not skip and ignore
-        Assume.assumeTrue(Env.isTemplateRenditionEndpointEnabled());
+        Assume.assumeTrue(toggleProperties.isEnableTemplateRenditionEndpoint());
 
         Response response = testUtil
             .authRequest()
@@ -57,7 +53,7 @@ public class TemplateRenditionResourceTests {
             .body("{\"formPayload\":{\"a\":1}, \"outputType\":\"DOCX\", \"templateId\":\""
                     + base64("FL-FRM-APP-ENG-00002.docx")
                     + "\"}")
-            .request("POST",Env.getTestUrl() + "/api/template-renditions");
+            .request("POST",testUtil.getTestUrl() + "/api/template-renditions");
 
         Assert.assertEquals(200, response.getStatusCode());
     }
