@@ -27,7 +27,7 @@ ccd-def:
     url: http://localhost:4451
 
 document_management:
-  url: docker ps
+  url: http://localhost:4603
 
 core_case_data:
   api:
