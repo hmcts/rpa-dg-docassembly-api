@@ -16,11 +16,9 @@ idam:
 
 s2s:
   api:
-    url: http://localhost:4502
-    secret: AAAAAAAAAAAAAAAA
-    serviceName: em_gw
-    ccdGwSecret: AAAAAAAAAAAAAAAA
-    ccdGwServiceName: ccd_gw
+    url: ${S2S_BASE_URI:http://localhost:4502}
+    secret: ${FUNCTIONAL_TEST_CLIENT_S2S_TOKEN:AAAAAAAAAAAAAAAA}
+    serviceName: ${S2S_SERVICE_NAME:em_gw}
 
 ccd-def:
   api:
