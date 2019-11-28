@@ -88,13 +88,11 @@ services:
       - IDAM_TESTING_SUPPORT_ENABLED=true
       - LOGGING_LEVEL_UK_GOV_HMCTS_IDAM=DEBUG
       - IDAM_S2S_BASE_URI=http://service-auth-provider-app:8489
-      - S2S_NAMES_WHITELIST=em_npa_app,sscs,divorce,ccd,em_gw,ccd_gw,em_stitching_api,em_ccd_orchestrator
+      - S2S_NAMES_WHITELIST=em_npa_app,sscs,divorce,ccd,em_gw,ccd_gw,em_stitching_api,em_ccd_orchestrator,dg_docassembly_api
       - http_proxy=
       - https_proxy=
       - no_proxy=
       #      logging env vars
-      - ROOT_APPENDER=JSON_CONSOLE
-      - JSON_CONSOLE_PRETTY_PRINT=false
       - REFORM_SERVICE_TYPE=java
       - REFORM_SERVICE_NAME=dm-store
       - REFORM_TEAM=evidence

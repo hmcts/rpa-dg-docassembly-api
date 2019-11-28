@@ -2,24 +2,25 @@ package uk.gov.hmcts.reform.dg.docassembly.functional;
 
 import io.restassured.response.Response;
 import org.junit.Assert;
-import org.junit.Test;
 import org.junit.Assume;
+import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import uk.gov.hmcts.reform.dg.docassembly.testutil.Env;
-import uk.gov.hmcts.reform.dg.docassembly.testutil.TestUtil;
+import uk.gov.hmcts.reform.dg.docassembly.testutil.ToggleProperties;
 
 import static uk.gov.hmcts.reform.dg.docassembly.testutil.Base64.base64;
-public class FormDefinitionResourceTests {
-    TestUtil testUtil = new TestUtil();
+
+public class FormDefinitionResourceTests extends BaseTest {
 
     @Test
     public void testFormDefinitionGetTemplateWithUIDefinition() {
         // If the Endpoint Toggles are enabled, continue, if not skip and ignore
-        Assume.assumeTrue(Env.isFormDefinitionEndpointEnabled());
+        Assume.assumeTrue(toggleProperties.isEnableFormDefinitionEndpoint());
 
         Response response = testUtil
             .authRequest()
             .request("GET",
-                Env.getTestUrl()
+                testUtil.getTestUrl()
                 + "/api/form-definitions/"
                 + base64("CV-CMC-GOR-ENG-0004-UI-Test.docx")
             );
@@ -30,12 +31,12 @@ public class FormDefinitionResourceTests {
     @Test
     public void testFormDefinitionGetNotExistingTemplate() {
         // If the Endpoint Toggles are enabled, continue, if not skip and ignore
-        Assume.assumeTrue(Env.isFormDefinitionEndpointEnabled());
+        Assume.assumeTrue(toggleProperties.isEnableFormDefinitionEndpoint());
 
         Response response = testUtil
             .authRequest()
             .request("GET",
-                Env.getTestUrl()
+                    testUtil.getTestUrl()
                 + "/api/form-definitions/"
                 + base64("dont-exist.docx")
             );
@@ -46,12 +47,12 @@ public class FormDefinitionResourceTests {
     @Test
     public void testFormDefinitionGetTemplateWithoutUIDefinition() {
         // If the Endpoint Toggles are enabled, continue, if not skip and ignore
-        Assume.assumeTrue(Env.isFormDefinitionEndpointEnabled());
+        Assume.assumeTrue(toggleProperties.isEnableFormDefinitionEndpoint());
 
         Response response = testUtil
             .authRequest()
             .request("GET",
-                Env.getTestUrl()
+                testUtil.getTestUrl()
                 + "/api/form-definitions/"
                 + base64("FL-FRM-APP-ENG-00002.docx")
             );
