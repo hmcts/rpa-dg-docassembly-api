@@ -4,9 +4,6 @@ import io.restassured.response.Response;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import uk.gov.hmcts.reform.dg.docassembly.testutil.Env;
-import uk.gov.hmcts.reform.dg.docassembly.testutil.ToggleProperties;
 
 import static uk.gov.hmcts.reform.dg.docassembly.testutil.Base64.base64;
 
