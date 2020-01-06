@@ -40,6 +40,8 @@
         <cve>CVE-2016-6798</cve>
         <cve>CVE-2016-5394</cve>
         <cve>CVE-2019-12415</cve>
+        <cve>CVE-2019-12418</cve>
+        <cve>CVE-2019-17563</cve>
     </suppress>
     <suppress>
         <notes><![CDATA[
