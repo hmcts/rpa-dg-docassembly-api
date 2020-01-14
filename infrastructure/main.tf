@@ -8,14 +8,6 @@ locals {
   local_env = "${(var.env == "preview" || var.env == "spreview") ? (var.env == "preview" ) ? "aat" : "saat" : var.env}"
   shared_vault_name = "${var.shared_product_name}-${local.local_env}"
 
-  previewVaultName = "${local.app_full_name}-aat"
-  nonPreviewVaultName = "${local.app_full_name}-${var.env}"
-  vaultName = "${(var.env == "preview" || var.env == "spreview") ? local.previewVaultName : local.nonPreviewVaultName}"
-
-  nonPreviewVaultUri = "${module.rpa-dg-docassembly-api-vault.key_vault_uri}"
-  previewVaultUri = "https://cet-online-app-aat.vault.azure.net/"
-  vaultUri = "${(var.env == "preview" || var.env == "spreview") ? local.previewVaultUri : local.nonPreviewVaultUri}"
-
   previewEnv= "aat"
   nonPreviewEnv = "${var.env}"
 
@@ -90,16 +82,15 @@ module "app" {
   }
 }
 
-module "rpa-dg-docassembly-api-vault" {
-  source              = "git@github.com:hmcts/cnp-module-key-vault?ref=master"
-  name                = "${local.vaultName}"
-  product             = "${var.product}"
-  env                 = "${var.env}"
-  tenant_id           = "${var.tenant_id}"
-  object_id           = "${var.jenkins_AAD_objectId}"
+module "local_key_vault" {
+  source = "git@github.com:hmcts/cnp-module-key-vault?ref=master"
+  product = "${local.app_full_name}"
+  env = "${var.env}"
+  tenant_id = "${var.tenant_id}"
+  object_id = "${var.jenkins_AAD_objectId}"
   resource_group_name = "${module.app.resource_group_name}"
-  product_group_object_id = "ffb5f9a3-b686-4325-a26e-746db5279a42"
-  common_tags  = "${var.common_tags}"
+  product_group_object_id = "5d9cd025-a293-4b97-a0e5-6f43efce02c0"
+  common_tags = "${var.common_tags}"
   managed_identity_object_id = "${var.managed_identity_object_id}"
 }
 
@@ -139,8 +130,8 @@ data "azurerm_key_vault" "product" {
 
 # Copy s2s key from shared to local vault
 data "azurerm_key_vault" "local_key_vault" {
-  name = "${local.vaultName}"
-  resource_group_name = "${local.vaultName}"
+  name = "${module.local_key_vault.key_vault_name}"
+  resource_group_name = "${module.local_key_vault.key_vault_name}"
 }
 
 resource "azurerm_key_vault_secret" "local_s2s_key" {
