@@ -137,7 +137,7 @@ data "azurerm_key_vault" "local_key_vault" {
 resource "azurerm_key_vault_secret" "local_s2s_key" {
   name         = "microservicekey-dg-docassembly-api"
   value        = "${data.azurerm_key_vault_secret.s2s_key.value}"
-  key_vault_id = data.azurerm_key_vault.local_key_vault.id
+  key_vault_id = "${data.azurerm_key_vault.local_key_vault.id}"
 }
 
 # Copy docmosis keys to local
