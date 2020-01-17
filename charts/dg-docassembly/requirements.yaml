@@ -1,6 +1,4 @@
 dependencies:
-
   - name: java
-    version: '~2.3.1'
+    version: '~2.11.2'
     repository: '@hmctspublic'
-    alias: docassembly-api

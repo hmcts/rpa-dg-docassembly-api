@@ -1,6 +1,5 @@
-docassembly-api:
+java:
   # Don't modify below here
   image: ${IMAGE_NAME}
   ingressHost: ${SERVICE_FQDN}
-postgresql:
-  enabled: true
+  aadIdentityName:

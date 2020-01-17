@@ -2,16 +2,15 @@
 plugins {
     id 'application'
     id 'io.spring.dependency-management' version '1.0.8.RELEASE'
-    id 'org.springframework.boot' version '2.1.6.RELEASE'
-    id 'org.owasp.dependencycheck' version '5.2.1'
-    id 'com.github.ben-manes.versions' version '0.21.0'
-    id "se.patrikerdes.use-latest-versions" version "0.2.11"
-    id 'org.sonarqube' version '2.7.1'
+    id 'org.springframework.boot' version '2.2.2.RELEASE'
+    id 'org.owasp.dependencycheck' version '5.2.4'
+    id 'com.github.ben-manes.versions' version '0.27.0'
+    id "se.patrikerdes.use-latest-versions" version "0.2.13"
+    id 'org.sonarqube' version '2.8'
     id 'jacoco'
     id 'checkstyle'
     id 'pmd'
-    id "com.github.lkishalmi.gatling" version "3.0.2"
-    id 'au.com.dius.pact' version '3.5.24'
+    id 'au.com.dius.pact' version '4.0.4'
 }
 
 apply plugin: 'java'
@@ -65,7 +64,7 @@ sourceSets {
 }
 
 dependencies {
-    compile "com.squareup.okhttp3:okhttp:4.0.1"
+    compile "com.squareup.okhttp3:okhttp:4.3.1"
     compile "com.fasterxml.jackson.datatype:jackson-datatype-json-org:2.+"
     compile "com.fasterxml.jackson.core:jackson-core:2.+"
     compile "com.fasterxml.jackson.core:jackson-annotations:2.+"
@@ -77,10 +76,10 @@ dependencies {
     compile "org.springframework.boot:spring-boot-starter-web"
     compile "org.springframework.boot:spring-boot-starter-actuator"
     compile "org.springframework.boot:spring-boot-starter-security"
-    compile "org.zalando:problem-spring-web:0.24.0-RC.0"
+    compile "org.zalando:problem-spring-web:0.25.2"
     compile "pl.touk:throwing-function:1.3"
     compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.9'
-    compile group: 'org.apache.poi', name: 'poi-ooxml', version: '4.1.0'
+    compile group: 'org.apache.poi', name: 'poi-ooxml', version: '4.1.1'
     compile group: 'com.microsoft.azure', name: 'applicationinsights-core', version: '2.4.0'
     compile group: 'commons-validator', name: 'commons-validator', version: '1.6'
     compile group: 'commons-io', name: 'commons-io', version: '2.6'
@@ -88,7 +87,7 @@ dependencies {
     compile group: 'uk.gov.hmcts.reform', name: 'service-auth-provider-client', version: '2.0.1'
     compile group: 'uk.gov.hmcts.reform', name: 'java-logging-appinsights', version: '5.0.1'
     compile group: 'uk.gov.hmcts.reform', name: 'java-logging-spring', version: '5.0.1'
-    compile group: 'uk.gov.hmcts.reform', name: 'health-spring-boot-starter', version: '0.0.4'
+    compile group: 'uk.gov.hmcts.reform', name: 'health-spring-boot-starter', version: '0.0.5'
     compile group: 'uk.gov.hmcts.reform', name: 'properties-volume-spring-boot-starter', version:'0.0.4'
 
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
@@ -96,13 +95,13 @@ dependencies {
     testCompile "org.springframework.boot:spring-boot-starter-test"
     testCompile "com.github.gmazzo:okhttp-mock:1.3.1"
     testCompile "io.rest-assured:rest-assured:4.0.0"
-    testCompile group: 'io.rest-assured', name: 'json-path', version: '4.0.0'
-    testCompile group: 'io.rest-assured', name: 'xml-path', version: '4.0.0'
+    testCompile group: 'io.rest-assured', name: 'json-path', version: '4.1.2'
+    testCompile group: 'io.rest-assured', name: 'xml-path', version: '4.1.2'
 
-    testCompileOnly 'junit:junit:4.12'
+    testCompileOnly 'junit:junit:4.13'
     testRuntimeOnly 'org.junit.vintage:junit-vintage-engine:5.3.2'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.3.2'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.3.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.5.2'
 
     testCompile "org.junit.jupiter:junit-jupiter-api:5.3.2"
     testRuntime "org.junit.jupiter:junit-jupiter-engine:5.3.2"
@@ -118,6 +117,8 @@ dependencies {
 
     contractTestCompile sourceSets.main.runtimeClasspath
     contractTestCompile sourceSets.test.runtimeClasspath
+
+    aatCompile "uk.gov.hmcts.reform:em-test-helper:1.14"
 }
 
 bootJar {
@@ -210,9 +211,6 @@ dependencyCheck {
 
 sourceSets {
     aat {
-        scala {
-            srcDirs = ['src/aat/java']
-        }
         java {
             compileClasspath += main.output
             runtimeClasspath += main.output
@@ -221,18 +219,7 @@ sourceSets {
         resources {
             srcDir('src/aat/resources')
         }
-        compileClasspath += configurations.gatling
     }
-}
-
-configurations {
-    gatling
-    contractTestCompile.extendsFrom testCompile
-    contractTestRuntime.extendsFrom testRuntime
-}
-
-gatling {
-    logLevel = "INFO"
 }
 
 idea {
@@ -242,28 +229,6 @@ idea {
         testSourceDirs += project.sourceSets.contractTest.java.srcDirs
         testResourceDirs += project.sourceSets.contractTest.resources.srcDirs
     }
-}
-
-task gatlingRunAAT(type: JavaExec) {
-    group = 'gatling'
-    description = 'Run gatling tests'
-    new File("${buildDir}/reports/tests/performance").mkdirs()
-    classpath = sourceSets.aat.runtimeClasspath + configurations.gatling
-    main = "io.gatling.app.Gatling"
-    args = ['-s', 'uk.gov.hmcts.reform.dg.docassembly.performance.NpaLoad',
-            '-rf', "${buildDir}/reports/tests/performance"
-    ]
-}
-
-task gatlingRunSmoke(type: JavaExec) {
-    group = 'gatling'
-    description = 'Run gatling tests'
-    new File("${buildDir}/reports/tests/performance").mkdirs()
-    classpath = sourceSets.aat.runtimeClasspath + configurations.gatling
-    main = "io.gatling.app.Gatling"
-    args = ['-s', 'uk.gov.hmcts.reform.dg.docassembly.performance.NpaSmoke',
-            '-rf', "${buildDir}/reports/tests/performance"
-    ]
 }
 
 task functional(type: Test) {

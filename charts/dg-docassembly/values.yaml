@@ -1,4 +1,4 @@
-docassembly-api:
+java:
   applicationPort: 8080
   image: hmctspublic.azurecr.io/dg/docassembly:latest
   readinessDelay: 30
@@ -9,25 +9,20 @@ docassembly-api:
   livenessTimeout: 5
   livenessPeriod: 15
   livenessFailureThreshold: 10
-#  # TODO hit liveness endpoint
-#  livenessPath: '/health'
+  aadIdentityName: dg
   keyVaults:
-    rpa:
-      resourceGroup: rpa
+    dg-docassembly:
+      resourceGroup: dg-docassembly
       secrets:
+        - microservicekey-dg-docassembly-api
         - AppInsightsInstrumentationKey
         - docmosis-templates-auth
         - docmosis-access-key
-    s2s:
-      resourceGroup: rpe-service-auth-provider
-      secrets:
-        - microservicekey-dg-docassembly-api
   environment:
-    # Regardless of environment, point towards AAT instances. Overwrite in product charts etc.
-    IDAM_API_BASE_URI: https://idam-api.aat.platform.hmcts.net
-    S2S_BASE_URI: http://rpe-service-auth-provider-aat.service.core-compute-aat.internal
+    IDAM_API_BASE_URI: https://idam-api.{{ .Values.global.environment }}.platform.hmcts.net
+    S2S_BASE_URI: http://rpe-service-auth-provider-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal
     IDAM_WEBSHOW_WHITELIST: https://em-show-aat.service.core-compute-aat.internal/oauth2/callback
-    DM_STORE_APP_URL: http://dm-store-aat.service.core-compute-aat.internal
+    DM_STORE_APP_URL: http://dm-store-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal
     DOCMOSIS_TEMPLATES_ENDPOINT: https://docmosis-development.platform.hmcts.net
     DOCMOSIS_ENDPOINT: https://docmosis-development.platform.hmcts.net/rs/render
 
@@ -45,7 +40,7 @@ docassembly-api:
     LOG_LEVEL_DM: INFO
     ENDPOINTS_HEALTH_SENSITIVE: false
     ENDPOINTS_INFO_SENSITIVE: false
-    S2S_NAMES_WHITELIST: em_api,em_gw,ccd_gw,ccd_data,sscs,dg_tmpl_mgmt, dg_docassembly, divorce_document_upload,divorce_document_generator,probate_backend,jui_webapp,pui_webapp
+    S2S_NAMES_WHITELIST: em_api,em_gw,ccd_gw,ccd_data,sscs,divorce_document_upload,divorce_document_generator,probate_backend,jui_webapp,pui_webapp,cmc_claim_store
     CASE_WORKER_ROLES: caseworker-probate,caseworker-cmc,caseworker-sscs,caseworker-divorce
     ENABLE_IDAM_HEALTH_CHECK: false
     ENABLE_S2S_HEALTH_CHECK: false
