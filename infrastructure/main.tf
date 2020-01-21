@@ -30,7 +30,7 @@ module "app" {
   asp_rg = "${var.shared_product_name}-${var.env}"
   asp_name = "${var.shared_product_name}-dg-${var.env}"
   appinsights_instrumentation_key = "${data.azurerm_key_vault_secret.app_insights_key.value}"
-  enable_ase                      = false
+  //enable_ase                      = false
 
   app_settings = {
     # idam
