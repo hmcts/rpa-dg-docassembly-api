@@ -14,7 +14,7 @@ public class SmokeTest {
     @Autowired
     private TestUtil testUtil;
 
-    @Test
+//    @Test
     public void testHealthEndpoint() {
 
         RestAssured.useRelaxedHTTPSValidation();
