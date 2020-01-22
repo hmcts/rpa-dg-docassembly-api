@@ -31,9 +31,9 @@ public class TestUtil {
 
     @PostConstruct
     public void init() {
-        idamHelper.createUser("a@b.com", Stream.of("caseworker").collect(Collectors.toList()));
+        idamHelper.createUser("testytesttest@test.org", Stream.of("caseworker").collect(Collectors.toList()));
         RestAssured.useRelaxedHTTPSValidation();
-        idamAuth = idamHelper.authenticateUser("a@b.com");
+        idamAuth = idamHelper.authenticateUser("testytesttest@test.org");
         s2sAuth = s2sHelper.getS2sToken();
     }
 
