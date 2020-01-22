@@ -1,6 +1,6 @@
 package uk.gov.hmcts.reform.dg.docassembly.smoke;
 
-import io.restassured.RestAssured;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,15 +18,8 @@ public class SmokeTest {
     @Autowired
     private TestUtil testUtil;
 
+    @Test
     public void testHealthEndpoint() {
-
-        RestAssured.useRelaxedHTTPSValidation();
-
-        RestAssured.given()
-            .request("GET", testUtil.getTestUrl() + "/health")
-            .then()
-            .statusCode(200);
-
 
     }
 }
