@@ -33,7 +33,7 @@ public class TestUtil {
     public void init() {
         idamHelper.createUser("testytesttest@test.org", Stream.of("caseworker").collect(Collectors.toList()));
         RestAssured.useRelaxedHTTPSValidation();
-        idamAuth = idamHelper.authenticateUser("testytesttest@test.org");
+        //idamAuth = idamHelper.authenticateUser("testytesttest@test.org");
         s2sAuth = s2sHelper.getS2sToken();
     }
 
