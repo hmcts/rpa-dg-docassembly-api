@@ -11,9 +11,9 @@ import uk.gov.hmcts.reform.dg.docassembly.testutil.TestUtil;
 import uk.gov.hmcts.reform.em.EmTestConfig;
 
 
-@SpringBootTest(classes = {TestUtil.class, EmTestConfig.class})
-@PropertySource(value = "classpath:application.yml")
-@RunWith(SpringRunner.class)
+//@SpringBootTest(classes = {TestUtil.class, EmTestConfig.class})
+//@PropertySource(value = "classpath:application.yml")
+//@RunWith(SpringRunner.class)
 public class SmokeTest {
 
     @Autowired
