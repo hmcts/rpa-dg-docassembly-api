@@ -1,7 +1,6 @@
 package uk.gov.hmcts.reform.dg.docassembly.smoke;
 
 import io.restassured.RestAssured;
-import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import uk.gov.hmcts.reform.dg.docassembly.testutil.TestUtil;
 
