@@ -1,13 +1,18 @@
 package uk.gov.hmcts.reform.dg.docassembly.smoke;
 
 import io.restassured.RestAssured;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.test.context.junit4.SpringRunner;
 import uk.gov.hmcts.reform.dg.docassembly.testutil.TestUtil;
+import uk.gov.hmcts.reform.em.EmTestConfig;
 
 
-//@SpringBootTest(classes = {TestUtil.class, EmTestConfig.class})
-//@PropertySource(value = "classpath:application.yml")
-//@RunWith(SpringRunner.class)
+@SpringBootTest(classes = {TestUtil.class, EmTestConfig.class})
+@PropertySource(value = "classpath:application.yml")
+@RunWith(SpringRunner.class)
 public class SmokeTest {
 
     @Autowired
