@@ -45,7 +45,6 @@ def vaultOverrides = [
 ]
 
 withPipeline(type , product, component) {
-    enableDockerBuild()
     overrideVaultEnvironments(vaultOverrides)
     loadVaultSecrets(secrets)
     disableLegacyDeployment()
