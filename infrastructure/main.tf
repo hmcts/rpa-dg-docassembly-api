@@ -13,6 +13,7 @@ locals {
 
   local_ase = "${(var.env == "preview" || var.env == "spreview") ? (var.env == "preview" ) ? "core-compute-aat" : "core-compute-saat" : local.ase_name}"
   s2s_base_uri = "http://${var.s2s_name}-${local.local_env}.service.${local.local_ase}.internal"
+  tags = "${merge(var.common_tags, map("Team Contact", "#rpe"))}"
 }
 
 module "local_key_vault" {
@@ -101,4 +102,5 @@ resource "azurerm_key_vault_secret" "local_app_insights_key" {
 resource "azurerm_resource_group" "rg" {
   name     = "${var.product}-${var.component}-${var.env}"
   location = "${var.location}"
+  tags = "${local.tags}"
 }
