@@ -18,6 +18,7 @@ import org.springframework.web.context.WebApplicationContext;
 import uk.gov.hmcts.reform.authorisation.ServiceAuthorisationApi;
 import uk.gov.hmcts.reform.dg.docassembly.config.ServiceTokenGeneratorConfiguration;
 import uk.gov.hmcts.reform.dg.docassembly.service.DmStoreUploader;
+import uk.gov.hmcts.reform.dg.docassembly.service.FormDefinitionService;
 import uk.gov.hmcts.reform.dg.docassembly.service.TemplateRenditionService;
 
 import java.time.Instant;
@@ -30,9 +31,6 @@ public class BaseTest {
 
     @MockBean
     TemplateRenditionResource templateRenditionResource;
-
-    @MockBean
-    TemplateRenditionService templateRenditionService;
 
     @MockBean
     DmStoreUploader dmStoreUploader;
