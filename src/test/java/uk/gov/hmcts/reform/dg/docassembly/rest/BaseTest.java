@@ -30,9 +30,6 @@ import java.util.Map;
 public class BaseTest {
 
     @MockBean
-    TemplateRenditionResource templateRenditionResource;
-
-    @MockBean
     DmStoreUploader dmStoreUploader;
 
     @MockBean
