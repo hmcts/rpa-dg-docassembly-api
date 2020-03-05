@@ -1,7 +1,6 @@
 package uk.gov.hmcts.reform.dg.docassembly.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;

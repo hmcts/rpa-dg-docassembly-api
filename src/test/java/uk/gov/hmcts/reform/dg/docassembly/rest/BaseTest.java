@@ -16,10 +16,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import uk.gov.hmcts.reform.authorisation.ServiceAuthorisationApi;
-import uk.gov.hmcts.reform.dg.docassembly.config.ServiceTokenGeneratorConfiguration;
 import uk.gov.hmcts.reform.dg.docassembly.service.DmStoreUploader;
-import uk.gov.hmcts.reform.dg.docassembly.service.FormDefinitionService;
-import uk.gov.hmcts.reform.dg.docassembly.service.TemplateRenditionService;
 
 import java.time.Instant;
 import java.util.ArrayList;

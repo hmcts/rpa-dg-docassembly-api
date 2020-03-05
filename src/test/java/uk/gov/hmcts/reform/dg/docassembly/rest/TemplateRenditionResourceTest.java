@@ -1,6 +1,5 @@
 package uk.gov.hmcts.reform.dg.docassembly.rest;
 
-import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -8,16 +7,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
-import uk.gov.hmcts.reform.auth.checker.core.service.Service;
-import uk.gov.hmcts.reform.auth.checker.core.user.User;
 import uk.gov.hmcts.reform.dg.docassembly.Application;
 import uk.gov.hmcts.reform.dg.docassembly.dto.CreateTemplateRenditionDto;
-import uk.gov.hmcts.reform.dg.docassembly.service.FormDefinitionService;
 import uk.gov.hmcts.reform.dg.docassembly.service.TemplateRenditionService;
-
-import javax.servlet.http.HttpServletRequest;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;

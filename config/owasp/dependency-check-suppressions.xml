@@ -57,4 +57,11 @@
         <packageUrl regex="true">^pkg:maven/com\.fasterxml\.jackson\.core/jackson\-databind@.*$</packageUrl>
         <cve>CVE-2019-12384</cve>
     </suppress>
+    <suppress>
+        <notes><![CDATA[
+   file name: nimbus-jose-jwt-7.8.jar
+   ]]></notes>
+        <packageUrl regex="true">^pkg:maven/com\.nimbusds/nimbus\-jose\-jwt@.*$</packageUrl>
+        <cve>CVE-2019-17195</cve>
+    </suppress>
 </suppressions>

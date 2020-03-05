@@ -71,6 +71,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     JwtDecoder jwtDecoder() {
         NimbusJwtDecoder jwtDecoder = (NimbusJwtDecoder) JwtDecoders.fromOidcIssuerLocation(issuerUri);
         OAuth2TokenValidator<Jwt> withTimestamp = new JwtTimestampValidator();
+        // Using issuerOverride instead of issuerUri as Sidam has wrong issuer currently.
         OAuth2TokenValidator<Jwt> withIssuer = new JwtIssuerValidator(issuerOverride);
         OAuth2TokenValidator<Jwt> validator = new DelegatingOAuth2TokenValidator<>(withTimestamp,
                 withIssuer);
