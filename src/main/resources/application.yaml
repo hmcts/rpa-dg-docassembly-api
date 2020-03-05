@@ -91,3 +91,7 @@ dm-store-app:
 endpoint-toggles:
   form-definitions: ${ENABLE_FORM_DEFINITION_ENDPOINT:true}
   template-renditions: ${ENABLE_TEMPLATE_RENDITION_ENDPOINT:true}
+
+# Delete when issueOverride variable is no longer used in SecurityConfiguration.class
+oidc:
+  issuer: ${OIDC_ISSUER_BASE_URI:http://localhost:8080/openam/oauth2/hmcts}
