@@ -1,7 +1,6 @@
 package uk.gov.hmcts.reform.dg.docassembly.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -13,7 +12,6 @@ import uk.gov.hmcts.reform.dg.docassembly.dto.TemplateIdDto;
 import uk.gov.hmcts.reform.dg.docassembly.service.FormDefinitionRetrievalException;
 import uk.gov.hmcts.reform.dg.docassembly.service.FormDefinitionService;
 import uk.gov.hmcts.reform.dg.docassembly.service.TemplateNotFoundException;
-import uk.gov.hmcts.reform.dg.docassembly.service.TemplateRenditionService;
 
 import java.util.Optional;
 
