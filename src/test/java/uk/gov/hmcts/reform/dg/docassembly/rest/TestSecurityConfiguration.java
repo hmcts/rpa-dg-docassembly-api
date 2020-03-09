@@ -1,6 +1,7 @@
 package uk.gov.hmcts.reform.dg.docassembly.rest;
 
 import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.oauth2.client.InMemoryOAuth2AuthorizedClientService;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
@@ -11,6 +12,8 @@ import org.springframework.security.oauth2.client.web.AuthenticatedPrincipalOAut
 import org.springframework.security.oauth2.client.web.OAuth2AuthorizedClientRepository;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
+import uk.gov.hmcts.reform.authorisation.filters.ServiceAuthFilter;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,6 +26,12 @@ public class TestSecurityConfiguration {
     public TestSecurityConfiguration() {
         this.clientRegistration = clientRegistration().build();
     }
+
+    @MockBean
+    ServiceAuthFilter serviceAuthFilter;
+
+    @MockBean
+    private JwtDecoder jwtDecoder;
 
     @Bean
     ClientRegistrationRepository clientRegistrationRepository() {
