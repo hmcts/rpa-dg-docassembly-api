@@ -2,7 +2,6 @@ package uk.gov.hmcts.reform.dg.docassembly.rest;
 
 import org.junit.Before;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -10,13 +9,10 @@ import org.springframework.security.oauth2.client.authentication.OAuth2Authentic
 import org.springframework.security.oauth2.core.oidc.OidcIdToken;
 import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
-import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
-import uk.gov.hmcts.reform.authorisation.ServiceAuthorisationApi;
-import uk.gov.hmcts.reform.dg.docassembly.service.DmStoreUploader;
 
 import java.time.Instant;
 import java.util.ArrayList;
@@ -25,15 +21,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class BaseTest {
-
-    @MockBean
-    DmStoreUploader dmStoreUploader;
-
-    @MockBean
-    ServiceAuthorisationApi serviceAuthorisationApi;
-
-    @MockBean
-    private JwtDecoder jwtDecoder;
 
     @Autowired
     private WebApplicationContext context;
