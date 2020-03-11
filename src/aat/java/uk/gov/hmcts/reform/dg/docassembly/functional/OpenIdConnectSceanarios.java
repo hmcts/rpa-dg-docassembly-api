@@ -65,6 +65,7 @@ public class OpenIdConnectSceanarios extends BaseTest {
     public void testWithEmptyS2SAuth() throws IOException, InterruptedException {
         assumeTrue(toggleProperties.isEnableTemplateRenditionEndpoint());
 
+        exceptionThrown.expect(IllegalArgumentException.class);
         final Response response = testUtil
             .validAuthRequestWithEmptyS2SAuth()
             .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -102,20 +103,6 @@ public class OpenIdConnectSceanarios extends BaseTest {
             .contentType(MediaType.APPLICATION_JSON_VALUE)
             .body(getBodyForRequest())
             .request("POST", testUtil.getTestUrl() + API_TEMPLATE_RENDITIONS_URL);
-    }
-
-    @Test
-    public void testThatNoAuthHeadersArePresentThenExceptionIsRaised() {
-        assumeTrue(toggleProperties.isEnableTemplateRenditionEndpoint());
-
-        exceptionThrown.expect(IllegalArgumentException.class);
-
-        final Response response = testUtil
-            .noHeadersInRequest()
-            .contentType(MediaType.APPLICATION_JSON_VALUE)
-            .body(getBodyForRequest())
-            .request("POST", testUtil.getTestUrl() + API_TEMPLATE_RENDITIONS_URL);
-
     }
 
     private String getBodyForRequest() {
