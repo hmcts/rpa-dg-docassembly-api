@@ -16,9 +16,11 @@ Use the following system variables to provide correct URLs and access keys:
 az login
 az acr login --name hmcts --subscription 1c4f0704-a29e-403d-b719-b90c34ef14c9
 ./gradlew assemble
-docker-compose -f docker-compose-demo.yml pull
-docker-compose -f docker-compose-demo.yml build
-docker-compose -f docker-compose-demo.yml up
+docker-compose -f docker-compose-dependencies.yml pull
+docker-compose -f docker-compose-dependencies.yml up --build
 ```
-
+To set up IDAM data run: `./idam-client-setup.sh`. 
+To check the data you can log into IDAM-web-admin `http://localhost:8082` with:
+Username `idamOwner@hmcts.net`
+Password `Ref0rmIsFun`
 
