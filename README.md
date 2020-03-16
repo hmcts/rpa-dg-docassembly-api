@@ -5,7 +5,7 @@
 
 This service relies heavily on Docmosis API and access to templates available for Docmosis instance.
 
-Use the following system variables to provide correct URLs and access keys:
+Turn on your vpn and use the following system variables to provide correct URLs and access keys:
 
 - DOCMOSIS_TEMPLATES_ENDPOINT
 - DOCMOSIS_TEMPLATES_ENDPOINT_AUTH
