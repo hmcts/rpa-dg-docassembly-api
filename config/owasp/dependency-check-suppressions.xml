@@ -41,6 +41,13 @@
         <cve>CVE-2016-5394</cve>
         <cve>CVE-2019-12418</cve>
         <cve>CVE-2019-17563</cve>
+        <cve>CVE-2019-10782</cve>
+        <cve>CVE-2020-5398</cve>
+        <cve>CVE-2020-5397</cve>
+        <cve>CVE-2020-1938</cve>
+        <cve>CVE-2019-20445</cve>
+        <cve>CVE-2019-20444</cve>
+        <cve>CVE-2020-7238</cve>
     </suppress>
     <suppress>
         <notes><![CDATA[
