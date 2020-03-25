@@ -32,6 +32,15 @@ variable "subscription" {
   type = "string"
 }
 
+variable "open_id_api_base_uri" {
+  default = "idam-api"
+}
+
+variable "oidc_issuer_base_uri" {
+  default = "idam-api"
+}
+
+
 variable "ilbIp"{}
 
 variable "tenant_id" {}
