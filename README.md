@@ -30,3 +30,22 @@ To check the data you can log into IDAM-web-admin `http://localhost:8082` with:
 Username `idamOwner@hmcts.net`
 Password `Ref0rmIsFun`
 
+### Running contract or pact tests:
+
+You can run contract or pact tests as follows:
+
+```
+./gradlew contract
+```
+
+You can then publish your pact tests locally by first running the pact docker-compose:
+
+```
+docker-compose -f docker-pactbroker-compose.yml up
+```
+
+and then using it to publish your tests:
+
+```
+./gradlew pactPublish
+```
