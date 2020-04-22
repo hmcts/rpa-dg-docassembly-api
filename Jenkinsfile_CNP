@@ -45,10 +45,9 @@ def vaultOverrides = [
 ]
 
 withPipeline(type , product, component) {
-    enableDockerBuild()
     overrideVaultEnvironments(vaultOverrides)
     loadVaultSecrets(secrets)
-    //disableLegacyDeployment()
+    disableLegacyDeployment()
     installCharts()
     enableAksStagingDeployment()
     after('test') {
