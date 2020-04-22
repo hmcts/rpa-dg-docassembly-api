@@ -38,6 +38,7 @@ env.S2S_BASE_URI = 'http://rpe-service-auth-provider-demo.service.core-compute-d
 env.IDAM_WEBSHOW_WHITELIST = 'https://em-show-aat.service.core-compute-aat.internal/oauth2/callback'
 env.DM_STORE_APP_URL = 'http://dm-store-demo.service.core-compute-demo.internal'
 env.DG_TEMPLATE_MANAGEMENT_API = 'http://dg-tmpl-mgmt-demo.service.core-compute-demo.internal'
+env.OIDC_ISSUER_BASE_URI = 'https://forgerock-am.service.core-compute-idam-demo.internal:8443/openam/oauth2/hmcts'
 
 def vaultOverrides = [
         'preview' : 'aat',
