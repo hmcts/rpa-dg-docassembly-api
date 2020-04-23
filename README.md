@@ -33,6 +33,9 @@ Password `Ref0rmIsFun`
 ### Running contract or pact tests:
 
 You can run contract or pact tests as follows:
+```
+./gradlew clean
+```
 
 ```
 ./gradlew contract
