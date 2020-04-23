@@ -38,69 +38,69 @@ provider "vault" {
   address = "https://vault.reform.hmcts.net:6200"
 }
 
-data "azurerm_key_vault" "shared_key_vault" {
-  name = "${local.shared_vault_name}"
-  resource_group_name = "${local.shared_vault_name}"
-}
+#data "azurerm_key_vault" "shared_key_vault" {
+#  name = "${local.shared_vault_name}"
+#  resource_group_name = "${local.shared_vault_name}"
+#}
 
-data "azurerm_key_vault_secret" "docmosis_access_key" {
-  name      = "docmosis-access-key"
-  key_vault_id = "${data.azurerm_key_vault.shared_key_vault.id}"
-}
+#data "azurerm_key_vault_secret" "docmosis_access_key" {
+#  name      = "docmosis-access-key"
+#  key_vault_id = "${data.azurerm_key_vault.shared_key_vault.id}"
+#}
 
-data "azurerm_key_vault_secret" "docmosis_templates_auth" {
-  name      = "docmosis-templates-auth"
-  key_vault_id = "${data.azurerm_key_vault.shared_key_vault.id}"
-}
+#data "azurerm_key_vault_secret" "docmosis_templates_auth" {
+#  name      = "docmosis-templates-auth"
+#  key_vault_id = "${data.azurerm_key_vault.shared_key_vault.id}"
+#}
 
-data "azurerm_key_vault" "s2s_vault" {
-  name = "s2s-${local.local_env}"
-  resource_group_name = "rpe-service-auth-provider-${local.local_env}"
-}
+#data "azurerm_key_vault" "s2s_vault" {
+#  name = "s2s-${local.local_env}"
+#  resource_group_name = "rpe-service-auth-provider-${local.local_env}"
+#}
 
-data "azurerm_key_vault_secret" "s2s_key" {
-  name      = "microservicekey-dg-docassembly-api"
-  key_vault_id = "${data.azurerm_key_vault.s2s_vault.id}"
-}
+#data "azurerm_key_vault_secret" "s2s_key" {
+#  name      = "microservicekey-dg-docassembly-api"
+#  key_vault_id = "${data.azurerm_key_vault.s2s_vault.id}"
+#}
 
-data "azurerm_key_vault" "product" {
-  name = "${var.shared_product_name}-${var.env}"
-  resource_group_name = "${var.shared_product_name}-${var.env}"
-}
+#data "azurerm_key_vault" "product" {
+#  name = "${var.shared_product_name}-${var.env}"
+#  resource_group_name = "${var.shared_product_name}-${var.env}"
+#}
 
 # Copy s2s key from shared to local vault
-data "azurerm_key_vault" "local_key_vault" {
-  name = "${module.local_key_vault.key_vault_name}"
-  resource_group_name = "${azurerm_resource_group.rg.name}"
-}
+#data "azurerm_key_vault" "local_key_vault" {
+#  name = "${module.local_key_vault.key_vault_name}"
+#  resource_group_name = "${azurerm_resource_group.rg.name}"
+#}
 
-resource "azurerm_key_vault_secret" "local_s2s_key" {
-  name         = "microservicekey-dg-docassembly-api"
-  value        = "${data.azurerm_key_vault_secret.s2s_key.value}"
-  key_vault_id = "${data.azurerm_key_vault.local_key_vault.id}"
-}
+#resource "azurerm_key_vault_secret" "local_s2s_key" {
+#  name         = "microservicekey-dg-docassembly-api"
+#  value        = "${data.azurerm_key_vault_secret.s2s_key.value}"
+#  key_vault_id = "${data.azurerm_key_vault.local_key_vault.id}"
+#}
 
 # Copy docmosis keys to local
-resource "azurerm_key_vault_secret" "local_docmosis_access_key" {
-  name         = "docmosis-access-key"
-  value        = "${data.azurerm_key_vault_secret.docmosis_access_key.value}"
-  key_vault_id = "${data.azurerm_key_vault.local_key_vault.id}"
-}
+#resource "azurerm_key_vault_secret" "local_docmosis_access_key" {
+#  name         = "docmosis-access-key"
+#  value        = "${data.azurerm_key_vault_secret.docmosis_access_key.value}"
+#  key_vault_id = "${data.azurerm_key_vault.local_key_vault.id}"
+#}
 
-resource "azurerm_key_vault_secret" "local_docmosis_templates_auth" {
-  name         = "docmosis-templates-auth"
-  value        = "${data.azurerm_key_vault_secret.docmosis_templates_auth.value}"
-  key_vault_id = "${data.azurerm_key_vault.local_key_vault.id}"
-}
+#resource "azurerm_key_vault_secret" "local_docmosis_templates_auth" {
+#  name         = "docmosis-templates-auth"
+#  value        = "${data.azurerm_key_vault_secret.docmosis_templates_auth.value}"
+#  key_vault_id = "${data.azurerm_key_vault.local_key_vault.id}"
+#}
 
 # Load AppInsights key from rpa vault
-data "azurerm_key_vault_secret" "app_insights_key" {
-  name      = "AppInsightsInstrumentationKey"
-  key_vault_id = "${data.azurerm_key_vault.product.id}"
-}
+#data "azurerm_key_vault_secret" "app_insights_key" {
+#  name      = "AppInsightsInstrumentationKey"
+#  key_vault_id = "${data.azurerm_key_vault.product.id}"
+#}
 
-resource "azurerm_key_vault_secret" "local_app_insights_key" {
-  name         = "AppInsightsInstrumentationKey"
-  value        = "${data.azurerm_key_vault_secret.app_insights_key.value}"
-  key_vault_id = "${data.azurerm_key_vault.local_key_vault.id}"
-}
+#resource "azurerm_key_vault_secret" "local_app_insights_key" {
+#  name         = "AppInsightsInstrumentationKey"
+#  value        = "${data.azurerm_key_vault_secret.app_insights_key.value}"
+#  key_vault_id = "${data.azurerm_key_vault.local_key_vault.id}"
+#}
