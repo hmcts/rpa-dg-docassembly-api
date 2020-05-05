@@ -206,19 +206,6 @@ dependencyCheck {
     }
 }
 
-sourceSets {
-    aat {
-        java {
-            compileClasspath += main.output
-            runtimeClasspath += main.output
-            srcDir('src/aat/java')
-        }
-        resources {
-            srcDir('src/aat/resources')
-        }
-    }
-}
-
 idea {
     module {
         testSourceDirs += project.sourceSets.aat.java.srcDirs
@@ -259,6 +246,12 @@ task contract(type: Test) {
     environment("APPINSIGHTS_INSTRUMENTATIONKEY", "test-key")
 }
 
+task runAndPublishConsumerPactTests(type: Test){
+    logger.lifecycle("Runs pact Tests")
+    testClassesDirs = sourceSets.contractTest.output.classesDirs
+    classpath = sourceSets.contractTest.runtimeClasspath
+
+}
 project.ext {
     pactVersion = getCheckedOutGitCommitHash()
 }
@@ -270,7 +263,7 @@ def getCheckedOutGitCommitHash() {
 pact {
     publish {
         pactDirectory = 'pacts'
-        pactBrokerUrl = System.getenv("PACT_BROKER_FULL_URL") ?: 'http://localhost:80'
+        pactBrokerUrl = System.getenv("PACT_BROKER_FULL_URL") ?: 'https://localhost:80'
         tags = [System.getenv("PACT_BRANCH_NAME") ?: 'Dev']
         version = project.pactVersion
     }
