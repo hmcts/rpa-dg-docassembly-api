@@ -189,6 +189,10 @@
         <cve>CVE-2008-4293</cve>
         <cve>CVE-2010-5227</cve>
         <cve>CVE-2019-19788</cve>
+        <cve>CVE-2020-11505</cve>
+        <cve>CVE-2020-9488</cve>
+        <cve>CVE-2011-4969</cve>
+        <cve>CVE-2020-1745</cve>
     </suppress>
     <suppress>
         <notes><![CDATA[
@@ -196,6 +200,28 @@
       ]]></notes>
         <packageUrl regex="true">^pkg:maven/com\.fasterxml\.jackson\.core/jackson\-databind@.*$</packageUrl>
         <cve>CVE-2019-12384</cve>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[file name: scala-library-2.12.5.jar]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.scala\-lang/scala\-library@.*$</packageUrl>
+        <vulnerabilityName>CWE-79: Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')</vulnerabilityName>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[
+       file name: scala-compiler-2.12.4.jar: jquery.js
+       ]]></notes>
+        <packageUrl regex="true">^pkg:javascript/jquery@.*$</packageUrl>
+        <vulnerabilityName>Regex in its jQuery.htmlPrefilter  sometimes may introduce XSS</vulnerabilityName>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[
+   pulled in by liquibase gradle plugin, only used on jenkins
+   ]]></notes>
+        <packageUrl regex="true">^pkg:javascript/bootstrap@.*$</packageUrl>
+        <cve>CVE-2018-14040</cve>
+        <cve>CVE-2018-14041</cve>
+        <cve>CVE-2018-14042</cve>
+        <cve>CVE-2019-8331</cve>
     </suppress>
     <suppress>
         <notes><![CDATA[
