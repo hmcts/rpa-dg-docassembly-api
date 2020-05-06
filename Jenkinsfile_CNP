@@ -59,7 +59,4 @@ withPipeline(type , product, component) {
         sh ./publish-swagger-docs.sh
          '''
     }
-    enablePactAs([
-            AppPipelineDsl.PactRoles.CONSUMER
-    ])
 }
