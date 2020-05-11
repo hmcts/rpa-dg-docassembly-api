@@ -124,7 +124,7 @@ dependencies {
     testCompile group: 'net.serenity-bdd', name: 'serenity-core', version: versions.serenity
     testCompile group: 'net.serenity-bdd', name: 'serenity-junit', version: versions.serenity
     testCompile group: 'net.serenity-bdd', name: 'serenity-spring', version: versions.serenity
-    testCompile group: 'net.serenity-bdd', name: 'serenity-single-page-report', version: versions.serenityreporter
+    testCompile group: 'net.serenity-bdd', name: 'serenity-single-page-report', version: versions.serenityreporter    
     
     contractTestCompile group: 'au.com.dius', name: 'pact-jvm-consumer-junit5_2.12', version: versions.pact_version
     contractTestCompile group: 'au.com.dius', name: 'pact-jvm-consumer-java8_2.12', version: versions.pact_version
@@ -276,6 +276,10 @@ def getCheckedOutGitCommitHash() {
     'git rev-parse --verify --short HEAD'.execute().text.trim()
 }
 
+serenity {
+    reports = ["single-page-html"]
+}
+
 pact {
     publish {
         pactDirectory = 'pacts'
@@ -283,10 +287,6 @@ pact {
         tags = [System.getenv("PACT_BRANCH_NAME") ?: 'Dev']
         version = project.pactVersion
     }
-}
-
-serenity {
-    reports = ["single-page-html"]
 }
 
 compileJava.dependsOn processResources
