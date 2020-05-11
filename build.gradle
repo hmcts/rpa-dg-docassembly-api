@@ -236,10 +236,11 @@ task functional(type: Test) {
     setClasspath(sourceSets.aat.runtimeClasspath)
     include "uk/gov/hmcts/reform/dg/docassembly/functional/**"
 
+    // Serenity Single page Reports
+    functional.finalizedBy(aggregate)
+
     environment("APPINSIGHTS_INSTRUMENTATIONKEY", "test-key")
 }
-
-functional.finalizedBy(aggregate)
 
 task smoke(type: Test) {
     group = 'Delivery pipeline'
