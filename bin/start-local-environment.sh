@@ -1,9 +1,7 @@
 #!/bin/bash
 
-## Usage: ./bin/start-local-environment DOCMOSIS_ACCESS_KEY
+## Usage: ./bin/start-local-environment
 ##
-## Options:
-##    - DOCMOSIS_ACCESS_KEY: Access key for docmosis development environment.
 ##
 ## Start local environment including idam client setup.
 
@@ -13,7 +11,6 @@ COMPOSE_FILE="-f docker-compose-dependencies.yml"
 IDAM_URI="http://localhost:5000"
 IDAM_USERNAME="idamOwner@hmcts.net"
 IDAM_PASSWORD="Ref0rmIsFun"
-export DOCMOSIS_ACCESS_KEY=$1
 
 # Start IDAM setup
 echo "Starting shared-db..."

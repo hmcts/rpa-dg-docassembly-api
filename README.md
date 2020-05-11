@@ -15,7 +15,7 @@ Turn on your vpn and use the following system variables to provide correct URLs 
 ```
 az login
 az acr login --name hmctspublic && az acr login --name hmctsprivate
-./bin/start-local-environment.sh <DOCMOSIS_ACCESS_KEY>
+./bin/start-local-environment.sh
 ./gradlew assemble
 DOCMOSIS_ACCESS_KEY=<DOCMOSIS_ACCESS_KEY> ./gradlew bootRun
 ```
