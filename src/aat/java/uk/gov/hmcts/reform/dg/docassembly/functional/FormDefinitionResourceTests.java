@@ -19,7 +19,7 @@ public class FormDefinitionResourceTests extends BaseTest {
             .request("GET",
                 testUtil.getTestUrl()
                 + "/api/form-definitions/"
-                + base64("CV-CMC-GOR-ENG-0004-UI-Test.docx")
+                + base64("CV-CMC-GOR-ENG-0004-UI-Testv2.docx")
             );
 
         Assert.assertEquals(200, response.getStatusCode());
