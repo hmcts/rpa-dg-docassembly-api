@@ -19,10 +19,8 @@ def product = "dg"
 def component = "docassembly"
 
 def secrets = [
-        's2s-${env}': [
-                secret('microservicekey-em-gw', 'FUNCTIONAL_TEST_CLIENT_S2S_TOKEN')
-        ],
         'rpa-${env}': [
+                secret('em-s2s-token', 'FUNCTIONAL_TEST_CLIENT_S2S_TOKEN'),
                 secret('show-oauth2-token', 'FUNCTIONAL_TEST_CLIENT_OAUTH_SECRET')
         ]
 ]
@@ -44,6 +42,8 @@ env.IDAM_WEBSHOW_WHITELIST = 'https://em-show-aat.service.core-compute-aat.inter
 env.DM_STORE_APP_URL = 'http://dm-store-aat.service.core-compute-aat.internal'
 env.DG_TEMPLATE_MANAGEMENT_API = 'http://dg-tmpl-mgmt-aat.service.core-compute-aat.internal'
 env.PACT_BROKER_FULL_URL = 'https://pact-broker.platform.hmcts.net'
+env.DOCMOSIS_TEMPLATES_ENDPOINT = 'https://docmosis-development.platform.hmcts.net'
+env.DOCMOSIS_ENDPOINT = 'https://docmosis-development.platform.hmcts.net/rs/render'
 
 def vaultOverrides = [
         'preview' : 'aat',
