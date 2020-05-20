@@ -3,6 +3,8 @@ package uk.gov.hmcts.reform.dg.docassembly.service;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import uk.gov.hmcts.reform.dg.docassembly.appinsights.DependencyProfiler;
@@ -21,6 +23,7 @@ public class TemplateManagementApiClient {
 
     private final OkHttpClient httpClient;
 
+    private static Logger log = LoggerFactory.getLogger(TemplateManagementApiClient.class);
     public TemplateManagementApiClient(
             OkHttpClient httpClient,
             @Value("${template-management-api.base-url}${template-management-api.resource}")
@@ -40,22 +43,31 @@ public class TemplateManagementApiClient {
                 .url(templateManagementApiUrl + filename)
                 .get()
                 .build();
+        Response response = null;
+        try {
+            response = httpClient.newCall(request).execute();
 
+            if (!response.isSuccessful() && response.code() == 404) {
+                throw new TemplateNotFoundException(
+                        String.format("Template %s could not be found", templateIdDto.getTemplateId()));
+            }
 
-        Response response = httpClient.newCall(request).execute();
+            if (!response.isSuccessful()) {
+                throw new FormDefinitionRetrievalException(String.format(
+                        "Could not retrieve a template. Http code and message %d, %s", response.code(), response.body().string()
+                ));
+            }
 
-        if (!response.isSuccessful() && response.code() == 404) {
-            throw new TemplateNotFoundException(
-                    String.format("Template %s could not be found", templateIdDto.getTemplateId()));
+        }
+        catch(Exception e) {
+            log.error("****Exception in TemplateManagementApiClient *************" + e );
+
         }
 
-        if (!response.isSuccessful()) {
-            throw new FormDefinitionRetrievalException(String.format(
-                    "Could not retrieve a template. Http code and message %d, %s", response.code(), response.body().string()
-            ));
-        }
+
 
         return response.body().byteStream();
+
 
     }
 
