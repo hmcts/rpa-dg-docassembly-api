@@ -10,6 +10,7 @@ import uk.gov.hmcts.reform.em.test.idam.IdamHelper;
 import uk.gov.hmcts.reform.em.test.s2s.S2sHelper;
 
 import javax.annotation.PostConstruct;
+import java.io.IOException;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -30,6 +31,12 @@ public class TestUtil {
 
     @Value("${test.url}")
     private String testUrl;
+
+    @Value("${dm-store-app.base-url}")
+    private String dmApiUrl;
+
+    @Value("${dm-store-app.docker_url}")
+    private String dmDocumentApiUrl;
 
     @PostConstruct
     public void init() {
@@ -92,6 +99,61 @@ public class TestUtil {
 
     private RequestSpecification invalidS2sAuthRequest() {
         return RestAssured.given().header("ServiceAuthorization", invalidServiceAuthToken);
+    }
+
+    public String getDmApiUrl() {
+        return dmApiUrl;
+    }
+
+    public String getDmDocumentApiUrl() {
+        return dmDocumentApiUrl;
+    }
+
+    public String uploadPptxDocumentAndReturnUrl() {
+        return uploadDocumentAndReturnUrl("Performance_Out.pptx", "application/vnd.openxmlformats-officedocument.presentationml.presentation");
+    }
+
+    public String uploadPptDocumentAndReturnUrl() {
+        return uploadDocumentAndReturnUrl("potential_and_kinetic.ppt", "application/vnd.ms-powerpoint");
+    }
+
+    public String uploadXlsxDocumentAndReturnUrl() {
+        return uploadDocumentAndReturnUrl("TestExcel.xlsx", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+    }
+
+    public String uploadDocxDocumentAndReturnUrl() {
+        return uploadDocumentAndReturnUrl("largeDocument.docx", "application/vnd.openxmlformats-officedocument.wordprocessingml.document");
+    }
+
+    public String uploadDOCDocumentAndReturnUrl() {
+        return uploadDocumentAndReturnUrl("wordDocument.doc", "application/msword");
+    }
+
+    public String uploadXLSDocumentAndReturnUrl() {
+        return uploadDocumentAndReturnUrl("XLSample.xls", "application/vnd.ms-excel");
+    }
+
+    public String uploadRTFDocumentAndReturnUrl() {
+        return uploadDocumentAndReturnUrl("test.rtf", "application/rtf");
+    }
+
+    public String uploadTXTDocumentAndReturnUrl() {
+        return uploadDocumentAndReturnUrl("sampleFile.txt", "text/plain");
+    }
+
+    public String uploadDocumentAndReturnUrl(String fileName, String mimeType) {
+        try {
+            String url = dmHelper.getDocumentMetadata(
+                dmHelper.uploadAndGetId(
+                    ClassLoader.getSystemResourceAsStream(fileName), mimeType, fileName))
+                .links.self.href;
+
+            return getDmApiUrl().equals("http://localhost:4603")
+                ? url.replaceAll(getDmApiUrl(), getDmDocumentApiUrl())
+                : url;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }
