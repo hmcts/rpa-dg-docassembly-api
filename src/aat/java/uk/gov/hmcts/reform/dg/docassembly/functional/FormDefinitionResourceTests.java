@@ -28,7 +28,6 @@ public class FormDefinitionResourceTests extends BaseTest {
     }
 
     @Test
-    @Pending
     public void testFormDefinitionGetNotExistingTemplate() {
         // If the Endpoint Toggles are enabled, continue, if not skip and ignore
         Assume.assumeTrue(toggleProperties.isEnableFormDefinitionEndpoint());
@@ -45,7 +44,6 @@ public class FormDefinitionResourceTests extends BaseTest {
     }
 
     @Test
-    @Pending
     public void testFormDefinitionGetTemplateWithoutUIDefinition() {
         // If the Endpoint Toggles are enabled, continue, if not skip and ignore
         Assume.assumeTrue(toggleProperties.isEnableFormDefinitionEndpoint());
