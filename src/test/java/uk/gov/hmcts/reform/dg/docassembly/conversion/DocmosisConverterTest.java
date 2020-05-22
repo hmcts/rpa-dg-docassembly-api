@@ -1,0 +1,75 @@
+package uk.gov.hmcts.reform.dg.docassembly.conversion;
+
+import okhttp3.*;
+import org.apache.pdfbox.io.IOUtils;
+import org.junit.Before;
+import org.junit.Test;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+
+import static org.junit.Assert.assertNotEquals;
+
+public class DocmosisConverterTest {
+
+    private static final String PDF_FILENAME = "Test.pdf";
+    private DocmosisConverter converter;
+
+    @Before
+    public void setup() {
+        OkHttpClient okHttpClient = new OkHttpClient
+            .Builder()
+            .addInterceptor(DocmosisConverterTest::intercept)
+            .build();
+
+        converter = new DocmosisConverter("key", "http://example.org", okHttpClient);
+    }
+
+    private static Response intercept(Interceptor.Chain chain) throws IOException {
+        InputStream file = ClassLoader.getSystemResourceAsStream(PDF_FILENAME);
+
+        return new Response.Builder()
+            .body(ResponseBody.create(MediaType.get("application/pdf"), IOUtils.toByteArray(file)))
+            .request(chain.request())
+            .message("")
+            .code(200)
+            .protocol(Protocol.HTTP_2)
+            .build();
+    }
+
+    @Test
+    public void convert() throws IOException {
+        File input = new File(ClassLoader.getSystemResource("template1.docx").getPath());
+        File output = converter.convertFileToPDF(input);
+
+        assertNotEquals(input.getName(), output.getName());
+    }
+
+    @Test
+    public void convertExcelTest() throws IOException {
+        File input = new File(ClassLoader.getSystemResource("TestExcel.xlsx").getPath());
+        File output = converter.convertFileToPDF(input);
+
+        assertNotEquals(input.getName(), output.getName());
+    }
+
+
+    @Test
+    public void convertPptTest() throws IOException {
+        File input = new File(ClassLoader.getSystemResource("potential_and_kinetic.ppt").getPath());
+        File output = converter.convertFileToPDF(input);
+
+        assertNotEquals(input.getName(), output.getName());
+    }
+
+
+    @Test
+    public void convertPptxTest() throws IOException {
+        File input = new File(ClassLoader.getSystemResource("Performance_Out.pptx").getPath());
+        File output = converter.convertFileToPDF(input);
+
+        assertNotEquals(input.getName(), output.getName());
+    }
+
+}
