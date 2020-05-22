@@ -46,5 +46,5 @@ core_case_data:
     url: http://localhost:4452
 
 toggle:
-  enable_form_definition_endpoint: ${ENABLE_FORM_DEFINITION_ENDPOINT:true}
+  enable_form_definition_endpoint: ${ENABLE_FORM_DEFINITION_ENDPOINT:false}
   enable_template_rendition_endpoint: ${ENABLE_TEMPLATE_RENDITION_ENDPOINT:true}
