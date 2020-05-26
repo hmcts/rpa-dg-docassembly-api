@@ -84,13 +84,14 @@ docmosis:
   render.endpoint: ${DOCMOSIS_ENDPOINT:https://docmosis-development.platform.hmcts.net/rs/render}
   convert.endpoint: ${DOCMOSIS_ENDPOINT:https://docmosis-development.platform.hmcts.net/rs/convert}
 
-dm-store-app:
+document_management:
   base-url: ${DM_STORE_APP_URL:http://localhost:4603}
   docker_url: http://dm-store:8080
 
 endpoint-toggles:
   form-definitions: ${ENABLE_FORM_DEFINITION_ENDPOINT:true}
   template-renditions: ${ENABLE_TEMPLATE_RENDITION_ENDPOINT:true}
+  document-conversion: ${ENABLE_DOCUMENT_CONVERSION_ENDPOINT:true}
 
 # Delete when issueOverride variable is no longer used in SecurityConfiguration.class
 oidc:
