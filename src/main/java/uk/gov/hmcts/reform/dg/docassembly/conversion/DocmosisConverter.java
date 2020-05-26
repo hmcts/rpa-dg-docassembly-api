@@ -83,7 +83,7 @@ public class DocmosisConverter {
 
 
     public File convertFileToPDF(File originalFile) throws IOException {
-
+        log.info("File {} has been requested to convert to PDF", originalFile.getName());
         return convert(originalFile);
     }
 }
