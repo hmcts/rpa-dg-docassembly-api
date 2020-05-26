@@ -5,16 +5,12 @@ import org.json.JSONObject;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import uk.gov.hmcts.reform.dg.docassembly.dto.PDFConversionDto;
 
 import java.util.UUID;
 
 public class DocumentConversionScenarios extends BaseTest {
-
-    @Value("${test.url}")
-    String testUrl;
 
     @Test
     public void testPDFConversionWithWordDocument() {
@@ -109,7 +105,7 @@ public class DocumentConversionScenarios extends BaseTest {
         Response convertTaskResponse = testUtil.authRequest()
             .header("Content-Type", MediaType.APPLICATION_JSON_VALUE)
             .body(jsonObject)
-            .request("POST", testUrl + "/api/convert");
+            .request("POST", testUtil.getTestUrl() + "/api/convert");
         return convertTaskResponse;
     }
 
@@ -122,7 +118,7 @@ public class DocumentConversionScenarios extends BaseTest {
         Response response = testUtil.authRequest()
             .header("Content-Type", MediaType.APPLICATION_JSON_VALUE)
             .body(jsonObject)
-            .request("POST", testUrl + "/api/convert");
+            .request("POST", testUtil.getTestUrl() + "/api/convert");
 
         return response;
     }
