@@ -31,7 +31,7 @@ public class DmStoreDownloaderImpl implements DmStoreDownloader {
 
     private String dmStoreAppBaseUrl;
 
-    private static final  String dmStoreDownloadEndpoint = "/documents/";
+    private static final  String DM_STORE_DOWNLOAD_ENDPOINT = "/documents/";
 
     private final ObjectMapper objectMapper;
 
@@ -50,7 +50,7 @@ public class DmStoreDownloaderImpl implements DmStoreDownloader {
 
         try {
 
-            Response response = getDocumentStoreResponse(dmStoreAppBaseUrl + dmStoreDownloadEndpoint + id);
+            Response response = getDocumentStoreResponse(dmStoreAppBaseUrl + DM_STORE_DOWNLOAD_ENDPOINT + id);
 
             if (response.isSuccessful()) {
                 JsonNode documentMetaData = objectMapper.readTree(response.body().byteStream());
@@ -60,7 +60,7 @@ public class DmStoreDownloaderImpl implements DmStoreDownloader {
 
                 String documentBinaryUrl = new StringBuffer()
                                                 .append(dmStoreAppBaseUrl)
-                                                    .append(dmStoreDownloadEndpoint)
+                                                    .append(DM_STORE_DOWNLOAD_ENDPOINT)
                                                     .append(id)
                                                     .append("/binary").toString();
 
