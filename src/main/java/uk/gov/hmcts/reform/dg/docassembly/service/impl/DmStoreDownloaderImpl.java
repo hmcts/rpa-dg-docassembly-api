@@ -10,7 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-//import org.springframework.transaction.annotation.Transactional;
 import uk.gov.hmcts.reform.authorisation.generators.AuthTokenGenerator;
 import uk.gov.hmcts.reform.dg.docassembly.service.DmStoreDownloader;
 import uk.gov.hmcts.reform.dg.docassembly.service.exception.DocumentTaskProcessingException;
@@ -22,7 +21,6 @@ import java.nio.file.StandardCopyOption;
 
 
 @Service
-//@Transactional
 public class DmStoreDownloaderImpl implements DmStoreDownloader {
 
     private final Logger log = LoggerFactory.getLogger(DmStoreDownloaderImpl.class);
@@ -33,7 +31,7 @@ public class DmStoreDownloaderImpl implements DmStoreDownloader {
 
     private String dmStoreAppBaseUrl;
 
-    private final String dmStoreDownloadEndpoint = "/documents/";
+    private final static String dmStoreDownloadEndpoint = "/documents/";
 
     private final ObjectMapper objectMapper;
 
