@@ -106,7 +106,7 @@ public class DocumentConversionScenarios extends BaseTest {
             .header("Content-Type", MediaType.APPLICATION_JSON_VALUE)
             .body(jsonObject)
             .request("POST", testUrl + "/api/convert");
-            return convertTaskResponse;
+        return convertTaskResponse;
     }
 
     private void createAndProcessRequestFailure(String newDocId) {
