@@ -58,7 +58,7 @@ public class DocmosisConverter {
             .setType(MultipartBody.FORM)
             .addFormDataPart("accessKey", docmosisAccessKey)
             .addFormDataPart("outputName", convertedFileName)
-            .addFormDataPart("file", originalFileName, RequestBody.create(MediaType.get(PDF_CONTENT_TYPE), file))
+            .addFormDataPart("file", originalFileName, RequestBody.create(file, MediaType.get(PDF_CONTENT_TYPE)))
             .build();
 
         return new Request.Builder()
