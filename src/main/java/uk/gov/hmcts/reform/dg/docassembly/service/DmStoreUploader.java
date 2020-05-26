@@ -32,7 +32,7 @@ public class DmStoreUploader {
 
     public DmStoreUploader(OkHttpClient okHttpClient,
                            AuthTokenGenerator authTokenGenerator,
-                           @Value("${dm-store-app.base-url}") String dmStoreAppBaseUrl,
+                           @Value("${document_management.base-url}") String dmStoreAppBaseUrl,
                            SubjectResolver<User> userResolver) {
         this.okHttpClient = okHttpClient;
         this.authTokenGenerator = authTokenGenerator;

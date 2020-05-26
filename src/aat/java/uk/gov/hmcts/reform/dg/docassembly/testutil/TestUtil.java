@@ -32,10 +32,10 @@ public class TestUtil {
     @Value("${test.url}")
     private String testUrl;
 
-    @Value("${dm-store-app.base-url}")
+    @Value("${document_management.base-url}")
     private String dmApiUrl;
 
-    @Value("${dm-store-app.docker_url}")
+    @Value("${document_management.docker_url}")
     private String dmDocumentApiUrl;
 
     @PostConstruct
