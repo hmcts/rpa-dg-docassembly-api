@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import uk.gov.hmcts.reform.dg.docassembly.service.exception.DocumentConversionException;
 
 import java.io.File;
 import java.io.IOException;
@@ -37,7 +38,11 @@ public class DocmosisConverter {
         final Response response = httpClient.newCall(request).execute();
 
         if (!response.isSuccessful()) {
-            throw new IOException(String.format("Docmosis error (%s) converting: %s", response.code(), file.getName()));
+            DocumentConversionException exceptionToThrow = new DocumentConversionException(
+                String.format("Docmosis can not convert file %s. HTTP response and message %d, %s",
+                    file.getName(), response.code(), response.body().string()));
+            log.error(exceptionToThrow.toString(), exceptionToThrow);
+            throw exceptionToThrow;
         }
         return createConvertedFile(response);
     }
@@ -83,7 +88,6 @@ public class DocmosisConverter {
 
 
     public File convertFileToPDF(File originalFile) throws IOException {
-        log.info("File {} has been requested to convert to PDF", originalFile.getName());
         return convert(originalFile);
     }
 }

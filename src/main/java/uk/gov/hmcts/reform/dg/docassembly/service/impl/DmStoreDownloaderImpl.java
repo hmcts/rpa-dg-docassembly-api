@@ -36,7 +36,7 @@ public class DmStoreDownloaderImpl implements DmStoreDownloader {
     private final ObjectMapper objectMapper;
 
     public DmStoreDownloaderImpl(OkHttpClient okHttpClient, AuthTokenGenerator authTokenGenerator,
-                                 @Value("${dm-store-app.base-url}") String dmStoreAppBaseUrl,
+                                 @Value("${document_management.base-url}") String dmStoreAppBaseUrl,
                                  ObjectMapper objectMapper) {
         this.okHttpClient = okHttpClient;
         this.authTokenGenerator = authTokenGenerator;
