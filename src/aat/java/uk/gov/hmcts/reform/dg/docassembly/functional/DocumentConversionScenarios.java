@@ -18,32 +18,36 @@ public class DocumentConversionScenarios extends BaseTest {
 
     @Test
     public void testPDFConversionWithWordDocument() {
-        Assume.assumeTrue(toggleProperties.isEnableTemplateRenditionEndpoint());
+        Assume.assumeTrue(toggleProperties.isEnableDocumentConversionEndpoint());
         String newDocId = testUtil.uploadDOCDocumentAndReturnUrl();
-        createAndProcessRequest(newDocId);
+        Response response = createAndProcessRequest(newDocId);
+
+        Assert.assertEquals(200, response.getStatusCode());
     }
 
     @Test
     public void testPDFConversionWithDocx() {
-        Assume.assumeTrue(toggleProperties.isEnableTemplateRenditionEndpoint());
+        Assume.assumeTrue(toggleProperties.isEnableDocumentConversionEndpoint());
         String newDocId = testUtil.uploadDocxDocumentAndReturnUrl();
         Response response = createAndProcessRequest(newDocId);
 
         Assert.assertEquals(200, response.getStatusCode());
     }
 
+
     @Test
     public void testPDFConversionWithPptx() {
-        Assume.assumeTrue(toggleProperties.isEnableTemplateRenditionEndpoint());
+        Assume.assumeTrue(toggleProperties.isEnableDocumentConversionEndpoint());
         String newDocId = testUtil.uploadPptxDocumentAndReturnUrl();
         Response response = createAndProcessRequest(newDocId);
 
         Assert.assertEquals(200, response.getStatusCode());
     }
 
+
     @Test
     public void testPDFConversionWithPPT() {
-        Assume.assumeTrue(toggleProperties.isEnableTemplateRenditionEndpoint());
+        Assume.assumeTrue(toggleProperties.isEnableDocumentConversionEndpoint());
         String newDocId = testUtil.uploadPptDocumentAndReturnUrl();
         Response response = createAndProcessRequest(newDocId);
 
@@ -52,7 +56,7 @@ public class DocumentConversionScenarios extends BaseTest {
 
     @Test
     public void testPDFConversionWithXlsx() {
-        Assume.assumeTrue(toggleProperties.isEnableTemplateRenditionEndpoint());
+        Assume.assumeTrue(toggleProperties.isEnableDocumentConversionEndpoint());
         String newDocId = testUtil.uploadXlsxDocumentAndReturnUrl();
 
         Response response = createAndProcessRequest(newDocId);
@@ -62,7 +66,7 @@ public class DocumentConversionScenarios extends BaseTest {
 
     @Test
     public void testPDFConversionWithXLS() {
-        Assume.assumeTrue(toggleProperties.isEnableTemplateRenditionEndpoint());
+        Assume.assumeTrue(toggleProperties.isEnableDocumentConversionEndpoint());
         String newDocId = testUtil.uploadXLSDocumentAndReturnUrl();
         Response response = createAndProcessRequest(newDocId);
 
@@ -71,7 +75,7 @@ public class DocumentConversionScenarios extends BaseTest {
 
     @Test
     public void testPDFConversionWithRTF() {
-        Assume.assumeTrue(toggleProperties.isEnableTemplateRenditionEndpoint());
+        Assume.assumeTrue(toggleProperties.isEnableDocumentConversionEndpoint());
         String newDocId = testUtil.uploadRTFDocumentAndReturnUrl();
         Response response = createAndProcessRequest(newDocId);
 
@@ -80,7 +84,7 @@ public class DocumentConversionScenarios extends BaseTest {
 
     @Test
     public void testPDFConversionWithTXT() {
-        Assume.assumeTrue(toggleProperties.isEnableTemplateRenditionEndpoint());
+        Assume.assumeTrue(toggleProperties.isEnableDocumentConversionEndpoint());
         String newDocId = testUtil.uploadTXTDocumentAndReturnUrl();
         Response response = createAndProcessRequest(newDocId);
 
@@ -89,9 +93,9 @@ public class DocumentConversionScenarios extends BaseTest {
 
     @Test
     public void testFailedConversion() {
-        Assume.assumeTrue(toggleProperties.isEnableTemplateRenditionEndpoint());
+        Assume.assumeTrue(toggleProperties.isEnableDocumentConversionEndpoint());
         String newDocId = testUtil.uploadTXTDocumentAndReturnUrl();
-        Response response = createAndProcessRequest(newDocId + "567");
+        Response response = createAndProcessRequestFailure(newDocId + "567");
 
         Assert.assertEquals(400, response.getStatusCode());
     }
@@ -109,18 +113,18 @@ public class DocumentConversionScenarios extends BaseTest {
         return convertTaskResponse;
     }
 
-    private void createAndProcessRequestFailure(String newDocId) {
+    private Response createAndProcessRequestFailure(String newDocId) {
         PDFConversionDto pdfConversionDto = new PDFConversionDto();
         pdfConversionDto.setDocumentId(UUID.fromString(newDocId.substring(newDocId.lastIndexOf('/') + 1)));
 
         JSONObject jsonObject = new JSONObject(pdfConversionDto);
 
-        testUtil.authRequest()
+        Response response = testUtil.authRequest()
             .header("Content-Type", MediaType.APPLICATION_JSON_VALUE)
             .body(jsonObject)
-            .request("POST", testUrl + "/api/convert")
-            .then()
-            .statusCode(400);
+            .request("POST", testUrl + "/api/convert");
+
+        return response;
     }
 
 }
