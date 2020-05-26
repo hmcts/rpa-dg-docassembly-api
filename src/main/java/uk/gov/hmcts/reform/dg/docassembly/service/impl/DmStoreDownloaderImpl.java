@@ -31,7 +31,7 @@ public class DmStoreDownloaderImpl implements DmStoreDownloader {
 
     private String dmStoreAppBaseUrl;
 
-    private final static String dmStoreDownloadEndpoint = "/documents/";
+    private static final  String dmStoreDownloadEndpoint = "/documents/";
 
     private final ObjectMapper objectMapper;
 
