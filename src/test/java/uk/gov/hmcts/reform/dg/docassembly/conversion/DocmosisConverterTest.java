@@ -26,6 +26,15 @@ public class DocmosisConverterTest {
         converter = new DocmosisConverter("key", "http://example.org", okHttpClient);
     }
 
+    public void replicatFailureScenario() {
+        OkHttpClient okHttpClient = new OkHttpClient
+            .Builder()
+            .addInterceptor(DocmosisConverterTest::interceptForFailure)
+            .build();
+
+        converter = new DocmosisConverter("", "http://example.org", okHttpClient);
+    }
+
     private static Response intercept(Interceptor.Chain chain) throws IOException {
         InputStream file = ClassLoader.getSystemResourceAsStream(PDF_FILENAME);
 
@@ -34,6 +43,18 @@ public class DocmosisConverterTest {
             .request(chain.request())
             .message("")
             .code(200)
+            .protocol(Protocol.HTTP_2)
+            .build();
+    }
+
+    private static Response interceptForFailure(Interceptor.Chain chain) throws IOException {
+        InputStream file = ClassLoader.getSystemResourceAsStream(PDF_FILENAME);
+
+        return new Response.Builder()
+            .body(ResponseBody.create(MediaType.get("application/pdf"), IOUtils.toByteArray(file)))
+            .request(chain.request())
+            .message("")
+            .code(401)
             .protocol(Protocol.HTTP_2)
             .build();
     }
@@ -70,6 +91,14 @@ public class DocmosisConverterTest {
         File output = converter.convertFileToPDF(input);
 
         assertNotEquals(input.getName(), output.getName());
+    }
+
+    @Test(expected = IOException.class)
+    public void convertFailureTest() throws IOException {
+        File input = new File(ClassLoader.getSystemResource("potential_and_kinetic.ppt").getPath());
+        replicatFailureScenario();
+        converter.convertFileToPDF(input);
+
     }
 
 }
