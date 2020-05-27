@@ -4,19 +4,17 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.apache.tika.Tika;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import uk.gov.hmcts.reform.dg.docassembly.dto.PDFConversionDto;
+import org.springframework.web.bind.annotation.*;
 import uk.gov.hmcts.reform.dg.docassembly.service.FileToPDFConverterService;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.FileInputStream;
+import java.util.UUID;
 
 
 /**
@@ -26,6 +24,7 @@ import java.io.FileInputStream;
 @RequestMapping("/api")
 public class DocumentConversionResource {
 
+    private final Logger log = LoggerFactory.getLogger(DocumentConversionResource.class);
     private FileToPDFConverterService fileToPDFConverterService;
 
     public DocumentConversionResource(FileToPDFConverterService fileToPDFConverterService) {
@@ -40,11 +39,11 @@ public class DocumentConversionResource {
             @ApiResponse(code = 403, message = "Forbidden"),
             @ApiResponse(code = 500, message = "Server Error"),
     })
-    @PostMapping("/convert")
-    public ResponseEntity convert(HttpServletRequest request,
-                                  @RequestBody PDFConversionDto pdfConversionDto) {
+    @PostMapping("/convert/{documentId}")
+    public ResponseEntity<Object> convert(@PathVariable UUID documentId) {
         try {
-            File convertedFile = fileToPDFConverterService.convertFile(pdfConversionDto.getDocumentId());
+            log.debug("REST request to get Document Conversion To PDF : {}", documentId);
+            File convertedFile = fileToPDFConverterService.convertFile(documentId);
 
             InputStreamResource resource = new InputStreamResource(new FileInputStream(convertedFile));
             Tika tika = new Tika();
