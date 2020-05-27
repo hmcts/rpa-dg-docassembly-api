@@ -1,12 +1,10 @@
 package uk.gov.hmcts.reform.dg.docassembly.functional;
 
 import io.restassured.response.Response;
-import org.json.JSONObject;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Test;
 import org.springframework.http.MediaType;
-import uk.gov.hmcts.reform.dg.docassembly.dto.PDFConversionDto;
 
 import java.util.UUID;
 
@@ -97,28 +95,22 @@ public class DocumentConversionScenarios extends BaseTest {
     }
 
     private Response createAndProcessRequest(String newDocId) {
-        PDFConversionDto pdfConversionDto = new PDFConversionDto();
-        pdfConversionDto.setDocumentId(UUID.fromString(newDocId.substring(newDocId.lastIndexOf('/') + 1)));
 
-        JSONObject jsonObject = new JSONObject(pdfConversionDto);
+        UUID docId = UUID.fromString(newDocId.substring(newDocId.lastIndexOf('/') + 1));
 
         Response convertTaskResponse = testUtil.authRequest()
             .header("Content-Type", MediaType.APPLICATION_JSON_VALUE)
-            .body(jsonObject)
-            .request("POST", testUtil.getTestUrl() + "/api/convert");
+            .request("POST", testUtil.getTestUrl() + "/api/convert/" + docId);
         return convertTaskResponse;
     }
 
     private Response createAndProcessRequestFailure(String newDocId) {
-        PDFConversionDto pdfConversionDto = new PDFConversionDto();
-        pdfConversionDto.setDocumentId(UUID.fromString(newDocId.substring(newDocId.lastIndexOf('/') + 1)));
 
-        JSONObject jsonObject = new JSONObject(pdfConversionDto);
+        UUID docId = UUID.fromString(newDocId.substring(newDocId.lastIndexOf('/') + 1));
 
         Response response = testUtil.authRequest()
             .header("Content-Type", MediaType.APPLICATION_JSON_VALUE)
-            .body(jsonObject)
-            .request("POST", testUtil.getTestUrl() + "/api/convert");
+            .request("POST", testUtil.getTestUrl() + "/api/convert/" + docId);
 
         return response;
     }

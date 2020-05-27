@@ -1,4 +1,4 @@
-package uk.gov.hmcts.reform.dg.docassembly.service.impl;
+package uk.gov.hmcts.reform.dg.docassembly.service;
 
 import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
@@ -6,8 +6,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import uk.gov.hmcts.reform.dg.docassembly.conversion.DocmosisConverter;
-import uk.gov.hmcts.reform.dg.docassembly.service.DmStoreDownloader;
-import uk.gov.hmcts.reform.dg.docassembly.service.FileToPDFConverterService;
 import uk.gov.hmcts.reform.dg.docassembly.service.exception.DocumentTaskProcessingException;
 import uk.gov.hmcts.reform.dg.docassembly.service.exception.FileTypeException;
 import uk.gov.hmcts.reform.dg.docassembly.service.exception.DocumentProcessingException;
