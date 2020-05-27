@@ -12,7 +12,6 @@ import uk.gov.hmcts.reform.dg.docassembly.conversion.DocmosisConverter;
 import uk.gov.hmcts.reform.dg.docassembly.service.exception.DocumentProcessingException;
 import uk.gov.hmcts.reform.dg.docassembly.service.exception.DocumentTaskProcessingException;
 import uk.gov.hmcts.reform.dg.docassembly.service.exception.FileTypeException;
-import uk.gov.hmcts.reform.dg.docassembly.service.impl.FileToPDFConverterServiceImpl;
 
 import java.io.File;
 import java.io.IOException;
