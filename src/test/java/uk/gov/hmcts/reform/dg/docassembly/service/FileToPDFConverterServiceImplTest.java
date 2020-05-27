@@ -67,7 +67,7 @@ public class FileToPDFConverterServiceImplTest {
     }
 
     @Test
-    public void convertPptTest() throws DocumentTaskProcessingException, IOException {
+    public void convertDocumentSuccessTest() throws DocumentTaskProcessingException, IOException {
         File mockFile = new File("potential_and_kinetic.ppt");
         Mockito.when(dmStoreDownloader.downloadFile(docStoreUUID.toString())).thenReturn(mockFile);
         Mockito.when(docmosisConverter.convertFileToPDF(mockFile)).thenReturn(mockFile);
@@ -77,7 +77,7 @@ public class FileToPDFConverterServiceImplTest {
     }
 
     @Test(expected = DocumentProcessingException.class)
-    public void convertDocumentToPDFFailureTest() throws DocumentTaskProcessingException {
+    public void convertNotProgressAsDmStoreDownloaderException() throws DocumentTaskProcessingException {
 
         UUID docStoreUUID = UUID.randomUUID();
         Mockito.when(dmStoreDownloader.downloadFile(docStoreUUID.toString())).thenThrow(DocumentTaskProcessingException.class);
@@ -91,6 +91,15 @@ public class FileToPDFConverterServiceImplTest {
         Mockito.when(dmStoreDownloader.downloadFile(docStoreUUID.toString())).thenReturn(mockFile);
         Mockito.when(docmosisConverter.convertFileToPDF(mockFile)).thenReturn(mockFile);
 
+        File convertedFile = fileToPDFConverterServiceImpl.convertFile(docStoreUUID);
+        Assert.assertEquals(convertedFile.getName(), mockFile.getName());
+    }
+
+    @Test(expected = DocumentProcessingException.class)
+    public void convertNotAllowedAsIOExceptionIsThrownTest() throws DocumentTaskProcessingException, IOException {
+        File mockFile = new File("potential_and_kinetic.ppt");
+        Mockito.when(dmStoreDownloader.downloadFile(docStoreUUID.toString())).thenReturn(mockFile);
+        Mockito.when(docmosisConverter.convertFileToPDF(mockFile)).thenThrow(IOException.class);
         File convertedFile = fileToPDFConverterServiceImpl.convertFile(docStoreUUID);
         Assert.assertEquals(convertedFile.getName(), mockFile.getName());
     }
