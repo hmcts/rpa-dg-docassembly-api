@@ -82,7 +82,7 @@ template-management-api:
 docmosis:
   accessKey: ${DOCMOSIS_ACCESS_KEY:SOMETHING}
   render.endpoint: ${DOCMOSIS_RENDER_ENDPOINT:https://docmosis-development.platform.hmcts.net/rs/render}
-  convert.endpoint: ${DOCMOSIS_ENDPOINT:https://docmosis-development.platform.hmcts.net/rs/convert}
+  convert.endpoint: ${DOCMOSIS_CONVERT_ENDPOINT:https://docmosis-development.platform.hmcts.net/rs/convert}
 
 document_management:
   base-url: ${DM_STORE_APP_URL:http://localhost:4603}
