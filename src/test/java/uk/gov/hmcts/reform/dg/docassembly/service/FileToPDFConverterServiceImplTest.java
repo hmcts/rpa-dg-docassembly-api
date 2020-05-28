@@ -1,6 +1,5 @@
 package uk.gov.hmcts.reform.dg.docassembly.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -29,34 +28,6 @@ public class FileToPDFConverterServiceImplTest {
 
     @Mock
     DocmosisConverter docmosisConverter;
-
-    private ObjectMapper mapper = new ObjectMapper();
-
-    private String documentStoreResponse = "{"
-        + "\"_embedded\": {"
-        + "\"documents\": [{"
-        + "\"modifiedOn\": \"2020-04-23T14:37:02+0000\","
-        + "\"size\": 19496,"
-        + "\"createdBy\": \"7f0fd7bf-48c0-4462-9056-38c1190e391f\","
-        + "\"_links\": {"
-        + "\"thumbnail\": {"
-        + "\"href\": \"http://localhost:4603/documents/0e38e3ad-171f-4d27-bf54-e41f2ed744eb/thumbnail\""
-        + "},"
-        + "\"binary\": {"
-        + "\"href\": \"http://localhost:4603/documents/0e38e3ad-171f-4d27-bf54-e41f2ed744eb/binary\""
-        + "},"
-        + "\"self\": {"
-        + "\"href\": \"http://localhost:4603/documents/0e38e3ad-171f-4d27-bf54-e41f2ed744eb\""
-        + "}"
-        + "},"
-        + "\"lastModifiedBy\": \"7f0fd7bf-48c0-4462-9056-38c1190e391f\","
-        + "\"originalDocumentName\": \"stitched9163237694642183694.pdf\","
-        + "\"mimeType\": \"application/pdf\","
-        + "\"classification\": \"PUBLIC\","
-        + "\"createdOn\": \"2020-04-23T14:37:02+0000\""
-        + "}]"
-        + "}"
-        + "}";
 
     private static final UUID docStoreUUID = UUID.randomUUID();
 
