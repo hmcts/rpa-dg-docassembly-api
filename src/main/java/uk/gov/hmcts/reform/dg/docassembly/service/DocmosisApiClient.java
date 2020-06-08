@@ -24,7 +24,7 @@ public class DocmosisApiClient {
     private final OkHttpClient httpClient;
 
     public DocmosisApiClient(OkHttpClient httpClient,
-                             @Value("${docmosis.convert.endpoint}") String docmosisUrl,
+                             @Value("${docmosis.render.endpoint}") String docmosisUrl,
                              @Value("${docmosis.accessKey}") String docmosisAccessKey) {
         this.httpClient = httpClient;
         this.docmosisUrl = docmosisUrl;
