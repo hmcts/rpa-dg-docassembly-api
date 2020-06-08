@@ -39,7 +39,7 @@ ccd-def:
     url: http://localhost:4451
 
 document_management:
-  url: http://localhost:4603
+  url: ${DM_STORE_APP_URL:http://localhost:4603}
 
 core_case_data:
   api:
@@ -48,3 +48,13 @@ core_case_data:
 toggle:
   enable_form_definition_endpoint: ${ENABLE_FORM_DEFINITION_ENDPOINT:false}
   enable_template_rendition_endpoint: ${ENABLE_TEMPLATE_RENDITION_ENDPOINT:true}
+  enable_document_conversion_endpoint: ${ENABLE_DOCUMENT_CONVERSION_ENDPOINT:true}
+
+docmosis:
+  accessKey: ${DOCMOSIS_ACCESS_KEY:SOMETHING}
+  render.endpoint: ${DOCMOSIS_RENDER_ENDPOINT:https://docmosis-development.platform.hmcts.net/rs/render}
+  convert.endpoint: ${DOCMOSIS_CONVERT_ENDPOINT:https://docmosis-development.platform.hmcts.net/rs/convert}
+
+docmosis-conversion:
+  multipart:
+    covered-ext: ${DOCMOSIS_MULTIPART_WHITELIST_EXT:doc,docx,pptx,ppt,rtf,txt,xlsx,xls}
