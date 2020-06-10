@@ -3,6 +3,6 @@
 /.idea
 /.gradle
 
-/bin/idam-client-setup.sh
+idam-client-setup.sh
 
 docker-compose-dependencies.yml
