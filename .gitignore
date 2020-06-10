@@ -2,3 +2,7 @@
 /out
 /.idea
 /.gradle
+
+idam-client-setup.sh
+
+docker-compose-dependencies.yml
