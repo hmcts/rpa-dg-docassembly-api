@@ -1,6 +1,7 @@
 package uk.gov.hmcts.reform.dg.docassembly.functional;
 
 import io.restassured.response.Response;
+import net.thucydides.core.annotations.Pending;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Test;
@@ -11,6 +12,7 @@ import java.util.UUID;
 public class DocumentConversionScenarios extends BaseTest {
 
     @Test
+    @Pending // Can be removed once the isEnableDocumentConversionEndpoint is set to true
     public void testPDFConversionWithWordDocument() {
         Assume.assumeTrue(toggleProperties.isEnableDocumentConversionEndpoint());
         String newDocId = testUtil.uploadDOCDocumentAndReturnUrl();
@@ -20,6 +22,7 @@ public class DocumentConversionScenarios extends BaseTest {
     }
 
     @Test
+    @Pending // Can be removed once the isEnableDocumentConversionEndpoint is set to true
     public void testPDFConversionWithDocx() {
         Assume.assumeTrue(toggleProperties.isEnableDocumentConversionEndpoint());
         String newDocId = testUtil.uploadDocxDocumentAndReturnUrl();
@@ -30,6 +33,7 @@ public class DocumentConversionScenarios extends BaseTest {
 
 
     @Test
+    @Pending // Can be removed once the isEnableDocumentConversionEndpoint is set to true
     public void testPDFConversionWithPptx() {
         Assume.assumeTrue(toggleProperties.isEnableDocumentConversionEndpoint());
         String newDocId = testUtil.uploadPptxDocumentAndReturnUrl();
