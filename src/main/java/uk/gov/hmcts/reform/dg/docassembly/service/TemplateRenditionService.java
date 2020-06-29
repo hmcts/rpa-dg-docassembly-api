@@ -53,7 +53,7 @@ public class TemplateRenditionService {
         }
 
         File file = File.createTempFile(
-                "docmosis-rendition",
+                createTemplateRenditionDto.getOutputFilename(),
                 tempFileExtension);
 
         IOUtils.copy(response.body().byteStream(), new FileOutputStream(file));
