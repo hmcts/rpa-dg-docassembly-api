@@ -79,7 +79,7 @@ public class TemplateRenditionResourceTest extends BaseTest {
     }
 
     @Test
-    public void shouldPassOutputNameFromClientToDocmosis() throws Exception {
+    public void shouldPassOutputNameFromClientToDmStore() throws Exception {
         CreateTemplateRenditionDto templateRenditionOutputDto = new CreateTemplateRenditionDto();
 
         restLogoutMockMvc
@@ -90,5 +90,8 @@ public class TemplateRenditionResourceTest extends BaseTest {
                         .header("ServiceAuthorization", "xxx"))
                 .andDo(print())
                 .andExpect(status().isOk());
+
+
+
     }
 }
