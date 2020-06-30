@@ -264,4 +264,12 @@
         <packageUrl regex="true">^pkg:maven/org\.apache\.tomcat\.embed/tomcat\-embed\-core@.*$</packageUrl>
         <cve>CVE-2019-17569</cve>
     </suppress>
+    <suppress>
+        <notes><![CDATA[Dependency for serenity BDD - still present in latest 2.10]]></notes>
+        <cve>CVE-2020-13271</cve>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[Dependency for serenity BDD - still present in latest 2.10]]></notes>
+        <cve>CVE-2020-13276</cve>
+    </suppress>
 </suppressions>
