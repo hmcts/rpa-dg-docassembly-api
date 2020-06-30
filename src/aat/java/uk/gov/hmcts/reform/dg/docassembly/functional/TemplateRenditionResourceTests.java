@@ -1,11 +1,16 @@
 package uk.gov.hmcts.reform.dg.docassembly.functional;
 
 import io.restassured.response.Response;
+import okhttp3.OkHttpClient;
 import org.json.JSONObject;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Test;
 import org.springframework.http.MediaType;
+import uk.gov.hmcts.reform.auth.checker.core.SubjectResolver;
+import uk.gov.hmcts.reform.auth.checker.core.user.User;
+import uk.gov.hmcts.reform.authorisation.generators.AuthTokenGenerator;
+import uk.gov.hmcts.reform.document.domain.Document;
 
 import static uk.gov.hmcts.reform.dg.docassembly.testutil.Base64.base64;
 
@@ -73,17 +78,11 @@ public class TemplateRenditionResourceTests extends BaseTest {
                 .request("POST",testUtil.getTestUrl() + "/api/template-renditions");
 
         Assert.assertEquals(200, response.getStatusCode());
+
         JSONObject jsonBody = new JSONObject(response.body().toString());
         String dmStoreHref = jsonBody.getString("renditionOutputLocation");
+        Document doc = testUtil.getDocumentMetadata(dmStoreHref.substring(dmStoreHref.lastIndexOf("/") + 1) + ".docx");
 
-//        Request request = new Request.Builder()
-//                .addHeader("user-id", getUserId(createTemplateRenditionDto))
-//                .addHeader("user-roles", "caseworker")
-//                .addHeader("ServiceAuthorization", authTokenGenerator.generate())
-//                .url(dmStoreAppBaseUrl + ENDPOINT)
-//                .method("POST", requestBody)
-//                .build();
-//
-//        okhttp3.Response response = okHttpClient.newCall(request).execute();
+        Assert.assertEquals("test-output-name", doc.originalDocumentName);
     }
 }
