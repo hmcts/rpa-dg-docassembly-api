@@ -81,8 +81,8 @@ public class TemplateRenditionResourceTests extends BaseTest {
 
         JSONObject jsonBody = new JSONObject(response.body().toString());
         String dmStoreHref = jsonBody.getString("renditionOutputLocation");
-        Document doc = testUtil.getDocumentMetadata(dmStoreHref.substring(dmStoreHref.lastIndexOf("/") + 1) + ".docx");
+        Document doc = testUtil.getDocumentMetadata(dmStoreHref.substring(dmStoreHref.lastIndexOf("/") + 1));
 
-        Assert.assertEquals("test-output-name", doc.originalDocumentName);
+        Assert.assertEquals("test-output-name.docx", doc.originalDocumentName);
     }
 }
