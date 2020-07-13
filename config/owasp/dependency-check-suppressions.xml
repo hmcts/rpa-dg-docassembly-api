@@ -199,6 +199,9 @@
         <cve>CVE-2020-1945</cve>
         <cve>CVE-2020-9489</cve>
         <cve>CVE-2020-9484</cve>
+        <cve>CVE-2020-13271</cve>
+        <cve>CVE-2020-13274</cve>
+        <cve>CVE-2020-13276</cve>
     </suppress>
     <suppress>
         <notes><![CDATA[
