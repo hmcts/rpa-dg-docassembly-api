@@ -77,6 +77,16 @@ sourceSets {
     }
 }
 
+configurations.all {
+    resolutionStrategy {
+        eachDependency { DependencyResolveDetails details ->
+            if (details.requested.group in ['org.apache.tomcat.embed']) {
+                details.useVersion '9.0.36'
+            }
+        }
+    }
+}
+
 dependencies {
     compile "com.squareup.okhttp3:okhttp:4.3.1"
     compile "com.fasterxml.jackson.datatype:jackson-datatype-json-org:2.+"
