@@ -106,7 +106,7 @@ public class DocumentConversionScenarios extends BaseTest {
 
     private Response createAndProcessRequestFailure(String newDocId) {
 
-        UUID docId = UUID.fromString(newDocId.substring(newDocId.lastIndexOf('/') + 1));
+        String docId = newDocId.substring(newDocId.lastIndexOf('/') + 1);
 
         Response response = testUtil.authRequest()
             .header("Content-Type", MediaType.APPLICATION_JSON_VALUE)
