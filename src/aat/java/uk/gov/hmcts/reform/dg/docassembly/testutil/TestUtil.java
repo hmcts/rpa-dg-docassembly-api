@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import uk.gov.hmcts.reform.em.test.dm.DmHelper;
 import uk.gov.hmcts.reform.em.test.idam.IdamHelper;
 import uk.gov.hmcts.reform.em.test.s2s.S2sHelper;
+import uk.gov.hmcts.reform.document.domain.Document;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
@@ -154,6 +155,10 @@ public class TestUtil {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public Document getDocumentMetadata(String fileId) {
+        return dmHelper.getDocumentMetadata(fileId);
     }
 
 }

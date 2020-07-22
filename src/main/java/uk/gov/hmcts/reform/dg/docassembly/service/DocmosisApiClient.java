@@ -11,7 +11,6 @@ import uk.gov.hmcts.reform.dg.docassembly.dto.CreateTemplateRenditionDto;
 
 import java.io.IOException;
 import java.util.Base64;
-import java.util.UUID;
 
 @Service
 public class DocmosisApiClient {
@@ -33,9 +32,6 @@ public class DocmosisApiClient {
 
     @DependencyProfiler(name = "docmosis", action = "render")
     public Response render(CreateTemplateRenditionDto createTemplateRenditionDto) throws IOException {
-        String tempFileName = String.format("%s%s",
-                UUID.randomUUID().toString(),
-                createTemplateRenditionDto.getOutputType().getFileExtension());
 
         MultipartBody requestBody = new MultipartBody
                 .Builder()
@@ -48,7 +44,7 @@ public class DocmosisApiClient {
                         docmosisAccessKey)
                 .addFormDataPart(
                         "outputName",
-                        tempFileName)
+                        createTemplateRenditionDto.getFullOutputFilename())
                 .addFormDataPart(
                         "data",
                         String.valueOf(createTemplateRenditionDto.getFormPayload()))
