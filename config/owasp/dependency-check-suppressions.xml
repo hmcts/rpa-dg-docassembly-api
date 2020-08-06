@@ -73,6 +73,7 @@
         <cve>CVE-2020-9489</cve>
         <cve>CVE-2020-11023</cve>
         <cve>CVE-2020-11022</cve>
+        <cve>CVE-2007-5615</cve>
     </suppress>
     <suppress>
         <notes><![CDATA[file name: scala-library-2.12.5.jar]]></notes>
