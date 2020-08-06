@@ -17,7 +17,7 @@ plugins {
     id 'jacoco'
     id 'checkstyle'
     id 'pmd'
-    id 'au.com.dius.pact' version '4.1.2'
+    id 'au.com.dius.pact' version '4.1.6'
 }
 
 apply plugin: 'java'
