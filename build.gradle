@@ -295,6 +295,8 @@ task runAndPublishConsumerPactTests(type: Test){
 
 }
 
+runAndPublishConsumerPactTests.dependsOn contract
+
 runAndPublishConsumerPactTests.finalizedBy pactPublish
 
 project.ext {
