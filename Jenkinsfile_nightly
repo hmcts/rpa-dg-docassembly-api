@@ -6,7 +6,7 @@ properties([
         displayName: 'Document Assembly API',
         projectUrlStr: 'https://github.com/hmcts/rpa-dg-docassembly'
     ],
-    pipelineTriggers([cron('22 30 * * *')]), // scheduling to trigger jenkins job
+    pipelineTriggers([cron('22 2 * * *')]), // scheduling to trigger jenkins job
 
 ])
 
