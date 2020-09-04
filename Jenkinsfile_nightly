@@ -43,7 +43,6 @@ def vaultOverrides = [
 ]
 
 withNightlyPipeline(type , product, component) {
-    enableDockerBuild()
 
     // Vars for Kubernetes
     env.IDAM_API_BASE_URI = 'https://idam-api.aat.platform.hmcts.net'
@@ -52,16 +51,15 @@ withNightlyPipeline(type , product, component) {
     env.S2S_BASE_URI = 'http://rpe-service-auth-provider-aat.service.core-compute-aat.internal'
     env.IDAM_WEBSHOW_WHITELIST = 'https://em-show-aat.service.core-compute-aat.internal/oauth2/callback'
     env.DM_STORE_APP_URL = 'http://dm-store-aat.service.core-compute-aat.internal'
+    env.DG_TEMPLATE_MANAGEMENT_API = 'http://dg-tmpl-mgmt-aat.service.core-compute-aat.internal'
+
     env.PACT_BROKER_FULL_URL = 'https://pact-broker.platform.hmcts.net'
 
     // Check URL
-    env.TEST_URL = "https://dg-docassembly-staging.service.core-compute-aat.internal"
+    env.TEST_URL = "http://dg-docassembly-aat.service.core-compute-aat.internal"
 
     overrideVaultEnvironments(vaultOverrides)
     loadVaultSecrets(secrets)
-
-    enableFullFunctionalTest()
     enableSlackNotifications('#em-dev-chat')
-    overrideVaultEnvironments(vaultOverrides)
 
 }
