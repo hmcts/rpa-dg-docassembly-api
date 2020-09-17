@@ -53,14 +53,13 @@ withNightlyPipeline(type , product, component) {
     env.DM_STORE_APP_URL = 'http://dm-store-aat.service.core-compute-aat.internal'
     env.DG_TEMPLATE_MANAGEMENT_API = 'http://dg-tmpl-mgmt-aat.service.core-compute-aat.internal'
 
-    env.PACT_BROKER_FULL_URL = 'https://pact-broker.platform.hmcts.net'
-
+    // Check URL
     env.TEST_URL = "http://dg-docassembly-aat.service.core-compute-aat.internal"
 
     overrideVaultEnvironments(vaultOverrides)
     loadVaultSecrets(secrets)
+    enableMutationTest()
+    enableFullFunctionalTest()
     enableSecurityScan()
-
     enableSlackNotifications('#em-dev-chat')
-
 }
