@@ -55,7 +55,7 @@ data "azurerm_key_vault_secret" "docmosis_templates_auth" {
 
 data "azurerm_key_vault" "s2s_vault" {
   name = "s2s-${local.local_env}"
-  resource_group_name = rpe-service-auth-provider-${local.local_env}
+  resource_group_name = rpe-service-auth-provider-local.local_env
 }
 
 data "azurerm_key_vault_secret" "s2s_key" {
@@ -65,7 +65,7 @@ data "azurerm_key_vault_secret" "s2s_key" {
 
 data "azurerm_key_vault" "product" {
   name = "${var.shared_product_name}-${var.env}"
-  resource_group_name = var.shared_product_name}-${var.env}
+  resource_group_name = var.shared_product_name-var.env
 }
 
 # Copy s2s key from shared to local vault
