@@ -9,12 +9,18 @@ public class ToggleProperties {
 
     private boolean enableTemplateRenditionEndpoint;
 
+    private boolean enableDocumentConversionEndpoint;
+
     public boolean isEnableFormDefinitionEndpoint() {
         return this.enableFormDefinitionEndpoint;
     }
 
     public boolean isEnableTemplateRenditionEndpoint() {
         return this.enableTemplateRenditionEndpoint;
+    }
+
+    public boolean isEnableDocumentConversionEndpoint() {
+        return this.enableDocumentConversionEndpoint;
     }
 
     public void setEnableFormDefinitionEndpoint(boolean enableFormDefinitionEndpoint) {
@@ -25,9 +31,14 @@ public class ToggleProperties {
         this.enableTemplateRenditionEndpoint = enableTemplateRenditionEndpoint;
     }
 
+    public void setEnableDocumentConversionEndpoint(boolean enableDocumentConversionEndpoint) {
+        this.enableDocumentConversionEndpoint = enableDocumentConversionEndpoint;
+    }
+
     public String toString() {
         return "ToggleProperties(enableFormDefinitionEndpoint="
                 + this.isEnableFormDefinitionEndpoint() + ", enableTemplateRenditionEndpoint="
+                + this.isEnableDocumentConversionEndpoint() + ", enableDocumentConversionEndpoint="
                 + this.isEnableTemplateRenditionEndpoint() + ")";
     }
 }
