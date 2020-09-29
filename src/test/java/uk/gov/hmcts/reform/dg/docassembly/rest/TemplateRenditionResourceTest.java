@@ -1,5 +1,8 @@
 package uk.gov.hmcts.reform.dg.docassembly.rest;
 
+import okhttp3.OkHttpClient;
+import okhttp3.mock.MockInterceptor;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -9,7 +12,11 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import uk.gov.hmcts.reform.dg.docassembly.Application;
 import uk.gov.hmcts.reform.dg.docassembly.dto.CreateTemplateRenditionDto;
+import uk.gov.hmcts.reform.dg.docassembly.service.DmStoreUploader;
+import uk.gov.hmcts.reform.dg.docassembly.service.DocmosisApiClient;
 import uk.gov.hmcts.reform.dg.docassembly.service.TemplateRenditionService;
+
+import java.io.IOException;
 
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -22,7 +29,32 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class TemplateRenditionResourceTest extends BaseTest {
 
     @MockBean
-    TemplateRenditionService templateRenditionService;
+    TemplateRenditionService templateRenditionServiceMock;
+
+    private MockInterceptor interceptor = new MockInterceptor();
+
+    private TemplateRenditionService templateRenditionService;
+
+    private DmStoreUploader dmStoreUploader;
+
+    private OkHttpClient client;
+
+    @Before
+    public void setup() throws IOException {
+
+        interceptor.reset();
+
+        this.client = new OkHttpClient.Builder()
+                .addInterceptor(interceptor)
+                .build();
+
+        dmStoreUploader = Mockito.mock(DmStoreUploader.class);
+
+        templateRenditionService = new TemplateRenditionService(
+                dmStoreUploader,
+                new DocmosisApiClient(client, "http://tornado.com", "x")
+        );
+    }
 
     @Test
     public void shouldCallTemplateRenditionService() throws Exception {
@@ -30,7 +62,7 @@ public class TemplateRenditionResourceTest extends BaseTest {
         CreateTemplateRenditionDto templateRenditionOutputDto = new CreateTemplateRenditionDto();
         templateRenditionOutputDto.setRenditionOutputLocation("x");
 
-        when(templateRenditionService.renderTemplate(Mockito.any(CreateTemplateRenditionDto.class)))
+        when(templateRenditionServiceMock.renderTemplate(Mockito.any(CreateTemplateRenditionDto.class)))
                 .thenReturn(templateRenditionOutputDto);
 
         restLogoutMockMvc
@@ -42,7 +74,24 @@ public class TemplateRenditionResourceTest extends BaseTest {
                 .andDo(print())
                 .andExpect(status().isOk());
 
-        verify(templateRenditionService, Mockito.times(1))
+        verify(templateRenditionServiceMock, Mockito.times(1))
                 .renderTemplate(Mockito.any(CreateTemplateRenditionDto.class));
+    }
+
+    @Test
+    public void shouldPassOutputNameFromClientToDmStore() throws Exception {
+        CreateTemplateRenditionDto templateRenditionOutputDto = new CreateTemplateRenditionDto();
+
+        restLogoutMockMvc
+                .perform(post("/api/template-renditions")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"outputType\":\"PDF\", \"templateId\":\"1\", \"outputName\": \"test-output-name\"}")
+                        .header("Authorization", "xxx")
+                        .header("ServiceAuthorization", "xxx"))
+                .andDo(print())
+                .andExpect(status().isOk());
+
+
+
     }
 }
