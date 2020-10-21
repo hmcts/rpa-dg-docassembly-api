@@ -117,7 +117,6 @@ dependencies {
     compile group: 'uk.gov.hmcts.reform', name: 'logging', version: versions.logging
     compile group: 'uk.gov.hmcts.reform', name: 'logging-spring', version: versions.logging
     compile group: 'uk.gov.hmcts.reform', name: 'logging-appinsights', version: versions.logging
-    compile group: 'uk.gov.hmcts.reform', name: 'health-spring-boot-starter', version: '0.0.5'
     compile group: 'uk.gov.hmcts.reform', name: 'properties-volume-spring-boot-starter', version:'0.0.4'
     compile group: 'org.apache.tika', name: 'tika-core', version: '1.24'
     compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.10'
