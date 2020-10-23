@@ -102,6 +102,7 @@ dependencies {
         exclude group: 'org.springframework.boot', module: 'spring-boot-starter-test'
     }
 
+    compile "io.github.openfeign:feign-httpclient:11.0"
     compile group: 'com.google.guava', name: 'guava', version: '30.0-jre'
     compile "com.squareup.okhttp3:okhttp:4.3.1"
     compile "com.fasterxml.jackson.datatype:jackson-datatype-json-org:2.+"
