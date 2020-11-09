@@ -14,13 +14,11 @@ public class FormDefinitionResourceTests extends BaseTest {
         // If the Endpoint Toggles are enabled, continue, if not skip and ignore
         Assume.assumeTrue(toggleProperties.isEnableFormDefinitionEndpoint());
 
-        Response response = testUtil
-            .authRequest()
-            .request("GET",
-                testUtil.getTestUrl()
-                + "/api/form-definitions/"
-                + base64("CV-CMC-GOR-ENG-0004-UI-Test.docx")
-            );
+        Response response =
+                testUtil
+                        .authRequest()
+                        .baseUri(testUtil.getTestUrl())
+                        .get("/api/form-definitions/" + base64("CV-CMC-GOR-ENG-0004-UI-Test.docx"));
 
         Assert.assertEquals(200, response.getStatusCode());
     }
@@ -30,13 +28,11 @@ public class FormDefinitionResourceTests extends BaseTest {
         // If the Endpoint Toggles are enabled, continue, if not skip and ignore
         Assume.assumeTrue(toggleProperties.isEnableFormDefinitionEndpoint());
 
-        Response response = testUtil
-            .authRequest()
-            .request("GET",
-                    testUtil.getTestUrl()
-                + "/api/form-definitions/"
-                + base64("dont-exist.docx")
-            );
+        Response response =
+                testUtil
+                        .authRequest()
+                        .baseUri(testUtil.getTestUrl())
+                        .get("/api/form-definitions/" + base64("dont-exist.docx"));
 
         Assert.assertEquals(404, response.getStatusCode());
     }
@@ -47,12 +43,9 @@ public class FormDefinitionResourceTests extends BaseTest {
         Assume.assumeTrue(toggleProperties.isEnableFormDefinitionEndpoint());
 
         Response response = testUtil
-            .authRequest()
-            .request("GET",
-                testUtil.getTestUrl()
-                + "/api/form-definitions/"
-                + base64("FL-FRM-APP-ENG-00002.docx")
-            );
+                .authRequest()
+                .baseUri(testUtil.getTestUrl())
+                .get("/api/form-definitions/" + base64("FL-FRM-APP-ENG-00002.docx"));
 
         Assert.assertEquals(404, response.getStatusCode());
     }
