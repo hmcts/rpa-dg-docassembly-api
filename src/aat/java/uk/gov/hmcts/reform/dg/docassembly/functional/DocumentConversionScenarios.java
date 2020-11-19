@@ -4,9 +4,10 @@ import io.restassured.response.Response;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Test;
-import org.springframework.http.MediaType;
 
 import java.util.UUID;
+
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 public class DocumentConversionScenarios extends BaseTest {
 
@@ -98,9 +99,12 @@ public class DocumentConversionScenarios extends BaseTest {
 
         UUID docId = UUID.fromString(newDocId.substring(newDocId.lastIndexOf('/') + 1));
 
-        Response convertTaskResponse = testUtil.authRequest()
-            .header("Content-Type", MediaType.APPLICATION_JSON_VALUE)
-            .request("POST", testUtil.getTestUrl() + "/api/convert/" + docId);
+        Response convertTaskResponse =
+                testUtil
+                        .authRequest()
+                        .baseUri(testUtil.getTestUrl())
+                        .contentType(APPLICATION_JSON_VALUE)
+                        .post("/api/convert/" + docId);
         return convertTaskResponse;
     }
 
@@ -108,9 +112,12 @@ public class DocumentConversionScenarios extends BaseTest {
 
         String docId = newDocId.substring(newDocId.lastIndexOf('/') + 1);
 
-        Response response = testUtil.authRequest()
-            .header("Content-Type", MediaType.APPLICATION_JSON_VALUE)
-            .request("POST", testUtil.getTestUrl() + "/api/convert/" + docId);
+        Response response =
+                testUtil
+                        .authRequest()
+                        .baseUri(testUtil.getTestUrl())
+                        .contentType(APPLICATION_JSON_VALUE)
+                        .post("/api/convert/" + docId);
 
         return response;
     }

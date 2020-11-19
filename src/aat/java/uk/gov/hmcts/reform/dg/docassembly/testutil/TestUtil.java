@@ -1,14 +1,14 @@
 package uk.gov.hmcts.reform.dg.docassembly.testutil;
 
-import io.restassured.RestAssured;
 import io.restassured.specification.RequestSpecification;
+import net.serenitybdd.rest.SerenityRest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import uk.gov.hmcts.reform.document.domain.Document;
 import uk.gov.hmcts.reform.em.test.dm.DmHelper;
 import uk.gov.hmcts.reform.em.test.idam.IdamHelper;
 import uk.gov.hmcts.reform.em.test.s2s.S2sHelper;
-import uk.gov.hmcts.reform.document.domain.Document;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
@@ -42,16 +42,16 @@ public class TestUtil {
     @PostConstruct
     public void init() {
         idamHelper.createUser("a@b.com", Stream.of("caseworker").collect(Collectors.toList()));
-        RestAssured.useRelaxedHTTPSValidation();
+        SerenityRest.useRelaxedHTTPSValidation();
         idamAuth = idamHelper.authenticateUser("a@b.com");
         s2sAuth = s2sHelper.getS2sToken();
     }
 
     public RequestSpecification authRequest() {
-        return RestAssured
-            .given()
-            .header("Authorization", idamAuth)
-            .header("ServiceAuthorization", s2sAuth);
+        return SerenityRest
+                .given()
+                .header("Authorization", idamAuth)
+                .header("ServiceAuthorization", s2sAuth);
     }
 
     public String getTestUrl() {
@@ -59,7 +59,7 @@ public class TestUtil {
     }
 
     private RequestSpecification s2sAuthRequest() {
-        return RestAssured.given().header("ServiceAuthorization", s2sAuth);
+        return SerenityRest.given().header("ServiceAuthorization", s2sAuth);
     }
 
     public RequestSpecification emptyIdamAuthRequest() {
@@ -67,11 +67,11 @@ public class TestUtil {
     }
 
     public RequestSpecification emptyIdamAuthAndEmptyS2SAuth() {
-        return RestAssured.given().header("ServiceAuthorization", null).header("Authorization", null);
+        return SerenityRest.given().header("ServiceAuthorization", null).header("Authorization", null);
     }
 
     public RequestSpecification randomHeadersInRequest() {
-        return RestAssured.given().header("randomHeader1", "random1").header("randomHeader2", "random2");
+        return SerenityRest.given().header("randomHeader1", "random1").header("randomHeader2", "random2");
     }
 
     public RequestSpecification validAuthRequestWithEmptyS2SAuth() {
@@ -83,7 +83,7 @@ public class TestUtil {
     }
 
     private RequestSpecification emptyS2sAuthRequest() {
-        return RestAssured.given().header("ServiceAuthorization", null);
+        return SerenityRest.given().header("ServiceAuthorization", null);
     }
 
     public RequestSpecification invalidIdamAuthrequest() {
@@ -91,7 +91,7 @@ public class TestUtil {
     }
 
     public RequestSpecification noHeadersInRequest() {
-        return RestAssured.given();
+        return SerenityRest.given();
     }
 
     public RequestSpecification invalidS2SAuth() {
@@ -99,7 +99,7 @@ public class TestUtil {
     }
 
     private RequestSpecification invalidS2sAuthRequest() {
-        return RestAssured.given().header("ServiceAuthorization", invalidServiceAuthToken);
+        return SerenityRest.given().header("ServiceAuthorization", invalidServiceAuthToken);
     }
 
     public String getDmApiUrl() {
@@ -145,13 +145,13 @@ public class TestUtil {
     public String uploadDocumentAndReturnUrl(String fileName, String mimeType) {
         try {
             String url = dmHelper.getDocumentMetadata(
-                dmHelper.uploadAndGetId(
-                    ClassLoader.getSystemResourceAsStream(fileName), mimeType, fileName))
-                .links.self.href;
+                    dmHelper.uploadAndGetId(
+                            ClassLoader.getSystemResourceAsStream(fileName), mimeType, fileName))
+                    .links.self.href;
 
             return getDmApiUrl().equals("http://localhost:4603")
-                ? url.replaceAll(getDmApiUrl(), getDmDocumentApiUrl())
-                : url;
+                    ? url.replaceAll(getDmApiUrl(), getDmDocumentApiUrl())
+                    : url;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
