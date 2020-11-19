@@ -16,6 +16,9 @@ management:
   endpoint:
     health:
       show-details: "always"
+      show-components: "always"
+      probes:
+        enabled: true
   endpoints:
     web:
       base-path: '/'
@@ -24,6 +27,10 @@ management:
          - health
          - info
   health:
+    livenessstate:
+      enabled: true
+    readinessstate:
+      enabled: true
     db:
       enabled: false
     diskspace:
