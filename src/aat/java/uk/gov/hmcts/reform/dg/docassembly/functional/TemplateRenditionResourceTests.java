@@ -3,14 +3,19 @@ package uk.gov.hmcts.reform.dg.docassembly.functional;
 import io.restassured.response.Response;
 import org.junit.Assert;
 import org.junit.Assume;
+import org.junit.Rule;
 import org.junit.Test;
 import uk.gov.hmcts.reform.dg.docassembly.dto.CreateTemplateRenditionDto;
 import uk.gov.hmcts.reform.document.domain.Document;
+import uk.gov.hmcts.reform.em.test.retry.RetryRule;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static uk.gov.hmcts.reform.dg.docassembly.testutil.Base64.base64;
 
 public class TemplateRenditionResourceTests extends BaseTest {
+
+    @Rule
+    public RetryRule retryRule = new RetryRule(3);
 
     @Test
     public void testTemplateRendition() {

@@ -4,6 +4,7 @@ import io.restassured.response.Response;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import uk.gov.hmcts.reform.em.test.retry.RetryRule;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assume.assumeTrue;
@@ -16,6 +17,9 @@ public class OpenIdConnectSceanarios extends BaseTest {
 
     @Rule
     public ExpectedException exceptionThrown = ExpectedException.none();
+
+    @Rule
+    public RetryRule retryRule = new RetryRule(3);
 
     @Test
     public void testValidAuthenticationAndAuthorisation() {

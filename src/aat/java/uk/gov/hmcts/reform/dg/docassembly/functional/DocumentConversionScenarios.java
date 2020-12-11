@@ -3,13 +3,18 @@ package uk.gov.hmcts.reform.dg.docassembly.functional;
 import io.restassured.response.Response;
 import org.junit.Assert;
 import org.junit.Assume;
+import org.junit.Rule;
 import org.junit.Test;
+import uk.gov.hmcts.reform.em.test.retry.RetryRule;
 
 import java.util.UUID;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 public class DocumentConversionScenarios extends BaseTest {
+
+    @Rule
+    public RetryRule retryRule = new RetryRule(3);
 
     @Test
     public void testPDFConversionWithWordDocument() {
