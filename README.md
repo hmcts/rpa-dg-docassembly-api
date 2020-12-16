@@ -13,10 +13,20 @@ Turn on your vpn and use the following system variables to provide correct URLs 
 - DOCMOSIS_ENDPOINT
 
 ```
+git clone https://github.com/hmcts/dg-docassembly-api.git
+cd rpa-dg-docassembly-api
+
 az login
 az acr login --name hmctspublic && az acr login --name hmctsprivate
-./bin/start-local-environment.sh
+
+docker-compose -f docker-compose-dependencies.yml pull
+
 ./gradlew assemble
+
+./bin/start-local-environment.sh 
+
+./gradlew migratePostgresDatabase
+
 DOCMOSIS_ACCESS_KEY=<DOCMOSIS_ACCESS_KEY> ./gradlew bootRun
 ```
 
