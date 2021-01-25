@@ -1,7 +1,7 @@
 buildscript {
     dependencies {
-        classpath("net.serenity-bdd:serenity-gradle-plugin:2.3.9")
-        classpath("net.serenity-bdd:serenity-single-page-report:2.3.9")
+        classpath("net.serenity-bdd:serenity-gradle-plugin:2.3.12")
+        classpath("net.serenity-bdd:serenity-single-page-report:2.3.12")
     }
 }
 
@@ -16,7 +16,7 @@ plugins {
     id 'jacoco'
     id 'checkstyle'
     id 'pmd'
-    id 'au.com.dius.pact' version '4.1.2'
+    id 'au.com.dius.pact' version '4.1.8'
     id "info.solidsoft.pitest" version '1.5.2'
 }
 
@@ -52,8 +52,8 @@ repositories {
 
 def versions = [
         serenityRestAssured: '2.3.4',
-        serenity           : '2.3.6',
-        serenityreporter   : '2.3.6',
+        serenity           : '2.3.12',
+        serenityreporter   : '2.3.12',
         fasterXmlJackson   : '2.11.3',
         pact_version       : '4.0.10',
         logging            : '5.1.7',
