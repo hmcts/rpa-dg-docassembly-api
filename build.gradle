@@ -21,10 +21,6 @@ plugins {
 }
 
 apply plugin: 'java'
-apply plugin: 'application'
-apply plugin: 'io.spring.dependency-management'
-apply plugin: 'org.springframework.boot'
-apply plugin: 'com.github.ben-manes.versions'
 apply plugin: 'idea'
 apply plugin: 'net.serenity-bdd.aggregator'
 
@@ -105,6 +101,9 @@ dependencies {
         exclude group: 'org.eclipse.jetty.alpn', module: 'alpn-api'
     }
 
+    def withoutCVE202011987 = {
+        exclude group: 'org.apache.xmlgraphics', module: 'batik-all'
+    }
     compile group: 'org.apache.tomcat.embed', name: 'tomcat-embed-core', version: '10.0.0'
     
     compile "io.github.openfeign:feign-httpclient:11.0"
@@ -127,7 +126,7 @@ dependencies {
     compile "org.springframework.boot:spring-boot-starter-oauth2-client"
     compile group: 'uk.gov.hmcts.reform', name: 'service-auth-provider-client', version: '3.1.2'
     compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.11'
-    compile group: 'org.apache.poi', name: 'poi-ooxml', version: '5.0.0'
+    compile group: 'org.apache.poi', name: 'poi-ooxml', version: '5.0.0', withoutCVE202011987
     compile group: 'commons-validator', name: 'commons-validator', version: '1.7'
     compile group: 'commons-beanutils', name: 'commons-beanutils', version: '1.9.4'
     compile group: 'commons-io', name: 'commons-io', version: '2.8.0'
@@ -202,6 +201,18 @@ dependencyManagement {
             entry 'netty-transport-native-epoll'
             entry 'netty-transport-native-kqueue'
             entry 'netty-transport-native-unix-common'
+        }
+
+        //CVE-2021-22112
+        dependencySet(group: 'org.springframework.security', version: '5.3.8.RELEASE') {
+            entry 'spring-security-config'
+            entry 'spring-security-core'
+            entry 'spring-security-crypto'
+            entry 'spring-security-oauth2-client'
+            entry 'spring-security-oauth2-core'
+            entry 'spring-security-oauth2-jose'
+            entry 'spring-security-oauth2-resource-server'
+            entry 'spring-security-web'
         }
     }
 }
