@@ -16,16 +16,17 @@ Turn on your vpn and use the following system variables to provide correct URLs 
 #Cloning repo and running though docker
 
 git clone https://github.com/hmcts/dg-docassembly-api.git
-cd rpa-dg-docassembly-api
+cd dg-docassembly-api
 
 az login
-az acr login --name hmctspublic && az acr login --name hmctsprivate
+az acr login --name hmctspublic
 
-docker-compose -f docker-compose-dependencies.yml pull
+docker-compose -f docker-compose-dependencies-simulator.yml pull
+docker-compose -f docker-compose-dependencies-simulator.yml up
 
-./gradlew assemble
-
-./bin/start-local-environment.sh 
+wait for 2-3 minutes till all the dependencies in the docker are up and running.
+./gradlew clean
+./gradlew build
 
 To set up IDAM data run: ./idam-client-setup.sh 
 To check the data you can log into IDAM-web-admin `http://localhost:8082` with:
