@@ -33,7 +33,7 @@ To check the data you can log into IDAM-web-admin `http://localhost:8082` with:
 Username: idamOwner@hmcts.net
 Password: Ref0rmIsFun
 
-DOCMOSIS_ACCESS_KEY=ZDYxMTkzZTQtMGY2Mi00NDM1LWIyN2ItNGRkNzdjOTczMjAwOjQ1NTE0ODQ ./gradlew bootRun
+DOCMOSIS_ACCESS_KEY=<DOCMOSIS_ACCESS_KEY> ./gradlew bootRun
 ```
 
 
