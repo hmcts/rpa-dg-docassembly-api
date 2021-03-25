@@ -59,3 +59,4 @@ and then using it to publish your tests:
 ```
 ./gradlew pactPublish
 ```
+checking PR build
