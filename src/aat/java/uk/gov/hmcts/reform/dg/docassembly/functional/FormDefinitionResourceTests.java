@@ -54,4 +54,20 @@ public class FormDefinitionResourceTests extends BaseTest {
 
         Assert.assertEquals(404, response.getStatusCode());
     }
+
+    @Test
+    public void shouldReturn401WhenUnauthenticatedUserGetTemplateWithDefinition() {
+        // If the Endpoint Toggles are enabled, continue, if not skip and ignore
+        Assume.assumeTrue(toggleProperties.isEnableFormDefinitionEndpoint());
+
+        testUtil
+                .unAuthenticatedRequest()
+                .baseUri(testUtil.getTestUrl())
+                .get("/api/form-definitions/" + base64("CV-CMC-GOR-ENG-0004-UI-Test.docx"))
+                .then()
+                .assertThat()
+                .statusCode(401)
+                .log()
+                .all();
+    }
 }
