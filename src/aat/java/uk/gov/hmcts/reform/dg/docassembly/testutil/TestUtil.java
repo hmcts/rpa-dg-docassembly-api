@@ -58,6 +58,10 @@ public class TestUtil {
         return testUrl;
     }
 
+    public RequestSpecification unAuthenticatedRequest() {
+        return SerenityRest.given();
+    }
+
     private RequestSpecification s2sAuthRequest() {
         return SerenityRest.given().header("ServiceAuthorization", s2sAuth);
     }
