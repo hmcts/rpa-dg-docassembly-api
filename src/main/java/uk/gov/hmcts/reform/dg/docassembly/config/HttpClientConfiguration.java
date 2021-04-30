@@ -16,9 +16,9 @@ public class HttpClientConfiguration {
     @Bean
     public OkHttpClient okHttpClient() {
         return new OkHttpClient.Builder()
-            .connectTimeout(timeout, TimeUnit.MILLISECONDS)
-            .readTimeout(timeout, TimeUnit.MILLISECONDS)
-            .writeTimeout(timeout, TimeUnit.MILLISECONDS)
+            .connectTimeout(timeout, TimeUnit.SECONDS)
+            .readTimeout(timeout, TimeUnit.SECONDS)
+            .writeTimeout(timeout, TimeUnit.SECONDS)
             .build();
     }
 
