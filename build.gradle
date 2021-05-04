@@ -114,7 +114,7 @@ dependencies {
     compile group:'com.fasterxml.jackson.core', name: 'jackson-databind', version: versions.fasterXmlJackson
     compile group:'com.fasterxml.jackson.module', name: 'jackson-module-afterburner', version: versions.fasterXmlJackson
     compile "com.jayway.jsonpath:json-path:2.5.0"
-    compile "io.springfox:springfox-swagger2:2.9.2"
+    compile "io.springfox:springfox-swagger2:3.0.0"
     compile "io.springfox:springfox-swagger-ui:2.9.2"
     compile "org.springframework.boot:spring-boot-starter-web"
     compile "org.springframework.boot:spring-boot-starter-actuator"
