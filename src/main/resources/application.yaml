@@ -107,3 +107,6 @@ oidc:
 docmosis-conversion:
   multipart:
     covered-ext: ${DOCMOSIS_MULTIPART_WHITELIST_EXT:doc,docx,pptx,ppt,rtf,txt,xlsx,xls}
+
+httpclient:
+  call-timeout: ${HTTPCLIENT_CALL_TIMEOUT:30}

@@ -4,6 +4,9 @@ import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import org.apache.commons.lang3.time.StopWatch;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import uk.gov.hmcts.reform.dg.docassembly.appinsights.DependencyProfiler;
@@ -15,6 +18,7 @@ import java.util.Base64;
 @Service
 public class DocmosisApiClient {
 
+    private final Logger log = LoggerFactory.getLogger(DocmosisApiClient.class);
 
     private final String docmosisUrl;
 
@@ -55,6 +59,18 @@ public class DocmosisApiClient {
                 .method("POST", requestBody)
                 .build();
 
-        return httpClient.newCall(request).execute();
+        Response response = null;
+
+        StopWatch stopwatch = new StopWatch();
+        stopwatch.start();
+
+        response =  httpClient.newCall(request).execute();
+
+        stopwatch.stop();
+        long timeElapsed = stopwatch.getTime();
+
+        log.info("Time taken for Docmosis call : {} milliseconds", timeElapsed);
+
+        return response;
     }
 }
