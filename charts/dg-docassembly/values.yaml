@@ -7,10 +7,14 @@ java:
     dg-docassembly:
       resourceGroup: dg-docassembly
       secrets:
-        - microservicekey-dg-docassembly-api
-        - AppInsightsInstrumentationKey
-        - docmosis-templates-auth
-        - docmosis-access-key
+        - name: microservicekey-dg-docassembly-api
+          alias: S2S_KEY
+        - name: AppInsightsInstrumentationKey
+          alias: APPINSIGHTS_INSTRUMENTATIONKEY
+        - name: docmosis-templates-auth
+          alias: DOCMOSIS_TEMPLATES_ENDPOINT_AUTH
+        - name: docmosis-access-key
+          alias: DOCMOSIS_ACCESS_KEY
   environment:
     IDAM_API_BASE_URI: https://idam-api.{{ .Values.global.environment }}.platform.hmcts.net
     OPEN_ID_API_BASE_URI: https://idam-web-public.{{ .Values.global.environment }}.platform.hmcts.net/o
