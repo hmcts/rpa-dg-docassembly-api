@@ -145,7 +145,7 @@ dependencies {
     testCompile "org.springframework.boot:spring-boot-starter-test", withoutStuff
     testCompile "com.github.gmazzo:okhttp-mock:1.4.1"
 
-    testRuntimeOnly 'org.junit.vintage:junit-vintage-engine:5.6.1'
+    testRuntimeOnly 'org.junit.vintage:junit-vintage-engine:5.7.2'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.3.2'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.6.0'
 
