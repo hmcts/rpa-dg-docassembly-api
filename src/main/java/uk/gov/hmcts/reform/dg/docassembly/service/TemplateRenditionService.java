@@ -4,12 +4,12 @@ import okhttp3.Response;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.stereotype.Service;
 import uk.gov.hmcts.reform.dg.docassembly.dto.CreateTemplateRenditionDto;
 import uk.gov.hmcts.reform.dg.docassembly.dto.RenditionOutputType;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 
 @Service
@@ -56,7 +56,8 @@ public class TemplateRenditionService {
                 "docmosis-rendition",
                 tempFileExtension);
 
-        IOUtils.copy(response.body().byteStream(), new FileOutputStream(file));
+        IOUtils.copy(response.body().byteStream(), new FileSystemResource(file).getOutputStream());
+        response.close();
 
         dmStoreUploader.uploadFile(file, createTemplateRenditionDto);
 

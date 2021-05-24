@@ -1,6 +1,8 @@
 spring:
   application:
     name: Document Assembly API
+  config:
+    import: "optional:configtree:/mnt/secrets/dg-docassembly/"
   security:
     oauth2:
       client:
