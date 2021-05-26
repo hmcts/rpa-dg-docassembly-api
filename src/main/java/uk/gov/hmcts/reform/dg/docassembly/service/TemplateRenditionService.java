@@ -35,6 +35,7 @@ public class TemplateRenditionService {
                     String.format("Could not render a template %s. HTTP response and message %d, %s",
                             createTemplateRenditionDto.getTemplateId(), response.code(), response.body().string()));
             log.error(exceptionToThrow.toString(), exceptionToThrow);
+            response.close();
             throw exceptionToThrow;
         }
 
