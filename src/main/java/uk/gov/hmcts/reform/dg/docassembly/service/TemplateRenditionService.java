@@ -1,7 +1,7 @@
 package uk.gov.hmcts.reform.dg.docassembly.service;
 
 import okhttp3.Response;
-import org.apache.tomcat.util.http.fileupload.IOUtils;
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -61,9 +61,12 @@ public class TemplateRenditionService {
 
         InputStream in = response.body().byteStream();
         OutputStream out = new FileOutputStream(file);
-        IOUtils.copy(in, out);
-        IOUtils.closeQuietly(in);
-        IOUtils.closeQuietly(out);
+        try {
+            IOUtils.copy(in, out);
+        } finally {
+            IOUtils.closeQuietly(in);
+            IOUtils.closeQuietly(out);
+        }
         response.close();
 
         dmStoreUploader.uploadFile(file, createTemplateRenditionDto);
