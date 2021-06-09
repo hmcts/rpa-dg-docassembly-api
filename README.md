@@ -59,3 +59,5 @@ and then using it to publish your tests:
 ```
 ./gradlew pactPublish
 ```
+
+Check CVE
