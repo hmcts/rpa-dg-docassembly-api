@@ -1,15 +1,43 @@
 package uk.gov.hmcts.reform.dg.docassembly.functional;
 
 import io.restassured.response.Response;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Test;
+import io.restassured.specification.RequestSpecification;
+import org.junit.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import uk.gov.hmcts.reform.dg.docassembly.testutil.TestUtil;
+import uk.gov.hmcts.reform.em.test.retry.RetryRule;
 
 import java.util.UUID;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 public class DocumentConversionScenarios extends BaseTest {
+
+    @Autowired
+    private TestUtil testUtil;
+
+    @Value("${test.url}")
+    private String testUrl;
+
+    @Rule
+    public RetryRule retryRule = new RetryRule(3);
+
+    private RequestSpecification request;
+    private RequestSpecification unAuthenticatedRequest;
+
+    @Before
+    public void setupRequestSpecification() {
+        request = testUtil
+                .authRequest()
+                .baseUri(testUrl)
+                .contentType(APPLICATION_JSON_VALUE);
+
+        unAuthenticatedRequest = testUtil
+                .unAuthenticatedRequest()
+                .baseUri(testUrl)
+                .contentType(APPLICATION_JSON_VALUE);
+    }
 
     @Test
     public void testPDFConversionWithWordDocument() {
@@ -95,31 +123,27 @@ public class DocumentConversionScenarios extends BaseTest {
         Assert.assertEquals(400, response.getStatusCode());
     }
 
+    @Test
+    public void shouldReturn401WhenUnAuthenticateUserConvertWordDocumentToPDF() {
+        Assume.assumeTrue(toggleProperties.isEnableDocumentConversionEndpoint());
+        final String newDocId = testUtil.uploadDOCDocumentAndReturnUrl();
+        final UUID docId = UUID.fromString(newDocId.substring(newDocId.lastIndexOf('/') + 1));
+        unAuthenticatedRequest
+                .post("/api/convert/" + docId)
+                .then()
+                .assertThat()
+                .statusCode(401)
+                .log().all();
+    }
+
     private Response createAndProcessRequest(String newDocId) {
-
         UUID docId = UUID.fromString(newDocId.substring(newDocId.lastIndexOf('/') + 1));
-
-        Response convertTaskResponse =
-                testUtil
-                        .authRequest()
-                        .baseUri(testUtil.getTestUrl())
-                        .contentType(APPLICATION_JSON_VALUE)
-                        .post("/api/convert/" + docId);
-        return convertTaskResponse;
+        return request.post("/api/convert/" + docId);
     }
 
     private Response createAndProcessRequestFailure(String newDocId) {
-
         String docId = newDocId.substring(newDocId.lastIndexOf('/') + 1);
-
-        Response response =
-                testUtil
-                        .authRequest()
-                        .baseUri(testUtil.getTestUrl())
-                        .contentType(APPLICATION_JSON_VALUE)
-                        .post("/api/convert/" + docId);
-
-        return response;
+        return request.post("/api/convert/" + docId);
     }
 
 }

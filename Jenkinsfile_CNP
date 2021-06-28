@@ -1,4 +1,6 @@
 #!groovy
+import uk.gov.hmcts.contino.AppPipelineDsl
+
 
 properties([
     [
@@ -40,6 +42,7 @@ env.S2S_BASE_URI = 'http://rpe-service-auth-provider-aat.service.core-compute-aa
 env.IDAM_WEBSHOW_WHITELIST = 'https://em-show-aat.service.core-compute-aat.internal/oauth2/callback'
 env.DM_STORE_APP_URL = 'http://dm-store-aat.service.core-compute-aat.internal'
 env.DG_TEMPLATE_MANAGEMENT_API = 'http://dg-tmpl-mgmt-aat.service.core-compute-aat.internal'
+env.PACT_BROKER_FULL_URL = 'https://pact-broker.platform.hmcts.net'
 
 def vaultOverrides = [
         'preview' : 'aat',

@@ -1,30 +1,24 @@
 buildscript {
     dependencies {
-        classpath("net.serenity-bdd:serenity-gradle-plugin:2.3.6")
-        classpath("net.serenity-bdd:serenity-single-page-report:2.3.6")
+        classpath("net.serenity-bdd:serenity-gradle-plugin:2.3.12")
+        classpath("net.serenity-bdd:serenity-single-page-report:2.3.12")
     }
 }
 
 plugins {
     id 'application'
-    id 'io.spring.dependency-management' version '1.0.10.RELEASE'
-    id 'org.springframework.boot' version '2.3.4.RELEASE'
-    id 'uk.gov.hmcts.java' version '0.12.1'
-    id 'com.github.ben-manes.versions' version '0.36.0'
-    id "se.patrikerdes.use-latest-versions" version "0.2.13"
-    id 'org.sonarqube' version '3.0'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'org.springframework.boot' version '2.4.5'
+    id 'uk.gov.hmcts.java' version '0.12.12'
+    id 'com.github.ben-manes.versions' version '0.39.0'
+    id 'org.sonarqube' version '3.3'
     id 'jacoco'
     id 'checkstyle'
-    id 'pmd'
-    id 'au.com.dius.pact' version '4.1.2'
-    id "info.solidsoft.pitest" version '1.5.1'
+    id 'au.com.dius.pact' version '4.1.8'
+    id "info.solidsoft.pitest" version '1.5.2'
 }
 
 apply plugin: 'java'
-apply plugin: 'application'
-apply plugin: 'io.spring.dependency-management'
-apply plugin: 'org.springframework.boot'
-apply plugin: 'com.github.ben-manes.versions'
 apply plugin: 'idea'
 apply plugin: 'net.serenity-bdd.aggregator'
 
@@ -48,13 +42,14 @@ repositories {
     maven {
         url 'https://repo.spring.io/libs-snapshot'
     }
+    maven { url 'https://jitpack.io' }
 }
 
 def versions = [
         serenityRestAssured: '2.3.4',
-        serenity           : '2.3.6',
-        serenityreporter   : '2.3.6',
-        fasterXmlJackson   : '2.11.3',
+        serenity           : '2.3.12',
+        serenityreporter   : '2.3.12',
+        fasterXmlJackson   : '2.12.3',
         pact_version       : '4.0.10',
         logging            : '5.1.7',
         gradlePitest       : '1.3.0',
@@ -81,16 +76,6 @@ sourceSets {
     }
 }
 
-configurations.all {
-    resolutionStrategy {
-        eachDependency { DependencyResolveDetails details ->
-            if (details.requested.group in ['org.apache.tomcat.embed']) {
-                details.useVersion '9.0.39'
-            }
-        }
-    }
-}
-
 dependencies {
 
     def withoutStuff = {
@@ -101,15 +86,23 @@ dependencies {
         exclude group: 'org.springframework.boot', module: 'spring-boot-starter-test'
     }
 
+    def withoutAlpnApi = {
+        exclude group: 'org.eclipse.jetty.alpn', module: 'alpn-api'
+    }
+
+    def withoutCVE202011987 = {
+        exclude group: 'org.apache.xmlgraphics', module: 'batik-all'
+    }
+        
     compile "io.github.openfeign:feign-httpclient:11.0"
-    compile group: 'com.google.guava', name: 'guava', version: '30.0-jre'
+    compile group: 'com.google.guava', name: 'guava', version: '30.1.1-jre'
     compile "com.squareup.okhttp3:okhttp:4.9.0"
     compile group:'com.fasterxml.jackson.datatype', name: 'jackson-datatype-json-org', version: versions.fasterXmlJackson
     compile group:'com.fasterxml.jackson.core', name: 'jackson-core', version: versions.fasterXmlJackson
     compile group:'com.fasterxml.jackson.core', name: 'jackson-annotations', version: versions.fasterXmlJackson
     compile group:'com.fasterxml.jackson.core', name: 'jackson-databind', version: versions.fasterXmlJackson
     compile group:'com.fasterxml.jackson.module', name: 'jackson-module-afterburner', version: versions.fasterXmlJackson
-    compile "com.jayway.jsonpath:json-path:2.4.0"
+    compile "com.jayway.jsonpath:json-path:2.6.0"
     compile "io.springfox:springfox-swagger2:2.9.2"
     compile "io.springfox:springfox-swagger-ui:2.9.2"
     compile "org.springframework.boot:spring-boot-starter-web"
@@ -119,26 +112,29 @@ dependencies {
     compile "pl.touk:throwing-function:1.3"
     compile "org.springframework.boot:spring-boot-starter-oauth2-resource-server"
     compile "org.springframework.boot:spring-boot-starter-oauth2-client"
-    compile group: 'uk.gov.hmcts.reform', name: 'service-auth-provider-client', version: '3.1.2'
-    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.11'
-    compile group: 'org.apache.poi', name: 'poi-ooxml', version: '4.1.1'
+    compile group: 'uk.gov.hmcts.reform', name: 'service-auth-provider-client', version: '4.0.0'
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.12.0'
+    compile group: 'org.apache.poi', name: 'poi-ooxml', version: '5.0.0', withoutCVE202011987
     compile group: 'commons-validator', name: 'commons-validator', version: '1.7'
     compile group: 'commons-beanutils', name: 'commons-beanutils', version: '1.9.4'
-    compile group: 'commons-io', name: 'commons-io', version: '2.8.0'
+    compile group: 'commons-io', name: 'commons-io', version: '2.10.0'
     compile group: 'uk.gov.hmcts.reform.auth', name: 'auth-checker-lib', version: '2.1.4'
     compile group: 'uk.gov.hmcts.reform', name: 'logging', version: versions.logging
     compile group: 'uk.gov.hmcts.reform', name: 'logging-spring', version: versions.logging
     compile group: 'uk.gov.hmcts.reform', name: 'logging-appinsights', version: versions.logging
-    compile group: 'uk.gov.hmcts.reform', name: 'properties-volume-spring-boot-starter', version:'0.1.0'
-    compile group: 'org.apache.tika', name: 'tika-core', version: '1.24.1'
-    compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.16'
+    
+    compile group: 'org.apache.tika', name: 'tika-core', version: '1.26'
+    compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.20'
 
+    compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.13'
+    
+    implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-bootstrap', version: '3.0.3'
+    
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor", withoutStuff
 
     testCompile "org.springframework.boot:spring-boot-starter-test", withoutStuff
-    testCompile "com.github.gmazzo:okhttp-mock:1.3.1"
+    testCompile "com.github.gmazzo:okhttp-mock:1.4.1"
 
-    testCompileOnly 'junit:junit:4.13'
     testRuntimeOnly 'org.junit.vintage:junit-vintage-engine:5.6.1'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.3.2'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.6.0'
@@ -157,7 +153,7 @@ dependencies {
     contractTestCompile group: 'au.com.dius', name: 'pact-jvm-consumer-junit', version: versions.pact_version
     contractTestCompile group: 'au.com.dius', name: 'pact-jvm-consumer-junit5', version: versions.pact_version
     contractTestCompile group: 'au.com.dius', name: 'pact-jvm-consumer-java8', version: versions.pact_version
-    compile group: 'au.com.dius', name: 'pact-jvm-consumer', version: versions.pact_version
+    compile group: 'au.com.dius', name: 'pact-jvm-consumer', version: versions.pact_version, withoutAlpnApi
     
     contractTestCompile("org.junit.jupiter:junit-jupiter-api:5.3.2")
     contractTestRuntime("org.junit.jupiter:junit-jupiter-engine:5.3.2")
@@ -166,7 +162,66 @@ dependencies {
     contractTestCompile sourceSets.main.runtimeClasspath
     contractTestCompile sourceSets.test.runtimeClasspath
 
-    aatCompile "uk.gov.hmcts.reform:em-test-helper:1.17.6", withoutStuff
+    aatCompile 'com.github.hmcts:em-test-helper:1.19'
+}
+
+dependencyManagement {
+    dependencies {
+
+        //CVE-2020-15824, CVE-2020-29582
+        dependencySet(group: 'org.jetbrains.kotlin', version: '1.5.0-M1') {
+            entry 'kotlin'
+            entry 'kotlin-stdlib'
+            entry 'kotlin-reflect'
+            entry 'kotlin-stdlib-common'
+            entry 'kotlin-stdlib-jdk7'
+            entry 'kotlin-stdlib-jdk8'
+        }
+
+        //CVE-2021-27807, CVE-2021-27906
+        dependencySet(group: 'org.apache.pdfbox', version: '2.0.24') {
+            entry 'pdfbox'
+        }
+
+        // Do not change - START
+        // Changing below will break Serenity Report generation
+        dependencySet(group: 'junit', version: '4.13') {
+            entry 'junit'
+        }
+
+        dependencySet(group: 'org.junit.jupiter', version: '5.6.3') {
+            entry 'junit-jupiter'
+            entry 'junit-jupiter-api'
+            entry 'junit-jupiter-params'
+        }
+
+        dependencySet(group: 'org.junit.vintage', version: '5.6.2') {
+            entry 'junit-vintage-engine'
+        }
+
+        dependencySet(group: 'net.bytebuddy', version: '1.11.2') {
+            entry 'byte-buddy'
+            entry 'byte-buddy-agent'
+        }
+        // Do not change - END
+
+        //CVE-2021-27568
+        dependencySet(group: 'net.minidev', version: '2.4.7') {
+            entry 'json-smart'
+        }
+
+        //CVE-2021-22118
+        dependencySet(group: 'org.springframework', version: '5.3.8') {
+            entry 'spring-aop'
+            entry 'spring-beans'
+            entry 'spring-context'
+            entry 'spring-core'
+            entry 'spring-expression'
+            entry 'spring-jcl'
+            entry 'spring-web'
+            entry 'spring-webmvc'
+        }
+    }
 }
 
 bootJar {
@@ -193,18 +248,17 @@ jacocoTestReport {
 
     reports {
         xml.enabled = true
-        csv.enabled = true
+        csv.enabled = false
         xml.destination file("${project.buildDir}/reports/jacoco/test/jacocoTestReport.xml")
     }
 
 }
 
-project.tasks['sonarqube'].dependsOn jacocoTestReport
+project.tasks['sonarqube'].dependsOn test, jacocoTestReport
 
 sonarqube {
     properties {
         property "sonar.projectName", "${rootProject.name}"
-        property "sonar.jacoco.reportPath", "${project.buildDir}/jacoco/test.exec"
         property "sonar.coverage.jacoco.xmlReportPaths", "${jacocoTestReport.reports.xml.destination.path}"
         property "sonar.exclusions", coverageExclusionList.join(", ")
         property "sonar.pitest.mode", "reuseReport"
@@ -218,14 +272,6 @@ checkstyle {
     toolVersion = '8.8'
     // need to set configDir to rootDir otherwise submodule will use submodule/config/checkstyle
     configDir = new File(rootDir, 'config/checkstyle')
-}
-
-pmd {
-    toolVersion = "6.12.0"
-    ignoreFailures = true
-    sourceSets = [sourceSets.main, sourceSets.test]
-    reportsDir = file("$project.buildDir/reports/pmd")
-    ruleSetFiles = files("config/pmd/ruleset.xml")
 }
 
 dependencyUpdates.resolutionStrategy = {
@@ -252,6 +298,10 @@ idea {
         testSourceDirs += project.sourceSets.contractTest.java.srcDirs
         testResourceDirs += project.sourceSets.contractTest.resources.srcDirs
     }
+}
+
+test {
+    useJUnitPlatform()
 }
 
 task functional(type: Test) {
