@@ -7,10 +7,14 @@ java:
     dg-docassembly:
       resourceGroup: dg-docassembly
       secrets:
-        - microservicekey-dg-docassembly-api
-        - AppInsightsInstrumentationKey
-        - docmosis-templates-auth
-        - docmosis-access-key
+        - name: microservicekey-dg-docassembly-api
+          alias: S2S_KEY
+        - name: AppInsightsInstrumentationKey
+          alias: APPINSIGHTS_INSTRUMENTATIONKEY
+        - name: docmosis-templates-auth
+          alias: DOCMOSIS_TEMPLATES_ENDPOINT_AUTH
+        - name: docmosis-access-key
+          alias: DOCMOSIS_ACCESS_KEY
   environment:
     IDAM_API_BASE_URI: https://idam-api.{{ .Values.global.environment }}.platform.hmcts.net
     OPEN_ID_API_BASE_URI: https://idam-web-public.{{ .Values.global.environment }}.platform.hmcts.net/o
@@ -18,9 +22,9 @@ java:
     S2S_BASE_URI: http://rpe-service-auth-provider-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal
     IDAM_WEBSHOW_WHITELIST: https://em-show-aat.service.core-compute-aat.internal/oauth2/callback
     DM_STORE_APP_URL: http://dm-store-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal
-    DOCMOSIS_TEMPLATES_ENDPOINT: https://docmosis-development.platform.hmcts.net
-    DOCMOSIS_CONVERT_ENDPOINT: https://docmosis-development.platform.hmcts.net/rs/convert
-    DOCMOSIS_RENDER_ENDPOINT: https://docmosis-development.platform.hmcts.net/rs/render
+    DOCMOSIS_TEMPLATES_ENDPOINT: https://docmosis.{{ .Values.global.environment }}.platform.hmcts.net
+    DOCMOSIS_CONVERT_ENDPOINT: https://docmosis.{{ .Values.global.environment }}.platform.hmcts.net/rs/convert
+    DOCMOSIS_RENDER_ENDPOINT: https://docmosis.{{ .Values.global.environment }}.platform.hmcts.net/rs/render
 
     REFORM_SERVICE_NAME: dg-docassembly
     REFORM_TEAM: evidence
@@ -36,7 +40,7 @@ java:
     LOG_LEVEL_DM: INFO
     ENDPOINTS_HEALTH_SENSITIVE: false
     ENDPOINTS_INFO_SENSITIVE: false
-    S2S_NAMES_WHITELIST: em_api,em_gw,ccd_gw,ccd_data,sscs,divorce_document_upload,divorce_document_generator,probate_backend,jui_webapp,pui_webapp,cmc_claim_store
+    S2S_NAMES_WHITELIST: em_api,em_gw,ccd_gw,ccd_data,sscs,divorce_document_upload,divorce_document_generator,probate_backend,jui_webapp,pui_webapp,cmc_claim_store,nfdiv_case_api
     CASE_WORKER_ROLES: caseworker-probate,caseworker-cmc,caseworker-sscs,caseworker-divorce
     ENABLE_IDAM_HEALTH_CHECK: false
     ENABLE_S2S_HEALTH_CHECK: false
@@ -44,3 +48,4 @@ java:
     ENABLE_TEMPLATE_RENDITION_ENDPOINT: true
     ENABLE_DOCUMENT_CONVERSION_ENDPOINT: true
     SERVER_PORT: 8080
+    HTTPCLIENT_CALL_TIMEOUT: 30

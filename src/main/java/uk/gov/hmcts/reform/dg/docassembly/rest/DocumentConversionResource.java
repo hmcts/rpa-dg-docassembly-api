@@ -6,14 +6,16 @@ import io.swagger.annotations.ApiResponses;
 import org.apache.tika.Tika;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import uk.gov.hmcts.reform.dg.docassembly.service.FileToPDFConverterService;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.util.UUID;
 
 
@@ -45,13 +47,12 @@ public class DocumentConversionResource {
             log.debug("REST request to get Document Conversion To PDF : {}", documentId);
             File convertedFile = fileToPDFConverterService.convertFile(documentId);
 
-            InputStreamResource resource = new InputStreamResource(new FileInputStream(convertedFile));
             Tika tika = new Tika();
 
             return ResponseEntity.ok()
                     .contentLength(convertedFile.length())
                     .contentType(MediaType.parseMediaType(tika.detect(convertedFile)))
-                    .body(resource);
+                    .body(new FileSystemResource(convertedFile));
         } catch (Exception e) {
             return ResponseEntity
                     .badRequest()

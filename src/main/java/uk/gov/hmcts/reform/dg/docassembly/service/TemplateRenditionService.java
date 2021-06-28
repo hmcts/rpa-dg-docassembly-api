@@ -1,7 +1,7 @@
 package uk.gov.hmcts.reform.dg.docassembly.service;
 
 import okhttp3.Response;
-import org.apache.tomcat.util.http.fileupload.IOUtils;
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -11,6 +11,8 @@ import uk.gov.hmcts.reform.dg.docassembly.dto.RenditionOutputType;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 @Service
 public class TemplateRenditionService {
@@ -35,6 +37,7 @@ public class TemplateRenditionService {
                     String.format("Could not render a template %s. HTTP response and message %d, %s",
                             createTemplateRenditionDto.getTemplateId(), response.code(), response.body().string()));
             log.error(exceptionToThrow.toString(), exceptionToThrow);
+            response.close();
             throw exceptionToThrow;
         }
 
@@ -56,7 +59,15 @@ public class TemplateRenditionService {
                 "docmosis-rendition",
                 tempFileExtension);
 
-        IOUtils.copy(response.body().byteStream(), new FileOutputStream(file));
+        InputStream in = response.body().byteStream();
+        OutputStream out = new FileOutputStream(file);
+        try {
+            IOUtils.copy(in, out);
+        } finally {
+            IOUtils.closeQuietly(in);
+            IOUtils.closeQuietly(out);
+        }
+        response.close();
 
         dmStoreUploader.uploadFile(file, createTemplateRenditionDto);
 
