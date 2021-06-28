@@ -1,6 +1,8 @@
 spring:
   application:
     name: Document Assembly API
+  config:
+    import: "optional:configtree:/mnt/secrets/dg-docassembly/"
   security:
     oauth2:
       client:
@@ -79,17 +81,17 @@ idam:
     totp_secret: ${S2S_KEY:AAAAAAAAAAAAAAAA}
     microservice: dg_docassembly_api
   s2s-authorised:
-    services: ${S2S_NAMES_WHITELIST:sscs,divorce,ccd,em_gw,jui_webapp,pui_webapp}
+    services: ${S2S_NAMES_WHITELIST:sscs,divorce,ccd,em_gw,jui_webapp,pui_webapp,xui_webapp}
 
 template-management-api:
-  base-url: ${DOCMOSIS_TEMPLATES_ENDPOINT:https://docmosis-development.platform.hmcts.net}
+  base-url: ${DOCMOSIS_TEMPLATES_ENDPOINT:https://docmosis.aat.platform.hmcts.net}
   auth: ${DOCMOSIS_TEMPLATES_ENDPOINT_AUTH:SOMETHING}
   resource: '/templates/'
 
 docmosis:
   accessKey: ${DOCMOSIS_ACCESS_KEY:SOMETHING}
-  render.endpoint: ${DOCMOSIS_RENDER_ENDPOINT:https://docmosis-development.platform.hmcts.net/rs/render}
-  convert.endpoint: ${DOCMOSIS_CONVERT_ENDPOINT:https://docmosis-development.platform.hmcts.net/rs/convert}
+  render.endpoint: ${DOCMOSIS_RENDER_ENDPOINT:https://docmosis.aat.platform.hmcts.net/rs/render}
+  convert.endpoint: ${DOCMOSIS_CONVERT_ENDPOINT:https://docmosis.aat.platform.hmcts.net/rs/convert}
 
 document_management:
   base-url: ${DM_STORE_APP_URL:http://localhost:4603}
@@ -107,3 +109,6 @@ oidc:
 docmosis-conversion:
   multipart:
     covered-ext: ${DOCMOSIS_MULTIPART_WHITELIST_EXT:doc,docx,pptx,ppt,rtf,txt,xlsx,xls}
+
+httpclient:
+  call-timeout: ${HTTPCLIENT_CALL_TIMEOUT:30}

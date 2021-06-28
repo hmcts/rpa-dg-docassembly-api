@@ -4,7 +4,9 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import uk.gov.hmcts.reform.dg.docassembly.config.Constants;
 import uk.gov.hmcts.reform.dg.docassembly.dto.CreateTemplateRenditionDto;
 import uk.gov.hmcts.reform.dg.docassembly.service.TemplateRenditionService;
 
@@ -20,6 +22,11 @@ public class TemplateRenditionResource {
 
     public TemplateRenditionResource(TemplateRenditionService templateRenditionService) {
         this.templateRenditionService = templateRenditionService;
+    }
+
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        binder.setDisallowedFields(Constants.IS_ADMIN);
     }
 
     @ApiOperation(
