@@ -69,8 +69,7 @@ public class TemplateRenditionResourceTest extends BaseTest {
                 .perform(post("/api/template-renditions")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\"outputType\":\"PDF\", \"templateId\":\"1\"}")
-                        .header("Authorization", "xxx")
-                        .header("ServiceAuthorization", "xxx"))
+                        .header("Authorization", "xxx"))
                 .andDo(print())
                 .andExpect(status().isOk());
 
@@ -86,8 +85,7 @@ public class TemplateRenditionResourceTest extends BaseTest {
                 .perform(post("/api/template-renditions")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\"outputType\":\"PDF\", \"templateId\":\"1\", \"outputName\": \"test-output-name\"}")
-                        .header("Authorization", "xxx")
-                        .header("ServiceAuthorization", "xxx"))
+                        .header("Authorization", "xxx"))
                 .andDo(print())
                 .andExpect(status().isOk());
 

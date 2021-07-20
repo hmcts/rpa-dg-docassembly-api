@@ -38,8 +38,7 @@ public class FormDefinitionResourceTest extends BaseTest {
 
         restLogoutMockMvc
                 .perform(get("/api/form-definitions/123")
-                        .header("Authorization", "xxx")
-                        .header("ServiceAuthorization", "xxx"))
+                        .header("Authorization", "xxx"))
                 .andDo(print()).andExpect(status().isOk());
     }
 
@@ -51,8 +50,7 @@ public class FormDefinitionResourceTest extends BaseTest {
 
         restLogoutMockMvc
                 .perform(get("/api/form-definitions/123")
-                        .header("Authorization", "xxx")
-                        .header("ServiceAuthorization", "xxx"))
+                        .header("Authorization", "xxx"))
                 .andDo(print()).andExpect(status().is4xxClientError());
 
         verify(formDefinitionService, Mockito.times(1))
@@ -67,8 +65,7 @@ public class FormDefinitionResourceTest extends BaseTest {
 
         restLogoutMockMvc
                 .perform(get("/api/form-definitions/123")
-                        .header("Authorization", "xxx")
-                        .header("ServiceAuthorization", "xxx"))
+                        .header("Authorization", "xxx"))
                 .andDo(print()).andExpect(status().is5xxServerError());
 
         verify(formDefinitionService, Mockito.times(1))
