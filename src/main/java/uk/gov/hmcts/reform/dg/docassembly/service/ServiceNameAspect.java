@@ -12,6 +12,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import uk.gov.hmcts.reform.dg.docassembly.config.security.SecurityUtils;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Objects;
 
 @Aspect
 @Component
@@ -31,16 +32,18 @@ public class ServiceNameAspect {
     public void logServiceName() {
 
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
-        String s2sToken = request.getHeader("serviceauthorization");
-        if (StringUtils.isNotBlank(s2sToken)) {
-            String serviceName;
-            if (s2sToken.startsWith(BEARER)) {
-                serviceName = securityUtils.getServiceName(s2sToken);
-            } else {
-                serviceName = securityUtils.getServiceName(BEARER + s2sToken);
+        if (Objects.nonNull(request)) {
+            String s2sToken = request.getHeader("serviceauthorization");
+            if (StringUtils.isNotBlank(s2sToken)) {
+                String serviceName;
+                if (s2sToken.startsWith(BEARER)) {
+                    serviceName = securityUtils.getServiceName(s2sToken);
+                } else {
+                    serviceName = securityUtils.getServiceName(BEARER + s2sToken);
+                }
+                log.info("Endpoint : {}  for : {} method is accessed by {} ", request.getRequestURI(),
+                    request.getMethod(), serviceName);
             }
-            log.info("Endpoint : {}  for : {} method is accessed by {} ", request.getRequestURI(),
-                request.getMethod(), serviceName);
         }
     }
 }
