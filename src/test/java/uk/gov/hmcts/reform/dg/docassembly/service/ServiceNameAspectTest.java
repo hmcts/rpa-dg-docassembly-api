@@ -1,11 +1,13 @@
 package uk.gov.hmcts.reform.dg.docassembly.service;
 
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.MockitoJUnit;
+import org.mockito.junit.MockitoRule;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import uk.gov.hmcts.reform.dg.docassembly.config.security.SecurityUtils;
@@ -25,9 +27,12 @@ public class ServiceNameAspectTest {
     @InjectMocks
     ServiceNameAspect serviceNameAspect;
 
+    //Below is required to intialize the Mock objects.
+    @Rule
+    public MockitoRule rule = MockitoJUnit.rule();
+
     @Before
     public void setUp() {
-        MockitoAnnotations.initMocks(this);
         RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
     }
 
